@@ -8,5 +8,6 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 {
     public class EnemyShip : Ship
     {
+
     }
 }

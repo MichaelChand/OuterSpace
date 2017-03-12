@@ -35,7 +35,7 @@ namespace OuterSpace.Game
 
         public void GameResume()
         {
-            //Once time has stopped, resume needs to be done by recresating the timer.
+            //Once time has stopped, resume needs to be done by recreating the timer.
             GameStart(); 
         }
 
