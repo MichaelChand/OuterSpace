@@ -1,4 +1,5 @@
-﻿using OuterSpace.RenderSystem;
+﻿using OuterSpace.Game;
+using OuterSpace.RenderSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace OuterSpace
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GameEngine _gameEngine;
          public MainWindow()
         {
             this.Width = SystemParameters.FullPrimaryScreenWidth;
@@ -37,14 +39,16 @@ namespace OuterSpace
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
+            Page renderPage = new RenderPage(Width, Height);
             Frame frame = new Frame();
             frame.Width = Width;
             frame.Height = Height;
             frame.Margin = new Thickness(0, 0, 0, 0);
             frame.HorizontalAlignment = HorizontalAlignment.Left;
             frame.VerticalAlignment = VerticalAlignment.Top;
-            frame.Navigate(InitialisePage(new RenderPage(Width, Height)));
+            frame.Navigate(InitialisePage(renderPage));
             GameGrid.Children.Add(frame);
+            _gameEngine = new Game.GameEngine(renderPage);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
