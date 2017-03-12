@@ -32,21 +32,16 @@ namespace OuterSpace
             InitializeComponent();
         }
 
-        public Page InitialisePage(Page page)
-        {
-            page.DataContext = this;
-            return page;
-        }
-
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             _gameMain = new GameMain(this);
             _gameMain.Initialise(GameGrid);
+            _gameMain.StartGame();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-
+            _gameMain.StopGame();
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
@@ -61,7 +56,7 @@ namespace OuterSpace
 
         private void FrameSetup()
         {
-            InitialisePage(MenuFrame.Content as Page);
+            _gameMain.InitialisePage(MenuFrame.Content as Page);
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

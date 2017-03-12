@@ -23,6 +23,22 @@ namespace OuterSpace.Game
             grid.Children.Add(element);
         }
 
+        public void StartGame()
+        {
+            _gameEngine.GameStart();
+        }
+
+        public void StopGame()
+        {
+            _gameEngine.GameStop();
+        }
+
+        public Page InitialisePage(Page page)
+        {
+            page.DataContext = this;
+            return page;
+        }
+
         public void Initialise<TGrid>(TGrid grid)
         {
             Page renderPage = new RenderPage(_mainWindow.Width, _mainWindow.Height);
@@ -38,14 +54,13 @@ namespace OuterSpace.Game
             frame.Width = _mainWindow.Width;
             frame.Height = _mainWindow.Height;
             frame.Margin = new Thickness(0, 0, 0, 0);
-            frame.HorizontalAlignment = HorizontalAlignment.Left;
             frame.VerticalAlignment = VerticalAlignment.Top;
+            frame.HorizontalAlignment = HorizontalAlignment.Left;
         }
 
         private void AddPageToFrame(Page page, Frame frame)
         {
-            
-            frame.Navigate(_mainWindow.InitialisePage(page));
+            frame.Navigate(InitialisePage(page));
         }
     }
 }

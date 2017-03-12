@@ -58,6 +58,8 @@
     <Compile Include="Common\Mathematics.cs" />
     <Compile Include="Common\TextureReader.cs" />
     <Compile Include="GameObjects\IAGameObject.cs" />
+    <Compile Include="GameObjects\Ships\Enemy\EnemyShip.cs" />
+    <Compile Include="GameObjects\Ships\Player\PlayerShip.cs" />
     <Compile Include="GameObjects\Ships\Ship.cs" />
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Game\GameMain.cs" />
@@ -118,10 +120,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameObjects\Ships\Enemy\" />
-    <Folder Include="GameObjects\Ships\Player\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
