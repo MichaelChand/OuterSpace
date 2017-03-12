@@ -23,7 +23,8 @@ namespace OuterSpace
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GameEngine _gameEngine;
+        private GameMain _gameMain;
+
          public MainWindow()
         {
             this.Width = SystemParameters.FullPrimaryScreenWidth;
@@ -31,7 +32,7 @@ namespace OuterSpace
             InitializeComponent();
         }
 
-        private Page InitialisePage(Page page)
+        public Page InitialisePage(Page page)
         {
             page.DataContext = this;
             return page;
@@ -39,16 +40,8 @@ namespace OuterSpace
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            Page renderPage = new RenderPage(Width, Height);
-            Frame frame = new Frame();
-            frame.Width = Width;
-            frame.Height = Height;
-            frame.Margin = new Thickness(0, 0, 0, 0);
-            frame.HorizontalAlignment = HorizontalAlignment.Left;
-            frame.VerticalAlignment = VerticalAlignment.Top;
-            frame.Navigate(InitialisePage(renderPage));
-            GameGrid.Children.Add(frame);
-            _gameEngine = new Game.GameEngine(renderPage);
+            _gameMain = new GameMain(this);
+            _gameMain.Initialise(GameGrid);
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)

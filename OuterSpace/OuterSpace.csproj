@@ -60,6 +60,7 @@
     <Compile Include="GameObjects\IAGameObject.cs" />
     <Compile Include="GameObjects\Ships\Ship.cs" />
     <Compile Include="Game\GameEngine.cs" />
+    <Compile Include="Game\GameMain.cs" />
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
