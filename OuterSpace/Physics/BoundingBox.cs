@@ -14,6 +14,16 @@ namespace OuterSpace.Physics
         public double Width { get; set; }
         public double Height { get; set; }
 
+        public BoundingBox()
+        {
+        }
+
+        public BoundingBox(Point position, Box box)
+        {
+            Position = position;
+            Dimension = box;
+        }
+
         public BoundingBox(Point position, double left, double top, double right, double bottom) : this(position, new Box { Left = left, Top = top, Right = right, Bottom = bottom })
         {
         }
@@ -23,10 +33,10 @@ namespace OuterSpace.Physics
 
         }
 
-        public BoundingBox(Point position, Box box)
+        public BoundingBox(Point position, double width, double height) : this(position, position.X, position.Y, position.X + width, position.Y + height)
         {
-            Position = position;
-            Dimension = box;
+            Width = width;
+            Height = height;
         }
     }
 }

@@ -21,7 +21,8 @@ namespace OuterSpace.RenderSystem
     /// </summary>
     public partial class RenderPage : Page
     {
-        List<IAGameObject> _gameObjects;
+        private List<IAGameObject> _gameObjects;
+
         public RenderPage(double width, double height)
         {
             Width = width;
@@ -35,15 +36,15 @@ namespace OuterSpace.RenderSystem
 
         public void SetupWorldObjects(params IAGameObject[] gameObjects)
         {
-            _gameObjects = gameObjects.ToList<IAGameObject>();
+            _gameObjects = gameObjects.ToList();
             for (int i = 0; i < _gameObjects.Count; i++)
                 AddComponents(_gameObjects[i].GetElements());
         }
 
         private void AddComponents(UIElement[] components)
         {
-            for (int j = 0; j < components.Length; j++)
-                cnvViewPort.Children.Add(components[j]);
+            for (int i = 0; i < components.Length; i++)
+                cnvViewPort.Children.Add(components[i]);
         }
 
         public void AddWorldObject(IAGameObject gameObject)
@@ -52,14 +53,21 @@ namespace OuterSpace.RenderSystem
             AddComponents(gameObject.GetElements());
         }
 
+        private void RemoveFromRenderCanvas(UIElement[] components)
+        {
+            for (int i = 0; i < components.Length; i++)
+                cnvViewPort.Children.Remove(components[i]);
+        }
+
         public void RemoveWorldObject(IAGameObject gameObject)
         {
+            RemoveFromRenderCanvas(gameObject.GetElements());
             _gameObjects.Remove(gameObject);
         }
 
         public void Render()
         {
-            //Call each component's render method and push to canvas.
+            //Call each component's render method. Assumption: Already in canvas.
             for (int i = 0; i < _gameObjects.Count; i++)
                 _gameObjects[i].Render();
         }
