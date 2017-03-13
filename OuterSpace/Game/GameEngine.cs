@@ -23,7 +23,7 @@ namespace OuterSpace.Game
 
         public void GameStart()
         {
-            _gameTimer = new Timers.GameTimer(_FRAMES, ProcessFrameCallback);
+            _gameTimer = new GameTimer(_FRAMES, ProcessFrameCallback);
             _gameTimer.Start();
         }
 

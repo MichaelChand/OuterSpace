@@ -11,6 +11,7 @@ namespace OuterSpace.Timers
     {
         public delegate void Callback(object sender, ElapsedEventArgs eea);
 
+        public bool TimerRunning = false;
         private Timer _ticks = new Timer();
         private int _frameInterval;
 
@@ -42,11 +43,13 @@ namespace OuterSpace.Timers
         public void Start()
         {
             _ticks.Start();
+            TimerRunning = true;
         }
 
         public void Stop()
         {
             _ticks.Stop();
+            TimerRunning = false;
         }
 
         #region IDisposable Support
