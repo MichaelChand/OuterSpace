@@ -1,4 +1,5 @@
-﻿using OuterSpace.RenderSystem;
+﻿using OuterSpace.GameObjects.Ships.Enemy;
+using OuterSpace.RenderSystem;
 using OuterSpace.Timers;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace OuterSpace.Game
         public GameEngine (Page renderPage)
         {
             _renderer = renderPage as RenderPage;
+            EnemyShip enemyship = new EnemyShip(_renderer.ActualWidth, _renderer.ActualHeight, null, "Assets//Images//SampleBlank.png");
+            (_renderer as RenderPage).SetupWorldObjects(enemyship);
         }
 
         public void GameStart()

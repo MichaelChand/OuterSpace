@@ -17,6 +17,11 @@ namespace OuterSpace.GameObjects.Ships
             throw new NotImplementedException();
         }
 
+        public BoundingBox GetBoundingBox()
+        {
+            return _boundingBox;
+        }
+
         public Point GetPosition()
         {
             return _boundingBox.Position;

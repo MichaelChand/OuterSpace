@@ -9,11 +9,11 @@ namespace OuterSpace.GameObjects
 {
     public abstract class IAGameObject
     {
-        protected UIElement[] uiObjects;
+        protected List<UIElement> _uiComponents = new List<UIElement>();
 
         public UIElement[] GetElements()
         {
-            return uiObjects;
+            return _uiComponents.ToArray();
         }
 
         public abstract void Render();
