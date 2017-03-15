@@ -1,4 +1,5 @@
-﻿using OuterSpace.GameObjects.Ships.Enemy;
+﻿using OuterSpace.GameObjects;
+using OuterSpace.GameObjects.Ships.Enemy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,17 @@ namespace OuterSpace.Game.Levels
 {
     public class WaveOne
     {
-        private List<EnemyShip> _enemies;
-        public WaveOne()
+        private List<IAGameObject> _enemies;
+        private GameData _gameData;
+
+        public WaveOne(GameData gameData)
         {
+            _gameData = gameData;
+        }
+
+        public void Load()
+        {
+            //Load Level data here.
             CreateLevel();
         }
 
@@ -20,11 +29,16 @@ namespace OuterSpace.Game.Levels
             _enemies = CreateEnemies();
         }
 
-        public List<EnemyShip> CreateEnemies()
+        public List<IAGameObject> CreateEnemies()
         {
-            List<EnemyShip> enemies = new List<EnemyShip>();
-            enemies.Add(new EnemyOne());
+            List<IAGameObject> enemies = new List<IAGameObject>();
+            enemies.Add(new EnemyOne(_gameData));
             return enemies;
+        }
+
+        public List<IAGameObject> GetEnemies()
+        {
+            return _enemies;
         }
     }
 

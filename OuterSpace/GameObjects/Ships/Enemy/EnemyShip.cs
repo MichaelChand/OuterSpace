@@ -19,7 +19,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private Random _random = new Random();
         private BitmapImage _textureLOD;
         private Image _shipTexture;
-        private string _texturePath;
+        protected string _texturePath;
 
         public BitmapImage TextureLOD
         {
@@ -41,7 +41,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             _gameData = gameData;
             _texturePath = texturePath;
             _boundingBox = boundingBox;
-            SetupShip();
+            //SetupShip();
         }
 
         public virtual void SetRandomStartPosition()

@@ -1,4 +1,5 @@
-﻿using OuterSpace.GameObjects.Ships.Enemy;
+﻿using OuterSpace.Game.Levels;
+using OuterSpace.GameObjects.Ships.Enemy;
 using OuterSpace.Physics;
 using OuterSpace.RenderSystem;
 using OuterSpace.Timers;
@@ -29,10 +30,14 @@ namespace OuterSpace.Game
             _gameData.ViewPortHeight = (int)(int)_renderer.RenderGrid.Height;
             _gameData.ViewportBounding = ViewPortBounding;
 
-            EnemyShip enemyship = new EnemyShip(_gameData, null, "Assets//Images//SampleBlank.png");
-            enemyship.SetRandomStartPosition();
-            (_renderer as RenderPage).SetupWorldObjects(enemyship);
-            enemyship.Render();
+            WaveOne level1 = new WaveOne(_gameData);
+            level1.Load();
+            _renderer.SetupWorldObjects(level1.GetEnemies().ToArray());
+            _renderer.Render();
+            //EnemyShip enemyship = new EnemyShip(_gameData, null, "Assets//Images//SampleBlank.png");
+            //enemyship.SetRandomStartPosition();
+            //(_renderer as RenderPage).SetupWorldObjects(enemyship);
+            //enemyship.Render();
         }
 
         public void GameStart()
