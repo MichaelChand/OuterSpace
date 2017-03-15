@@ -58,11 +58,14 @@
     <Compile Include="Common\Mathematics.cs" />
     <Compile Include="Common\TextureReader.cs" />
     <Compile Include="GameObjects\IAGameObject.cs" />
+    <Compile Include="GameObjects\Ships\Enemy\EnemyOne.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyShip.cs" />
     <Compile Include="GameObjects\Ships\Player\PlayerShip.cs" />
     <Compile Include="GameObjects\Ships\Ship.cs" />
+    <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Game\GameMain.cs" />
+    <Compile Include="Game\Levels\WaveOne.cs" />
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>

@@ -1,6 +1,8 @@
-﻿using OuterSpace.Physics;
+﻿using OuterSpace.Game;
+using OuterSpace.Physics;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +10,32 @@ using System.Windows;
 
 namespace OuterSpace.GameObjects.Ships
 {
-    public class Ship : IAGameObject
+    public class Ship : IAGameObject, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         protected BoundingBox _boundingBox;
+        protected Point Position;
+        private Thickness _drawPosition;
+        protected GameData _gameData;
+
+        public Thickness DrawPosition
+        {
+            get { return _drawPosition; }
+            set
+            {
+                _drawPosition = value;
+                OnShipPropertyChanged("DrawPosition");
+            }
+        }
+
+        public override void Update()
+        {
+            throw new NotImplementedException();
+        }
 
         public override void Render()
         {
-            throw new NotImplementedException();
+            DrawPosition = new Thickness(Position.X, Position.Y, DrawPosition.Right, DrawPosition.Bottom);
         }
 
         public BoundingBox GetBoundingBox()
@@ -56,5 +77,12 @@ namespace OuterSpace.GameObjects.Ships
         {
             _boundingBox.Height = height;
         }
+
+        #region Notify event handlers
+        protected void OnShipPropertyChanged(string property)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using OuterSpace.Common;
+using OuterSpace.Game;
 using OuterSpace.Physics;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,8 @@ using System.Windows.Media.Imaging;
 
 namespace OuterSpace.GameObjects.Ships.Enemy
 {
-    public class EnemyShip : Ship, INotifyPropertyChanged
+    public class EnemyShip : Ship
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         private Random _random = new Random();
         private BitmapImage _textureLOD;
         private Image _shipTexture;
@@ -27,23 +27,33 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             private set
             {
                 _textureLOD = value;
-                OnEnemyShipPropertyChanged("TextureLOD");
+                OnShipPropertyChanged("TextureLOD");
             }
         }
 
-        public EnemyShip(double screenWidth, double screenHeight, BoundingBox boundingBox, string texturePath)
+        public EnemyShip()
         {
+
+        }
+
+        public EnemyShip(GameData gameData, BoundingBox boundingBox, string texturePath)
+        {
+            _gameData = gameData;
             _texturePath = texturePath;
             _boundingBox = boundingBox;
             SetupShip();
         }
 
-        private void SetupShip()
+        public virtual void SetRandomStartPosition()
+        {
+            Position = new Point(GenerateStartingPosition(0, _gameData.ViewPortWidth), GenerateStartingPosition(0, _gameData.ViewPortHeight));
+        }
+
+        protected virtual void SetupShip()
         {
             _shipTexture = new Image();
             LoadShipTexture(_texturePath);
             ApplyBinding();
-            _shipTexture.Margin = new Thickness(200, 200, 0, 0);
             _uiComponents.Add(_shipTexture);
         }
 
@@ -56,20 +66,16 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private void ApplyBinding()
         {
             Binding TextureLODBinding = new Binding("TextureLOD");
+            Binding DrawPositionBinding = new Binding("DrawPosition");
             TextureLODBinding.Source = this;
+            DrawPositionBinding.Source = this;
             _shipTexture.SetBinding(Image.SourceProperty, TextureLODBinding);
+            _shipTexture.SetBinding(Image.MarginProperty, DrawPositionBinding);
         }
 
         protected double GenerateStartingPosition(int min, int max)
         {
             return _random.Next(min, max);
         }
-
-        #region Notify event handlers
-        protected void OnEnemyShipPropertyChanged(string property)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
-        #endregion
     }
 }

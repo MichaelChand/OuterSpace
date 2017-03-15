@@ -11,11 +11,12 @@ namespace OuterSpace.GameObjects
     {
         protected List<UIElement> _uiComponents = new List<UIElement>();
 
-        public UIElement[] GetElements()
+        public virtual UIElement[] GetElements()
         {
             return _uiComponents.ToArray();
         }
 
+        public abstract void Update();
         public abstract void Render();
     }
 }

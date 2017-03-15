@@ -1,4 +1,5 @@
 ﻿using OuterSpace.GameObjects.Ships.Enemy;
+using OuterSpace.Physics;
 using OuterSpace.RenderSystem;
 using OuterSpace.Timers;
 using System;
@@ -16,12 +17,22 @@ namespace OuterSpace.Game
         private RenderPage _renderer;
         private GameTimer _gameTimer;
         private readonly int _FRAMES = 30;
+        private GameData _gameData;
 
         public GameEngine (Page renderPage)
         {
             _renderer = renderPage as RenderPage;
-            EnemyShip enemyship = new EnemyShip(_renderer.ActualWidth, _renderer.ActualHeight, null, "Assets//Images//SampleBlank.png");
+
+            BoundingBox ViewPortBounding = new BoundingBox(_renderer.Margin.Left, _renderer.Margin.Top, _renderer.Width, (_renderer.Height * 2) - (_renderer.Height / 1.20), 0, 0);
+            _gameData = new GameData();
+            _gameData.ViewPortWidth = (int)_renderer.RenderGrid.Width;
+            _gameData.ViewPortHeight = (int)(int)_renderer.RenderGrid.Height;
+            _gameData.ViewportBounding = ViewPortBounding;
+
+            EnemyShip enemyship = new EnemyShip(_gameData, null, "Assets//Images//SampleBlank.png");
+            enemyship.SetRandomStartPosition();
             (_renderer as RenderPage).SetupWorldObjects(enemyship);
+            enemyship.Render();
         }
 
         public void GameStart()
@@ -38,7 +49,7 @@ namespace OuterSpace.Game
 
         public void GameResume()
         {
-            //Once time has stopped, resume needs to be done by recreating the timer.
+            //Once timer has stopped, resume needs to be done by recreating the timer.
             GameStart(); 
         }
 
