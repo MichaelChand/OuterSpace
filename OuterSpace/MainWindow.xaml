@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:OuterSpace"
         x:Name="OuterSpaceMain"
         mc:Ignorable="d"
-        Title="MainWindow" Background="MidnightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" MaxWidth="1920" MaxHeight="1080" >
-    <Grid>
+        Title="MainWindow" Background="MidnightBlue" WindowStartupLocation="CenterScreen" MaxWidth="1920" MaxHeight="1080" ResizeMode="NoResize" WindowState="Maximized" >
+    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
         <Grid x:Name="MenuGrid" Margin="10,10,0,0" Width="770" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Midnightblue">
             <Frame x:Name="MenuFrame" Margin="0,0,0,0" Width="750" Height="500" NavigationUIVisibility="Hidden" Background="Blue" Source="NavigationPages\MenuPage.xaml" />
             <Button x:Name="btnStart" Width="50" Height="20" Content="START" Margin="20,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnStart_Click"/>
             <Button x:Name="btnStop" Width="50" Height="20" Content="STOP" Margin="100,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnStop_Click"/>
             <Button x:Name="btnExit" Width="50" Height="20" Content="EXIT" Margin="170,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnExit_Click"/>
         </Grid>
-        <Grid x:Name="GameGrid"  Margin="0,50,0,0" Background="MidnightBlue" Loaded="MainWindow_Loaded" HorizontalAlignment="Left">
-            <!-- <Frame x:Name="GameScreenFrame" Margin="0,0,0,0" Width="750" Height="500" Background="Blue" Source="RenderSystem\RenderPage.xaml" /> -->
+        <Grid x:Name="GameGrid"  Margin="0,50,0,0" Background="LawnGreen" Loaded="MainWindow_Loaded" HorizontalAlignment="Left">
+            <!-- Frame place holder -->
         </Grid>
     </Grid>
 </Window>

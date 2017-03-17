@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace OuterSpace.Game
 {
@@ -41,21 +42,30 @@ namespace OuterSpace.Game
 
         public void Initialise<TGrid>(TGrid grid)
         {
-            Page renderPage = new RenderPage(_mainWindow.Width, _mainWindow.Height);
-            Frame frame = new Frame();
-            SetupRenderFrame(frame);
+            Page renderPage = SetupRenderPage();
+            Frame frame = SetupRenderFrame();
             AddPageToFrame(renderPage, frame);
             AddToGrid(grid as Grid, frame);
             _gameEngine = new GameEngine(renderPage);
         }
 
-        private void SetupRenderFrame(Frame frame)
+        private Page SetupRenderPage()
         {
-            frame.Width = _mainWindow.Width;
-            frame.Height = _mainWindow.Height;
+            Page RenderPage = new RenderPage(_mainWindow.ActualWidth / 1.20, _mainWindow.ActualHeight / 1.20);
+            RenderPage.Margin = new Thickness(0, 0, 0, 0);
+            RenderPage.VerticalAlignment = VerticalAlignment.Top;
+            RenderPage.HorizontalAlignment = HorizontalAlignment.Left;
+            return RenderPage;
+        }
+
+        private Frame SetupRenderFrame()
+        {
+            Frame frame = new Frame();
             frame.Margin = new Thickness(0, 0, 0, 0);
             frame.VerticalAlignment = VerticalAlignment.Top;
             frame.HorizontalAlignment = HorizontalAlignment.Left;
+            frame.Background = new SolidColorBrush(Colors.Blue);
+            return frame;
         }
 
         private void AddPageToFrame(Page page, Frame frame)

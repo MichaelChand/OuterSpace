@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OuterSpace.Game.Levels
 {
-    public class WaveOne
+    public class WaveOne : ILevel
     {
         private List<IAGameObject> _enemies;
         private GameData _gameData;
@@ -36,7 +36,7 @@ namespace OuterSpace.Game.Levels
             return enemies;
         }
 
-        public List<IAGameObject> GetEnemies()
+        public List<IAGameObject> GetLevelObjects()
         {
             return _enemies;
         }

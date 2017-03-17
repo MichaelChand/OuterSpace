@@ -65,6 +65,7 @@
     <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Game\GameMain.cs" />
+    <Compile Include="Game\Levels\ILevel.cs" />
     <Compile Include="Game\Levels\WaveOne.cs" />
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>

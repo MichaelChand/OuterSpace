@@ -1,4 +1,5 @@
-﻿using OuterSpace.Game.Levels;
+﻿using OuterSpace.Common;
+using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects.Ships.Enemy;
 using OuterSpace.Physics;
 using OuterSpace.RenderSystem;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace OuterSpace.Game
@@ -19,25 +21,34 @@ namespace OuterSpace.Game
         private GameTimer _gameTimer;
         private readonly int _FRAMES = 30;
         private GameData _gameData;
+        private List<ILevel> _levels = new List<ILevel>();
+        private Mathematics _maths = new Mathematics();
 
         public GameEngine (Page renderPage)
         {
             _renderer = renderPage as RenderPage;
+            Initialise();
+        }
 
-            BoundingBox ViewPortBounding = new BoundingBox(_renderer.Margin.Left, _renderer.Margin.Top, _renderer.Width, (_renderer.Height * 2) - (_renderer.Height / 1.20), 0, 0);
+        private void Initialise()
+        {
+            SetupGameData();
+            CreateLevel();
+            _renderer.SetupWorldObjects(_levels[0].GetLevelObjects().ToArray());
+        }
+
+        private void SetupGameData()
+        {
+            BoundingBox ViewPortBounding = new BoundingBox(new Point(0, 0), _renderer.Width, _maths.RemoveByPercentage(_renderer.Height, 30));
             _gameData = new GameData();
             _gameData.ViewPortWidth = (int)_renderer.RenderGrid.Width;
-            _gameData.ViewPortHeight = (int)(int)_renderer.RenderGrid.Height;
+            _gameData.ViewPortHeight = (int)_renderer.RenderGrid.Height;
             _gameData.ViewportBounding = ViewPortBounding;
+        }
 
-            WaveOne level1 = new WaveOne(_gameData);
-            level1.Load();
-            _renderer.SetupWorldObjects(level1.GetEnemies().ToArray());
-            _renderer.Render();
-            //EnemyShip enemyship = new EnemyShip(_gameData, null, "Assets//Images//SampleBlank.png");
-            //enemyship.SetRandomStartPosition();
-            //(_renderer as RenderPage).SetupWorldObjects(enemyship);
-            //enemyship.Render();
+        private void CreateLevel()
+        {
+             _levels.Add(new WaveOne(_gameData));
         }
 
         public void GameStart()
@@ -58,9 +69,16 @@ namespace OuterSpace.Game
             GameStart(); 
         }
 
+        private void Update()
+        {
+            for(int i = 0; i < _levels.Count; i++)
+                _levels[i].Load();
+        }
+
         private void ProcessFrameCallback(object sender, ElapsedEventArgs eea)
         {
-            Console.WriteLine("DEBUG: Callback: ProcessFrameCallback");
+            Update();
+            _renderer.Render();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace OuterSpace.Physics
 {
     public class PhysicsSystem
     {
-        public void BoundingTest(/*Dimension A, Dimension B*/)
+        public void BoundingTest(Box boxA, Box boxB)
         {
 
         }

@@ -27,8 +27,8 @@ namespace OuterSpace
 
          public MainWindow()
         {
-            this.Width = SystemParameters.FullPrimaryScreenWidth;
-            this.Height = SystemParameters.FullPrimaryScreenHeight;
+            this.Width = SystemParameters.MaximizedPrimaryScreenWidth;
+            this.Height = SystemParameters.MaximizedPrimaryScreenHeight;
             InitializeComponent();
         }
 

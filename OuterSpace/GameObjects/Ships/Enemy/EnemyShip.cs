@@ -46,7 +46,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         public virtual void SetRandomStartPosition()
         {
-            Position = new Point(GenerateStartingPosition(0, _gameData.ViewPortWidth), GenerateStartingPosition(0, _gameData.ViewPortHeight));
+            Position = new Point(GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Width), GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Height));
         }
 
         protected virtual void SetupShip()
