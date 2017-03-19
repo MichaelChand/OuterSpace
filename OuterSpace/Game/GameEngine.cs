@@ -34,6 +34,7 @@ namespace OuterSpace.Game
         {
             SetupGameData();
             CreateLevel();
+            LoadLevels();
             _renderer.SetupWorldObjects(_levels[0].GetLevelObjects().ToArray());
         }
 
@@ -49,6 +50,12 @@ namespace OuterSpace.Game
         private void CreateLevel()
         {
              _levels.Add(new WaveOne(_gameData));
+        }
+
+        private void LoadLevels()
+        {
+            for (int i = 0; i < _levels.Count; i++)
+                _levels[i].Load();
         }
 
         public void GameStart()
@@ -71,8 +78,8 @@ namespace OuterSpace.Game
 
         private void Update()
         {
-            for(int i = 0; i < _levels.Count; i++)
-                _levels[i].Load();
+            //for(int i = 0; i < _levels.Count; i++)
+            //    _levels[i].Load();
         }
 
         private void ProcessFrameCallback(object sender, ElapsedEventArgs eea)
