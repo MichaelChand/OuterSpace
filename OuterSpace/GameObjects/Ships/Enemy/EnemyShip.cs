@@ -20,6 +20,10 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private BitmapImage _textureLOD;
         private Image _shipTexture;
         protected string _texturePath;
+        protected int _moveScaleX = 1;
+        protected int _moveScaleY = 1;
+        protected int _speed = 2;
+        protected PhysicsSystem _physics = new PhysicsSystem();
 
         public BitmapImage TextureLOD
         {
@@ -76,6 +80,15 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         protected double GenerateStartingPosition(int min, int max)
         {
             return _random.Next(min, max);
+        }
+
+        public override void Update()
+        {
+            Point scaler = _physics.BoundingTest(_gameData.ViewportBounding, _boundingBox, new Point(_moveScaleX, _moveScaleY));
+            _moveScaleX = (int)scaler.X;
+            _moveScaleY = (int)scaler.Y;
+            Position = new Point(Position.X + ( _moveScaleX * _speed), Position.Y + (_moveScaleY * _speed));
+            _boundingBox.Dimension = new Box { Left = Position.X, Top = Position.Y, Right = _boundingBox.Dimension.Right, Bottom = _boundingBox.Dimension.Bottom };
         }
     }
 }

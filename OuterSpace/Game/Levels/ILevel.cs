@@ -11,5 +11,6 @@ namespace OuterSpace.Game.Levels
     {
         void Load();
         List<IAGameObject> GetLevelObjects();
+        void Update();
     }
 }

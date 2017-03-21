@@ -30,7 +30,7 @@ namespace OuterSpace.GameObjects.Ships
 
         public override void Update()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Render()

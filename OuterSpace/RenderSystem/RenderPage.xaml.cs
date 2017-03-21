@@ -68,7 +68,7 @@ namespace OuterSpace.RenderSystem
         public void Render()
         {
             //Call each component's render method. Assumption: Already in canvas.
-            for (int i = 0; i < _gameObjects.Count; i++)
+            for (int i = _gameObjects.Count-1; i >= 0; i--)
                 _gameObjects[i].Render();
         }
     }

@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\ExtensionMethod.cs" />
     <Compile Include="Common\Mathematics.cs" />
     <Compile Include="Common\TextureReader.cs" />
     <Compile Include="GameObjects\IAGameObject.cs" />

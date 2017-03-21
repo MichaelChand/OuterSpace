@@ -78,14 +78,13 @@ namespace OuterSpace.Game
 
         private void Update()
         {
-            //for(int i = 0; i < _levels.Count; i++)
-            //    _levels[i].Load();
+            _levels[0].Update();
         }
 
         private void ProcessFrameCallback(object sender, ElapsedEventArgs eea)
         {
-            Update();
             _renderer.Render();
+            Update();
         }
     }
 }

@@ -40,6 +40,12 @@ namespace OuterSpace.Game.Levels
         {
             return _enemies;
         }
+
+        public void Update()
+        {
+            for (int i = 0; i < _enemies.Count; i++)
+                _enemies[i].Update();
+        }
     }
 
 

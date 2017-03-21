@@ -51,7 +51,7 @@ namespace OuterSpace.Game
 
         private Page SetupRenderPage()
         {
-            Page RenderPage = new RenderPage(_mainWindow.ActualWidth / 1.20, _mainWindow.ActualHeight / 1.20);
+            Page RenderPage = new RenderPage(_mainWindow.ActualWidth / 1.20, _mainWindow.ActualHeight / 1.20); //need canvas Width
             RenderPage.Margin = new Thickness(0, 0, 0, 0);
             RenderPage.VerticalAlignment = VerticalAlignment.Top;
             RenderPage.HorizontalAlignment = HorizontalAlignment.Left;
