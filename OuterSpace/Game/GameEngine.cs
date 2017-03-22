@@ -40,10 +40,10 @@ namespace OuterSpace.Game
 
         private void SetupGameData()
         {
-            BoundingBox ViewPortBounding = new BoundingBox(new Point(0, 0), _renderer.Width, _maths.RemoveByPercentage(_renderer.Height, 30));
+            BoundingBox ViewPortBounding = new BoundingBox(new Point(0, 0), _renderer.cnvViewPort.Width, _maths.RemoveByPercentage(_renderer.cnvViewPort.Height, 30));
             _gameData = new GameData();
-            _gameData.ViewPortWidth = (int)_renderer.RenderGrid.Width;
-            _gameData.ViewPortHeight = (int)_renderer.RenderGrid.Height;
+            _gameData.ViewPortWidth = (int)_renderer.cnvViewPort.Width;
+            _gameData.ViewPortHeight = (int)_renderer.cnvViewPort.Height;
             _gameData.ViewportBounding = ViewPortBounding;
         }
 

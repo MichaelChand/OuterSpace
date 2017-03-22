@@ -9,6 +9,6 @@
       Title="RenderPage" HorizontalAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
     <Grid x:Name="RenderGrid" VerticalAlignment="Top" HorizontalAlignment="Left" >
-        <Canvas x:Name="cnvViewPort" Width="{Binding ElementName=RenderGrid, Path=ActualWidth}" Height="{Binding ElementName=RenderGrid, Path=ActualHeight}" Margin="0,0,0,0" Background="Black" />
+        <Canvas x:Name="cnvViewPort" Width="800" Height="600" Margin="0,0,0,0" Background="Black" />
     </Grid>
 </Page>

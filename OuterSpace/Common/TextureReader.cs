@@ -10,17 +10,19 @@ namespace OuterSpace.Common
 {
     public class TextureReader
     {
-        public BitmapImage BitmapFromFile(string path)
+        public BitmapImage BitmapFromFile(string path, int widthLimit, int heightLimit)
         {
-            return BytestoBitmap(GetFileBytes(path));
+            return BytesToBitmap(GetFileBytes(path), widthLimit, heightLimit);
         }
 
-        private BitmapImage BytestoBitmap(byte[] bytes)
+        private BitmapImage BytesToBitmap(byte[] bytes, int width, int height)
         {
             using (MemoryStream byteStream = new MemoryStream(bytes))
             {
                 BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();
+                bitmapImage.DecodePixelWidth = width;
+                bitmapImage.DecodePixelHeight = height;
                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                 bitmapImage.StreamSource = byteStream;
                 bitmapImage.EndInit();

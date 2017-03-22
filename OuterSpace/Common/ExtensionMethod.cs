@@ -11,8 +11,8 @@ namespace OuterSpace.Common
     {
         public static bool Intersects(this BoundingBox boxA,  BoundingBox boxB)
         {
-            if ((((boxA.Dimension.Left + boxA.Width) >= boxB.Dimension.Left) && boxA.Dimension.Left <= boxB.Dimension.Left) && 
-                (((boxA.Dimension.Top + boxA.Height) >= boxB.Dimension.Top) && boxA.Dimension.Top <= boxB.Dimension.Top)) 
+            if ((((boxA.Dimension.Left + boxA.Dimension.Width) >= boxB.Dimension.Left) && boxA.Dimension.Left <= boxB.Dimension.Left) && 
+                (((boxA.Dimension.Top + boxA.Dimension.Height) >= boxB.Dimension.Top) && boxA.Dimension.Top <= boxB.Dimension.Top)) 
                 return true;
             return false;
         }

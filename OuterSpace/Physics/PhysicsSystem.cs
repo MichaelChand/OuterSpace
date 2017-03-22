@@ -10,28 +10,40 @@ namespace OuterSpace.Physics
 {
     public class PhysicsSystem
     {
-        public Point BoundingTest(BoundingBox boxA, BoundingBox boxB, Point scaler)
+        public Point BoundingTest(BoundingBox boundry, BoundingBox boxB, Point scaler)
         {
             int xScale = (int)scaler.X;
             int yScale = (int)scaler.Y;
-            if (boxB.Dimension.Left <= 0)
+            CollisionDirection collisionDirection = BoundryCollisionDirection(boundry, boxB);
+            switch(collisionDirection)
             {
-                xScale *= -1;
+                case CollisionDirection.Left:
+                    xScale *= -1;
+                    break;
+                case CollisionDirection.Top:
+                    yScale *= -1;
+                    break;
+                case CollisionDirection.Right:
+                    xScale *= -1;
+                    break;
+                case CollisionDirection.Bottom:
+                    yScale *= -1;
+                    break;
             }
-            if(boxB.Dimension.Top <= 0)
-            {
-                yScale *= -1;
-            }
-            if(boxB.Dimension.Left + boxB.Width >= boxA.Dimension.Left + boxA.Width)
-            {
-                xScale *= -1;
-            }
-            if (boxB.Dimension.Top + boxB.Height >= boxA.Dimension.Top + boxA.Height)
-            {
-                yScale *= -1;
-            }
-
             return new Point(xScale, yScale);
+        }
+
+        public CollisionDirection BoundryCollisionDirection(BoundingBox boundry, BoundingBox box)
+        {
+            if (box.Dimension.Left <= 0)
+                return CollisionDirection.Left;
+            if (box.Dimension.Top <= 0)
+                return CollisionDirection.Top;
+            if (box.Dimension.Left + box.Dimension.Width >= boundry.Dimension.Left + boundry.Dimension.Width)
+                return CollisionDirection.Right;
+            if (box.Dimension.Top + box.Dimension.Height >= boundry.Dimension.Top + boundry.Dimension.Height)
+                return CollisionDirection.Bottom;
+            return CollisionDirection.None;
         }
 
         public void CollisionDetection(/*param A, param B*/)
