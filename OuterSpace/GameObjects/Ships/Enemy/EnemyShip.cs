@@ -49,13 +49,14 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         public virtual void SetRandomStartPosition()
         {
-            Position = new Point(GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Dimension.Width), GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Dimension.Height));
+            _boundingBox.Dimension.Left = GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Dimension.Width);
+            _boundingBox.Dimension.Top = GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Dimension.Height);
         }
 
-        protected virtual void SetupShip(Size size)
+        protected virtual void SetupShip()
         {
             _shipTexture = new Image();
-            LoadShipTexture(_texturePath, size);
+            LoadShipTexture(_texturePath, new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height));
             ApplyBinding();
             _uiComponents.Add(_shipTexture);
         }

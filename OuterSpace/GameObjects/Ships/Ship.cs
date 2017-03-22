@@ -15,7 +15,6 @@ namespace OuterSpace.GameObjects.Ships
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected BoundingBox _boundingBox;
-        protected Point Position;
         private Thickness _drawPosition;
         protected GameData _gameData;
         protected PhysicsSystem _physics = new PhysicsSystem();
@@ -37,7 +36,7 @@ namespace OuterSpace.GameObjects.Ships
 
         public override void Render()
         {
-            DrawPosition = new Thickness(Position.X, Position.Y, DrawPosition.Right, DrawPosition.Bottom);
+            DrawPosition = new Thickness(_boundingBox.Dimension.Left, _boundingBox.Dimension.Top, DrawPosition.Right, DrawPosition.Bottom);
         }
 
         public BoundingBox GetBoundingBox()
@@ -88,20 +87,16 @@ namespace OuterSpace.GameObjects.Ships
             switch(collisionDirection)
             {
                 case CollisionDirection.Left:
-                    Position = new Point(0, Position.Y);
                     _boundingBox.Dimension.Left = 0;
                     break;
                 case CollisionDirection.Top:
-                    Position = new Point(Position.X, 0);
                     _boundingBox.Dimension.Top = 0;
                     break;
                 case CollisionDirection.Right:
-                    Position = new Point(boundry.Dimension.Left + boundry.Dimension.Width - _boundingBox.Dimension.Width, Position.Y);
-                    _boundingBox.Dimension.Left = Position.X;
+                    _boundingBox.Dimension.Left = boundry.Dimension.Left + boundry.Dimension.Width - _boundingBox.Dimension.Width;
                     break;
                 case CollisionDirection.Bottom:
-                    Position = new Point(Position.X, boundry.Dimension.Top + boundry.Dimension.Height - _boundingBox.Dimension.Height);
-                    _boundingBox.Dimension.Top = Position.Y;
+                    _boundingBox.Dimension.Top = boundry.Dimension.Top + boundry.Dimension.Height - _boundingBox.Dimension.Height;
                     break;
             }
         }

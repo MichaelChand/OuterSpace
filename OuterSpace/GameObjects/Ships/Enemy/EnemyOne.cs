@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OuterSpace.Physics;
 using OuterSpace.Game;
 using System.Windows;
+using System.Runtime.CompilerServices;
 
 namespace OuterSpace.GameObjects.Ships.Enemy
 {
@@ -26,21 +27,31 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         private void Initialise()
         {
-            int startX = (int)GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Dimension.Width);
-            int startY = (int)GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Dimension.Height);
-            _boundingBox = new BoundingBox (new Box { Left = startX, Top = startY, Width = _width, Height = _height } );
-            SetupShip(new Size(_width, _height));
+            _boundingBox = new BoundingBox (new Box { Left = 0, Top = 0, Width = _width, Height = _height } );
             SetRandomStartPosition();
+            SetupShip();
         }
 
-        public override void Update()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void SetMovementScaler()
         {
             Point scaler = _physics.BoundingTest(_gameData.ViewportBounding, _boundingBox, new Point(_moveScaleX, _moveScaleY));
             _moveScaleX = (int)scaler.X;
             _moveScaleY = (int)scaler.Y;
-            Position = new Point(Position.X + (_moveScaleX * _speed), Position.Y + (_moveScaleY * _speed));
-            _boundingBox.Dimension = new Box { Left = Position.X, Top = Position.Y, Width = _boundingBox.Dimension.Width, Height = _boundingBox.Dimension.Height };
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void AdjustPositionAndBounding()
+        {
+            _boundingBox.Dimension = new Box { Left = _boundingBox.Dimension.Left + (_moveScaleX * _speed), Top = _boundingBox.Dimension.Top + (_moveScaleY * _speed), Width = _boundingBox.Dimension.Width, Height = _boundingBox.Dimension.Height };
             BoundryCorrection(_gameData.ViewportBounding);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override void Update()
+        {
+            SetMovementScaler();
+            AdjustPositionAndBounding();
         }
     }
 }
