@@ -10,7 +10,7 @@ namespace OuterSpace.Common
 {
     public class TextureReader
     {
-        public BitmapImage BitmapFromFile(string path, int widthLimit, int heightLimit)
+        public BitmapImage LoadTextureFromAssemblyPath(string path, int widthLimit, int heightLimit)
         {
             return BytesToBitmap(GetFileBytes(path), widthLimit, heightLimit);
         }

@@ -12,6 +12,7 @@ namespace OuterSpace.Game.Levels
     {
         private List<IAGameObject> _enemies;
         private GameData _gameData;
+        private int _framesPerSecond;
 
         public WaveOne(GameData gameData)
         {
@@ -32,7 +33,7 @@ namespace OuterSpace.Game.Levels
         public List<IAGameObject> CreateEnemies()
         {
             List<IAGameObject> enemies = new List<IAGameObject>();
-            enemies.Add(new EnemyOne(_gameData));
+            enemies.Add(new EnemyOne(_gameData, _framesPerSecond));
             return enemies;
         }
 

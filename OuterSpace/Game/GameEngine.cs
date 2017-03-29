@@ -46,6 +46,7 @@ namespace OuterSpace.Game
             _gameData.ViewPortWidth = (int)_renderer.cnvViewPort.Width;
             _gameData.ViewPortHeight = (int)_renderer.cnvViewPort.Height;
             _gameData.ViewportBounding = ViewPortBounding;
+            _gameData.FramesPerSecond = _FRAMES;
         }
 
         private void CreateLevel()

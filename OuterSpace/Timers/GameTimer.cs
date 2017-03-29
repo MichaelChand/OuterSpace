@@ -14,18 +14,20 @@ namespace OuterSpace.Timers
         public bool TimerRunning = false;
         private Timer _ticks = new Timer();
         private int _frameInterval;
+        private int _frames;
 
         private Callback _callback;
 
         public GameTimer(int frames, Callback callback)
         {
+            _frames = frames;
             SetCallBack(callback);
-            SetFrameInterval(FramesToMillis(frames));
+            SetFrameInterval();
         }
 
-        private void SetFrameInterval(int milliSeconds)
+        private void SetFrameInterval()
         {
-            _frameInterval = milliSeconds;
+            _frameInterval = FramesToMillis(_frames);
             _ticks.Interval = _frameInterval;
         }
 

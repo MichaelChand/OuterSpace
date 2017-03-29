@@ -49,8 +49,8 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         public virtual void SetRandomStartPosition()
         {
-            _boundingBox.Dimension.Left = GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Dimension.Width);
-            _boundingBox.Dimension.Top = GenerateStartingPosition(0, (int)_gameData.ViewportBounding.Dimension.Height);
+            _boundingBox.Dimension.Left = GenerateRangedRandom(0, (int)_gameData.ViewportBounding.Dimension.Width);
+            _boundingBox.Dimension.Top = GenerateRangedRandom(0, (int)_gameData.ViewportBounding.Dimension.Height);
         }
 
         protected virtual void SetupShip()
@@ -64,7 +64,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private void LoadShipTexture(string texturePath, Size size)
         {
             TextureReader textureLOD = new TextureReader();
-            TextureLOD = textureLOD.BitmapFromFile(_texturePath, (int)size.Width, (int)size.Height);
+            TextureLOD = textureLOD.LoadTextureFromAssemblyPath(_texturePath, (int)size.Width, (int)size.Height);
         }
 
         private void ApplyBinding()
@@ -77,7 +77,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             _shipTexture.SetBinding(Image.MarginProperty, DrawPositionBinding);
         }
 
-        protected double GenerateStartingPosition(int min, int max)
+        protected double GenerateRangedRandom(int min, int max)
         {
             return _random.Next(min, max);
         }
