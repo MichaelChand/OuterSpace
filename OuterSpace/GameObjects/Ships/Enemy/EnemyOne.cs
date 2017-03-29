@@ -21,6 +21,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private int _framesPerSecond;
         private int _secondsRange = 10;
         private int _waitToChangeHeadingSeconds = 10;
+        private int _speedRange = 5;
         private Mathematics _maths = new Mathematics();
 
         public EnemyOne(GameData gameData, int framesPerSecond) : this(gameData, null, null)
@@ -40,6 +41,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             SetRandomStartPosition();
             SetupShip();
             _angle = GenerateRangedRandom(1, _headingAngleRange);
+            AutoSpeed();
             Update();
         }
 
@@ -55,6 +57,20 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             }
         }
 
+        private void AutoSpeed()
+        {
+            _speed = (int)GenerateRangedRandom(1, _speedRange);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Point SpeedAndHeadingControl()
+        {
+            double angle = _angle;
+            Heading();
+            //if(angle != _angle) AutoSpeed();
+            return new Point(_maths.GetX(_angle, _speed), _maths.GetY(_angle, _speed));
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetMovementScaler()
         {
@@ -66,10 +82,8 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AdjustPositionAndBounding()
         {
-            Heading();
-            double X = _maths.GetX(_angle, _speed);
-            double Y = _maths.GetY(_angle, _speed);
-            _boundingBox.Dimension = new Box { Left = _boundingBox.Dimension.Left  + (_moveScaleX * X), Top = _boundingBox.Dimension.Top + (_moveScaleY * Y), Width = _boundingBox.Dimension.Width, Height = _boundingBox.Dimension.Height };
+            Point speedXY = SpeedAndHeadingControl();
+            _boundingBox.Dimension = new Box { Left = _boundingBox.Dimension.Left  + (_moveScaleX * speedXY.X), Top = _boundingBox.Dimension.Top + (_moveScaleY * speedXY.Y), Width = _boundingBox.Dimension.Width, Height = _boundingBox.Dimension.Height };
             BoundryCorrection(_gameData.ViewportBounding);
         }
 
