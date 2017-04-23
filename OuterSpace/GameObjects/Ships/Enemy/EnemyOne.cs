@@ -67,7 +67,6 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         {
             double angle = _angle;
             Heading();
-            //if(angle != _angle) AutoSpeed();
             return new Point(_maths.GetX(_angle, _speed), _maths.GetY(_angle, _speed));
         }
 

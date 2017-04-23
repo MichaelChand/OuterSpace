@@ -67,6 +67,7 @@
     <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Game\GameMain.cs" />
+    <Compile Include="Game\Input\KeyboardInput.cs" />
     <Compile Include="Game\Levels\ILevel.cs" />
     <Compile Include="Game\Levels\WaveOne.cs" />
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
@@ -132,6 +133,9 @@
     <None Include="Assets\Images\SampleBlank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\SampleBlank2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

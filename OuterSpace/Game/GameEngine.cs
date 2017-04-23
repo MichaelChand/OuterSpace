@@ -52,6 +52,8 @@ namespace OuterSpace.Game
         private void CreateLevel()
         {
              _levels.Add(new WaveOne(_gameData));
+            double d = 2.3;
+            decimal a = (decimal)d;
         }
 
         private void LoadLevels()

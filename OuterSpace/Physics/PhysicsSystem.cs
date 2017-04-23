@@ -46,9 +46,9 @@ namespace OuterSpace.Physics
             return CollisionDirection.None;
         }
 
-        public void CollisionDetection(/*param A, param B*/)
+        public bool CollisionDetection(BoundingBox boxA, BoundingBox boxB)
         {
-
+            return boxA.Intersects(boxB);
         }
     }
 }
