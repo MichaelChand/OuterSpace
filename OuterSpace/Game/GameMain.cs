@@ -10,10 +10,11 @@ using System.Windows.Media;
 
 namespace OuterSpace.Game
 {
-    public class GameMain
+    public class GameMain : IDisposable
     {
         private MainWindow _mainWindow;
         private GameEngine _gameEngine;
+
         public  GameMain(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
@@ -72,5 +73,47 @@ namespace OuterSpace.Game
         {
             frame.Navigate(InitialisePage(page));
         }
+
+        private void CleanUp()
+        {
+            _gameEngine?.Dispose();
+            _gameEngine = null;
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                CleanUp();
+                // TODO: set large fields to null.
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        //~GameMain()
+        //{
+        //    // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //    Dispose(false);
+        //}
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            //GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

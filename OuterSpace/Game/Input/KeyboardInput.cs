@@ -32,7 +32,11 @@ namespace ReConInvaders.Inputsystem
 
         private void KeyboardEvent_KeyUp(object sender, KeyEventArgs keyEventArgs)
         {
-            IsKeyPressed = false;
+            if (keyEventArgs.Key == _key)
+            {
+                IsKeyPressed = false;
+                _keypressed = KeypressType.Nokey; //Clear once read.
+            }
         }
 
         private void KeyboardEvent_KeyDown(object sender, KeyEventArgs keyEventArgs)
@@ -83,13 +87,18 @@ namespace ReConInvaders.Inputsystem
         public KeypressType GetKeyPressed()
         {
             _lastKeypressed = _keypressed;
-            _keypressed = KeypressType.Nokey; //Clear once read.
             return _lastKeypressed;
         }
 
         public Key? GetRawKeyObject()
         {
             return _key;
+        }
+
+        private void CleanUp()
+        {
+            App.Current.MainWindow.KeyDown -= KeyboardEvent_KeyDown;
+            App.Current.MainWindow.KeyUp -= KeyboardEvent_KeyUp;
         }
 
         #region IDisposable Support
@@ -106,8 +115,7 @@ namespace ReConInvaders.Inputsystem
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
-                App.Current.MainWindow.KeyDown -= KeyboardEvent_KeyDown;
-                App.Current.MainWindow.KeyUp -= KeyboardEvent_KeyUp;
+                CleanUp();
                 disposedValue = true;
             }
         }

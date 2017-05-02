@@ -34,6 +34,7 @@ namespace OuterSpace
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
+            _gameMain?.Dispose();
             _gameMain = new GameMain(this);
             _gameMain.Initialise(GameGrid);
             _gameMain.StartGame();
