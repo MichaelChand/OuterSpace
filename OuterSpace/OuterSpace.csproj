@@ -62,6 +62,7 @@
     <Compile Include="GameObjects\IAGameObject.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyOne.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyShip.cs" />
+    <Compile Include="GameObjects\Ships\Player\Player.cs" />
     <Compile Include="GameObjects\Ships\Player\PlayerShip.cs" />
     <Compile Include="GameObjects\Ships\Ship.cs" />
     <Compile Include="Game\GameData.cs" />
@@ -120,6 +121,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Assets\Images\SampleBlank2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -133,9 +137,6 @@
     <None Include="Assets\Images\SampleBlank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\SampleBlank2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

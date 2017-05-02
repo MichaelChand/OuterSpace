@@ -1,9 +1,11 @@
 ﻿using OuterSpace.Common;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects.Ships.Enemy;
+using OuterSpace.GameObjects.Ships.Player;
 using OuterSpace.Physics;
 using OuterSpace.RenderSystem;
 using OuterSpace.Timers;
+using ReConInvaders.Inputsystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,8 @@ namespace OuterSpace.Game
         private GameData _gameData;
         private List<ILevel> _levels = new List<ILevel>();
         private Mathematics _maths = new Mathematics();
+        private Player _player;
+        private KeyboardInput _keyboardInput;
 
         public GameEngine (Page renderPage)
         {
@@ -33,10 +37,13 @@ namespace OuterSpace.Game
 
         private void Initialise()
         {
+            _keyboardInput = new KeyboardInput();
             SetupGameData();
             CreateLevel();
             LoadLevels();
+            _player = new Player(_gameData);
             _renderer.SetupWorldObjects(_levels[0].GetLevelObjects().ToArray());
+            _renderer.SetupWorldObjects(_player.GetPlayerObject());
         }
 
         private void SetupGameData()
@@ -83,6 +90,7 @@ namespace OuterSpace.Game
         private void Update()
         {
             _levels[0].Update();
+            _player.Update(_keyboardInput.GetKeyPressed());
         }
 
         private void ProcessFrameCallback(object sender, ElapsedEventArgs eea)

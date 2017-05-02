@@ -8,16 +8,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace OuterSpace.GameObjects.Ships
 {
     public class Ship : IAGameObject, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected BoundingBox _boundingBox;
+        public bool IsWireframe = false;
         private Thickness _drawPosition;
+        private BitmapImage _textureLOD;
+        protected BoundingBox _boundingBox;
+        protected string _texturePath;
+        protected Image _shipTexture;
         protected GameData _gameData;
         protected PhysicsSystem _physics = new PhysicsSystem();
+        protected Size _shipDim { get; set; }
+        private Rectangle _rectangle;
+
+        public BitmapImage TextureLOD
+        {
+            get { return _textureLOD; }
+            private set
+            {
+                _textureLOD = value;
+                OnShipPropertyChanged("TextureLOD");
+            }
+        }
 
         public Thickness DrawPosition
         {
@@ -27,6 +48,44 @@ namespace OuterSpace.GameObjects.Ships
                 _drawPosition = value;
                 OnShipPropertyChanged("DrawPosition");
             }
+        }
+
+        protected virtual void LoadShipTexture(string texturePath, Size size)
+        {
+            TextureReader textureLOD = new TextureReader();
+            TextureLOD = textureLOD.LoadTextureFromAssemblyPath(_texturePath, (int)size.Width, (int)size.Height);
+        }
+
+        protected virtual void SetupShip()
+        {
+            _shipTexture = new Image();
+            LoadShipTexture(_texturePath, _shipDim);
+            ApplyBinding();
+            _uiComponents.Add(_shipTexture);
+            if(IsWireframe)
+                DisplayWireFrame();
+        }
+
+        private void DisplayWireFrame()
+        {
+            _rectangle = new Rectangle();
+            Binding DrawPositionBinding = new Binding("DrawPosition");
+            DrawPositionBinding.Source = this;
+            _rectangle.SetBinding(Image.MarginProperty, DrawPositionBinding);
+            _rectangle.Width = _boundingBox.Dimension.Width;
+            _rectangle.Height = _boundingBox.Dimension.Height;
+            _rectangle.Stroke = new SolidColorBrush(Colors.Red);
+            _uiComponents.Add(_rectangle);
+        }
+
+        protected virtual void ApplyBinding()
+        {
+            Binding TextureLODBinding = new Binding("TextureLOD");
+            Binding DrawPositionBinding = new Binding("DrawPosition");
+            TextureLODBinding.Source = this;
+            DrawPositionBinding.Source = this;
+            _shipTexture.SetBinding(Image.SourceProperty, TextureLODBinding);
+            _shipTexture.SetBinding(Image.MarginProperty, DrawPositionBinding);
         }
 
         public override void Update()
@@ -81,24 +140,26 @@ namespace OuterSpace.GameObjects.Ships
             _boundingBox.Dimension.Height = height;
         }
 
-        protected void BoundryCorrection(BoundingBox boundry)
+        protected bool BoundryCorrection(BoundingBox boundry)
         {
             CollisionDirection collisionDirection = _physics.BoundryCollisionDirection(boundry, _boundingBox);
             switch(collisionDirection)
             {
                 case CollisionDirection.Left:
                     _boundingBox.Dimension.Left = 0;
-                    break;
+                    return true;
                 case CollisionDirection.Top:
                     _boundingBox.Dimension.Top = 0;
-                    break;
+                    return true;
                 case CollisionDirection.Right:
                     _boundingBox.Dimension.Left = boundry.Dimension.Left + boundry.Dimension.Width - _boundingBox.Dimension.Width;
-                    break;
+                    return true;
                 case CollisionDirection.Bottom:
                     _boundingBox.Dimension.Top = boundry.Dimension.Top + boundry.Dimension.Height - _boundingBox.Dimension.Height;
-                    break;
+                    return true;
             }
+
+            return false;
         }
 
         #region Notify event handlers

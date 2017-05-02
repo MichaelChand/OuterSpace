@@ -21,10 +21,10 @@ namespace OuterSpace.Common
             {
                 BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();
-                bitmapImage.DecodePixelWidth = width;
-                bitmapImage.DecodePixelHeight = height;
                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
                 bitmapImage.StreamSource = byteStream;
+                bitmapImage.DecodePixelWidth = width;
+                bitmapImage.DecodePixelHeight = height;
                 bitmapImage.EndInit();
                 return bitmapImage;
             }

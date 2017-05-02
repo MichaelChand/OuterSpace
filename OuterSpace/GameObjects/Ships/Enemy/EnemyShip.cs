@@ -17,22 +17,9 @@ namespace OuterSpace.GameObjects.Ships.Enemy
     public class EnemyShip : Ship
     {
         private Random _random = new Random();
-        private BitmapImage _textureLOD;
-        private Image _shipTexture;
-        protected string _texturePath;
         protected int _moveScaleX = 1;
         protected int _moveScaleY = 1;
         protected int _speed = 2;
-
-        public BitmapImage TextureLOD
-        {
-            get { return _textureLOD; }
-            private set
-            {
-                _textureLOD = value;
-                OnShipPropertyChanged("TextureLOD");
-            }
-        }
 
         public EnemyShip()
         {
@@ -51,30 +38,6 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         {
             _boundingBox.Dimension.Left = GenerateRangedRandom(0, (int)_gameData.ViewportBounding.Dimension.Width);
             _boundingBox.Dimension.Top = GenerateRangedRandom(0, (int)_gameData.ViewportBounding.Dimension.Height);
-        }
-
-        protected virtual void SetupShip()
-        {
-            _shipTexture = new Image();
-            LoadShipTexture(_texturePath, new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height));
-            ApplyBinding();
-            _uiComponents.Add(_shipTexture);
-        }
-
-        private void LoadShipTexture(string texturePath, Size size)
-        {
-            TextureReader textureLOD = new TextureReader();
-            TextureLOD = textureLOD.LoadTextureFromAssemblyPath(_texturePath, (int)size.Width, (int)size.Height);
-        }
-
-        private void ApplyBinding()
-        {
-            Binding TextureLODBinding = new Binding("TextureLOD");
-            Binding DrawPositionBinding = new Binding("DrawPosition");
-            TextureLODBinding.Source = this;
-            DrawPositionBinding.Source = this;
-            _shipTexture.SetBinding(Image.SourceProperty, TextureLODBinding);
-            _shipTexture.SetBinding(Image.MarginProperty, DrawPositionBinding);
         }
 
         protected double GenerateRangedRandom(int min, int max)

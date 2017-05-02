@@ -21,7 +21,7 @@ namespace OuterSpace.RenderSystem
     /// </summary>
     public partial class RenderPage : Page
     {
-        private List<IAGameObject> _gameObjects;
+        private List<IAGameObject> _gameObjects = new List<IAGameObject>();
 
         public RenderPage(double width, double height)
         {
@@ -36,9 +36,11 @@ namespace OuterSpace.RenderSystem
 
         public void SetupWorldObjects(params IAGameObject[] gameObjects)
         {
-            _gameObjects = gameObjects.ToList();
-            for (int i = 0; i < _gameObjects.Count; i++)
-                AddComponents(_gameObjects[i].GetElements());
+            for (int i = 0; i < gameObjects.Length; i++)
+            {
+                _gameObjects.Add(gameObjects[i]);
+                AddComponents(gameObjects[i].GetElements());
+            }
         }
 
         private void AddComponents(UIElement[] components)
