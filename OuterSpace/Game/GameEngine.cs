@@ -29,15 +29,15 @@ namespace OuterSpace.Game
         private Player _player;
         private KeyboardInput _keyboardInput;
 
-        public GameEngine (Page renderPage)
+        public GameEngine (Page renderPage, KeyboardInput keyboardInput)
         {
+            _keyboardInput = keyboardInput;
             _renderer = renderPage as RenderPage;
             Initialise();
         }
 
         private void Initialise()
         {
-            _keyboardInput = new KeyboardInput();
             SetupGameData();
             CreateLevel();
             LoadLevels();
@@ -90,7 +90,7 @@ namespace OuterSpace.Game
         private void Update()
         {
             _levels[0].Update();
-            _player.Update(_keyboardInput.GetKeyPressed());
+            _player.Update(_keyboardInput.GetKeyPressed(), _keyboardInput.GetActiveActionKeys());
         }
 
         private void ProcessFrameCallback(object sender, ElapsedEventArgs eea)

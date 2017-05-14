@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:OuterSpace"
         x:Name="OuterSpaceMain"
         mc:Ignorable="d"
-        Title="MainWindow" Background="MidnightBlue" WindowStartupLocation="CenterScreen" MaxWidth="1920" MaxHeight="1080" ResizeMode="NoResize" WindowState="Maximized" >
+        Title="MainWindow" Background="MidnightBlue" WindowStartupLocation="CenterScreen" MaxWidth="1920" MaxHeight="1080" ResizeMode="NoResize" WindowState="Maximized" IsTabStop="False" IsHitTestVisible="True" PreviewKeyDown="KeyboardEvent_KeyDown" PreviewKeyUp="KeyboardEvent_KeyUp" >
     <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
         <Grid x:Name="MenuGrid" Margin="10,10,0,0" Width="770" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Midnightblue">
             <Frame x:Name="MenuFrame" Margin="0,0,0,0" Width="750" Height="500" NavigationUIVisibility="Hidden" Background="Blue" Source="NavigationPages\MenuPage.xaml" />

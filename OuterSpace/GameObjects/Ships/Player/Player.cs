@@ -2,12 +2,14 @@
 using OuterSpace.Game;
 using OuterSpace.Physics;
 using OuterSpace.RenderSystem;
+using ReConInvaders.Inputsystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static ReConInvaders.Inputsystem.KeyboardInput;
 
 namespace OuterSpace.GameObjects.Ships.Player
 {
@@ -15,6 +17,7 @@ namespace OuterSpace.GameObjects.Ships.Player
     {
         private PlayerShip _playerShip;
         private GameData _gameData;
+        private int _debugCounter_ = 0;
 
         public Player(GameData gameData)
         {
@@ -42,9 +45,25 @@ namespace OuterSpace.GameObjects.Ships.Player
             return _playerShip;
         }
 
-        public void Update(KeypressType key)
+        private void UpdateAction(List<KeypressType> keys)
         {
-            switch(key)
+            Action<KeypressType> ManageAction = (key) =>
+            {
+                switch(key)
+                {
+                    case KeypressType.Space :
+                        Console.WriteLine(string.Format("{0} : SPACE! The final frontier...", _debugCounter_++));
+                        break;
+                }
+            };
+
+            foreach (var key in keys)
+                ManageAction(key);
+        }
+
+        private void UpdateMovement(KeypressType key)
+        {
+            switch (key)
             {
                 case KeypressType.Left:
                     _playerShip.MoveLeft();
@@ -53,6 +72,12 @@ namespace OuterSpace.GameObjects.Ships.Player
                     _playerShip.MoveRight();
                     break;
             }
+        }
+
+        public void Update(KeypressType moveKey, List<KeypressType> actionKeys)
+        {
+            UpdateMovement(moveKey);
+            UpdateAction(actionKeys);
             _playerShip.Update();
         }
     }

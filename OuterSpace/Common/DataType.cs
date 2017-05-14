@@ -10,9 +10,4 @@ namespace OuterSpace.Common
     {
         Left, Top, Right, Bottom, None
     }
-
-    public enum KeypressType
-    {
-        Nokey, Up, Down, Left, Right, Space
-    }
 }
