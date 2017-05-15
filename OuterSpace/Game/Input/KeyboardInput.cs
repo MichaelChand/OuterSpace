@@ -48,17 +48,16 @@ namespace ReConInvaders.Inputsystem
             }
 
             if (keyEventArgs.Key == ActionKeyRegistered(keyEventArgs.Key))
-                _actionKeyList[TranslateActionKeyType(keyEventArgs.Key)].IsKeyPressed = false;
+                RemoveActionKey(TranslateActionKeyType(keyEventArgs.Key));
         }
 
         internal void KeyboardEvent_KeyDown(object sender, KeyEventArgs keyEventArgs)
         {
-            IsKeyPressed = true;
             bool KeyHandledStatus = SetCurrentKeypressType(keyEventArgs.Key);
             SetKeyHandled(KeyHandledStatus, keyEventArgs);
+
             if (_kbEventCallback != null)
                 _kbEventCallback.Invoke(keyEventArgs.Key);
-            //SetKeyHandled(true, keyEventArgs);
         }
 
         internal void SetKeyHandled(bool status, KeyEventArgs keyEventArgs)
@@ -68,6 +67,7 @@ namespace ReConInvaders.Inputsystem
 
         private bool SetCurrentKeypressType(Key? keyPressed)
         {
+            IsKeyPressed = true;
             bool keyHandledState = true;
             Key? oldkey = _key;
             _key = keyPressed;
@@ -98,6 +98,7 @@ namespace ReConInvaders.Inputsystem
                 default:
                     _keypressed = KeypressType.NoKey;
                     keyHandledState = false;
+                    IsKeyPressed = false;
                     break;
             }
             
@@ -137,9 +138,12 @@ namespace ReConInvaders.Inputsystem
         {
             ActionKey actionKey;
             if (_actionKeyList.TryGetValue(keypressType, out actionKey))
+            {
+                ChangeActionKeyRegistry(actionKey.ActionKeyPressed, true);
                 return false;
+            }
             else
-                _actionKeyList.Add(keypressType, new ActionKey { ActionKeyPressed = keypressType, key = TranslateActionKey(keypressType), IsKeyPressed = true});
+                _actionKeyList.Add(keypressType, new ActionKey { ActionKeyPressed = keypressType, key = TranslateActionKey(keypressType) });
             return true;
         }
 
@@ -154,18 +158,28 @@ namespace ReConInvaders.Inputsystem
             return _lastKeypressed;
         }
 
+        private void ChangeActionKeyRegistry(KeypressType keypressType, bool registerStatus)
+        {
+            ActionKey actionKey = _actionKeyList[keypressType];
+            actionKey.KeepRegistered = registerStatus;
+            _actionKeyList[keypressType] = actionKey;
+        }
+
         public List<KeypressType> GetActiveActionKeys()
         {
             List<KeypressType> aakList = new List<KeypressType>();
-            foreach (ActionKey actionKey in _actionKeyList.Values)
-                aakList.Add(actionKey.ActionKeyPressed);
-
-            for (int i = aakList.Count - 1; i >= 0; i--)
+            for(int i = _actionKeyList.Count-1; i >= 0; i--)
             {
-                bool actionKeyPressed = _actionKeyList[aakList[i]].IsKeyPressed;
-                if(!actionKeyPressed)
-                    RemoveActionKey(aakList[i]);
+                ActionKey actionKey = _actionKeyList.ElementAt(i).Value;
+                if(actionKey.KeepRegistered)
+                    aakList.Add(_actionKeyList.ElementAt(i).Value.ActionKeyPressed);
+                else
+                 ChangeActionKeyRegistry(actionKey.ActionKeyPressed, true);
+
+                if (aakList.Count > 0 &&_actionKeyList[aakList.Last()].KeepRegistered)
+                    ChangeActionKeyRegistry(_actionKeyList[aakList.Last()].ActionKeyPressed, false);
             }
+            
             return aakList;
         }
 
@@ -189,7 +203,7 @@ namespace ReConInvaders.Inputsystem
         {
             public KeypressType ActionKeyPressed;
             public Key? key;
-            public bool IsKeyPressed = false;
+            public bool KeepRegistered = true;
         }
 
         #region IDisposable Support
