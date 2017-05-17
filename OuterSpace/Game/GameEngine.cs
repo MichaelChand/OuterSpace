@@ -1,4 +1,5 @@
 ﻿using OuterSpace.Common;
+using OuterSpace.Game.Input;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects.Ships.Enemy;
 using OuterSpace.GameObjects.Ships.Player;
@@ -29,9 +30,10 @@ namespace OuterSpace.Game
         private Player _player;
         private KeyboardInput _keyboardInput;
 
-        public GameEngine (Page renderPage, KeyboardInput keyboardInput)
+        public GameEngine (Page renderPage)
         {
-            _keyboardInput = keyboardInput;
+            _keyboardInput = new KeyboardInput(new PlayKeyManager());
+            _keyboardInput.KBPreviewEventInitialise();
             _renderer = renderPage as RenderPage;
             Initialise();
         }
@@ -89,8 +91,8 @@ namespace OuterSpace.Game
 
         private void Update()
         {
-            _levels[0].Update();
-            _player.Update(_keyboardInput.GetKeyPressed(), _keyboardInput.GetActiveActionKeys());
+            //_levels[0].Update();
+            _player.Update(_keyboardInput.GetActiveKeys());
         }
 
         private void ProcessFrameCallback(object sender, ElapsedEventArgs eea)

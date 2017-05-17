@@ -47,7 +47,7 @@ namespace OuterSpace.Game
             Frame frame = SetupRenderFrame();
             AddPageToFrame(renderPage, frame);
             AddToGrid(grid as Grid, frame);
-            _gameEngine = new GameEngine(renderPage, _mainWindow.GetKeyboardObject());
+            _gameEngine = new GameEngine(renderPage);
         }
 
         private Page SetupRenderPage()

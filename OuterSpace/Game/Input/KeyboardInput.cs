@@ -1,5 +1,6 @@
 ﻿using OuterSpace;
 using OuterSpace.Common;
+using OuterSpace.Game.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,175 +13,61 @@ namespace ReConInvaders.Inputsystem
 {
     public class KeyboardInput : IDisposable
     {
-        private Action<Key> _kbEventCallback;
+        private IKeyManager _keyManager;
+        private Action<Key?> _kbEventCallback;
         private Key? _key = null;
-
-        private KeypressType _keypressed = KeypressType.NoKey;
-        private KeypressType _lastKeypressed = KeypressType.NoKey;
-
-        private Dictionary<KeypressType, ActionKey> _actionKeyList;
 
         public bool IsKeyPressed { get; private set; }
 
-        public KeyboardInput(Action<Key> keyEventCallback)
+        public KeyboardInput(Action<Key?> keyEventCallback, IKeyManager keyManager)
         {
             IsKeyPressed = false;
             _kbEventCallback = keyEventCallback;
-            _actionKeyList = new Dictionary<KeypressType, ActionKey>();
+            _keyManager = keyManager;
         }
-
-        public void KBInitialise()
-        {
-            App.Current.MainWindow.KeyDown += KeyboardEvent_KeyDown;
-            App.Current.MainWindow.KeyUp += KeyboardEvent_KeyUp;
-        }
-
 
         public KeyboardInput() : this(null) { }
 
+        public KeyboardInput(IKeyManager keyManager) : this(null, keyManager) { }
+
+        public void KBEventInitialise()
+        {
+            Application.Current.MainWindow.KeyDown += KeyboardEvent_KeyDown;
+            Application.Current.MainWindow.KeyUp += KeyboardEvent_KeyUp;
+        }
+
+        /// <summary>
+        /// WARNING: This will stop the parent form from receiving keyboard events.
+        /// </summary>
+        public void KBPreviewEventInitialise()
+        {
+            Application.Current.MainWindow.PreviewKeyDown += KeyboardEvent_KeyDown;
+            Application.Current.MainWindow.PreviewKeyUp += KeyboardEvent_KeyUp;
+        }
 
         internal void KeyboardEvent_KeyUp(object sender, KeyEventArgs keyEventArgs)
         {
-            if (keyEventArgs.Key == _key)
-            {
-                IsKeyPressed = false;
-                _keypressed = KeypressType.NoKey; //Clear once released.
-            }
-
-            if (keyEventArgs.Key == ActionKeyRegistered(keyEventArgs.Key))
-                RemoveActionKey(TranslateActionKeyType(keyEventArgs.Key));
+            _keyManager.KeyUp(keyEventArgs.Key);
         }
 
         internal void KeyboardEvent_KeyDown(object sender, KeyEventArgs keyEventArgs)
         {
-            bool KeyHandledStatus = SetCurrentKeypressType(keyEventArgs.Key);
+            _key = keyEventArgs.Key;
+            bool KeyHandledStatus = _keyManager.SetCurrentKeypressType(_key);
             SetKeyHandled(KeyHandledStatus, keyEventArgs);
 
             if (_kbEventCallback != null)
-                _kbEventCallback.Invoke(keyEventArgs.Key);
+                _kbEventCallback.Invoke(_key);
         }
 
-        internal void SetKeyHandled(bool status, KeyEventArgs keyEventArgs)
+        private void SetKeyHandled(bool status, KeyEventArgs keyEventArgs)
         {
             keyEventArgs.Handled = status;
         }
 
-        private bool SetCurrentKeypressType(Key? keyPressed)
+        public List<KeypressType> GetActiveKeys()
         {
-            IsKeyPressed = true;
-            bool keyHandledState = true;
-            Key? oldkey = _key;
-            _key = keyPressed;
-            if (_key == null)
-            {
-                _keypressed = KeypressType.NoKey;
-                return false;
-            }
-
-            switch (_key)
-            {
-                case Key.Up:
-                    _keypressed = KeypressType.Up;
-                    break;
-                case Key.Down:
-                    _keypressed = KeypressType.Down;
-                    break;
-                case Key.Left:
-                    _keypressed = KeypressType.Left;
-                    break;
-                case Key.Right:
-                    _keypressed = KeypressType.Right;
-                    break;
-                case Key.Space:
-                    AddActionKey(KeypressType.Space);
-                    _key = oldkey;
-                    break;
-                default:
-                    _keypressed = KeypressType.NoKey;
-                    keyHandledState = false;
-                    IsKeyPressed = false;
-                    break;
-            }
-            
-            return keyHandledState;
-        }
-
-        private KeypressType TranslateActionKeyType(Key? key)
-        {
-            switch(key)
-            {
-                case Key.Space:
-                    return KeypressType.Space;
-            }
-            return KeypressType.NoKey;
-        }
-
-        private Key? TranslateActionKey(KeypressType keypressType)
-        {
-            switch (keypressType)
-            {
-                case KeypressType.Space:
-                    return Key.Space;
-            }
-            return null;
-        }
-
-        private Key? ActionKeyRegistered(Key testKey)
-        {
-            KeypressType keypressType = TranslateActionKeyType(testKey);
-            ActionKey actionKey;
-            if (_actionKeyList.TryGetValue(keypressType, out actionKey))
-                return actionKey.key;
-            return null;
-        }
-
-        private bool AddActionKey(KeypressType keypressType)
-        {
-            ActionKey actionKey;
-            if (_actionKeyList.TryGetValue(keypressType, out actionKey))
-            {
-                ChangeActionKeyRegistry(actionKey.ActionKeyPressed, true);
-                return false;
-            }
-            else
-                _actionKeyList.Add(keypressType, new ActionKey { ActionKeyPressed = keypressType, key = TranslateActionKey(keypressType) });
-            return true;
-        }
-
-        private void RemoveActionKey(KeypressType keypressType)
-        {
-            _actionKeyList.Remove(keypressType);
-        }
-
-        public KeypressType GetKeyPressed()
-        {
-            _lastKeypressed = _keypressed;
-            return _lastKeypressed;
-        }
-
-        private void ChangeActionKeyRegistry(KeypressType keypressType, bool registerStatus)
-        {
-            ActionKey actionKey = _actionKeyList[keypressType];
-            actionKey.KeepRegistered = registerStatus;
-            _actionKeyList[keypressType] = actionKey;
-        }
-
-        public List<KeypressType> GetActiveActionKeys()
-        {
-            List<KeypressType> aakList = new List<KeypressType>();
-            for(int i = _actionKeyList.Count-1; i >= 0; i--)
-            {
-                ActionKey actionKey = _actionKeyList.ElementAt(i).Value;
-                if(actionKey.KeepRegistered)
-                    aakList.Add(_actionKeyList.ElementAt(i).Value.ActionKeyPressed);
-                else
-                 ChangeActionKeyRegistry(actionKey.ActionKeyPressed, true);
-
-                if (aakList.Count > 0 &&_actionKeyList[aakList.Last()].KeepRegistered)
-                    ChangeActionKeyRegistry(_actionKeyList[aakList.Last()].ActionKeyPressed, false);
-            }
-            
-            return aakList;
+            return _keyManager.GetActiveKeyList();
         }
 
         public Key? GetRawKeyObject()
@@ -190,20 +77,8 @@ namespace ReConInvaders.Inputsystem
 
         private void CleanUp()
         {
-            App.Current.MainWindow.KeyDown -= KeyboardEvent_KeyDown;
-            App.Current.MainWindow.KeyUp -= KeyboardEvent_KeyUp;
-        }
-
-        public enum KeypressType
-        {
-            NoKey, Up, Down, Left, Right, Space
-        }
-
-        private class ActionKey
-        {
-            public KeypressType ActionKeyPressed;
-            public Key? key;
-            public bool KeepRegistered = true;
+            Application.Current.MainWindow.PreviewKeyDown -= KeyboardEvent_KeyDown;
+            Application.Current.MainWindow.PreviewKeyUp -= KeyboardEvent_KeyUp;
         }
 
         #region IDisposable Support
@@ -240,5 +115,6 @@ namespace ReConInvaders.Inputsystem
             // GC.SuppressFinalize(this);
         }
         #endregion
+
     }
 }

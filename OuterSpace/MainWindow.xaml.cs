@@ -1,4 +1,5 @@
 ﻿using OuterSpace.Game;
+using OuterSpace.Game.Input;
 using OuterSpace.RenderSystem;
 using ReConInvaders.Inputsystem;
 using System;
@@ -35,20 +36,14 @@ namespace OuterSpace
 
         private void PostComponentInitialise()
         {
-            _keyboardInput = new KeyboardInput();
+            _keyboardInput = new KeyboardInput( new MenuKeyManager());
+            _keyboardInput.KBPreviewEventInitialise();
         }
 
         private void PreComponentInitialise()
         {
             this.Width = SystemParameters.MaximizedPrimaryScreenWidth;
             this.Height = SystemParameters.MaximizedPrimaryScreenHeight;
-            EventManager.RegisterClassHandler(typeof(Window), Keyboard.KeyUpEvent, new KeyEventHandler(KeyboardEvent_KeyUp), true);
-            EventManager.RegisterClassHandler(typeof(Window), Keyboard.KeyDownEvent, new KeyEventHandler(KeyboardEvent_KeyDown), true);
-        }
-
-        public KeyboardInput GetKeyboardObject()
-        {
-            return _keyboardInput;
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -83,16 +78,6 @@ namespace OuterSpace
         {
             PostComponentInitialise();
         }
-
-        //private void PreviewKeyTrap_KeyDown(object sender, KeyEventArgs keyEventArgs)
-        //{
-        //    _keyboardInput.SetKeyHandled(true, keyEventArgs);
-        //}
-
-        //private void PreviewKeyTrap_KeyUp(object sender, KeyEventArgs keyEventArgs)
-        //{
-        //    _keyboardInput.SetKeyHandled(true, keyEventArgs);
-        //}
 
         private void KeyboardEvent_KeyDown(object sender, KeyEventArgs keyEventArgs)
         {

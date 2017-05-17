@@ -24,6 +24,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -68,7 +70,12 @@
     <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Game\GameMain.cs" />
+    <Compile Include="Game\Input\IKeyManager.cs" />
     <Compile Include="Game\Input\KeyboardInput.cs" />
+    <Compile Include="Game\Input\KeyInfo.cs" />
+    <Compile Include="Game\Input\KeypressType.cs" />
+    <Compile Include="Game\Input\MenuKeyManager.cs" />
+    <Compile Include="Game\Input\PlayKeyManager.cs" />
     <Compile Include="Game\Levels\ILevel.cs" />
     <Compile Include="Game\Levels\WaveOne.cs" />
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
@@ -80,6 +87,7 @@
     <Compile Include="RenderSystem\RenderPage.xaml.cs">
       <DependentUpon>RenderPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="Timers\GameTimer.cs" />
     <Compile Include="Timers\ITimer.cs" />
     <Page Include="MainWindow.xaml">

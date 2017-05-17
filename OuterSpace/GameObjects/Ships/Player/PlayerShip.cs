@@ -53,6 +53,21 @@ namespace OuterSpace.GameObjects.Ships.Player
             _boundingBox.Dimension.Top = _gameData.ViewportBounding.Dimension.Top + _gameData.ViewportBounding.Dimension.Height - 50;
         }
 
+        public void SpeedChange(int speed)
+        {
+            _speed = speed;
+        }
+
+        public void MoveUp()
+        {
+            _position = new Point(_position.X, _position.Y - _speed);
+        }
+
+        public void MoveDown()
+        {
+            _position = new Point(_position.X, _position.Y + _speed);
+        }
+
         public void MoveLeft()
         {
             _position = new Point(_position.X - _speed, _position.Y);
