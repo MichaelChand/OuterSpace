@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using static ReConInvaders.Inputsystem.KeyboardInput;
 
 namespace OuterSpace.GameObjects.Ships.Player
@@ -47,25 +48,25 @@ namespace OuterSpace.GameObjects.Ships.Player
             return _playerShip;
         }
 
-        private void UpdateAction(List<KeypressType> keys)
+        private void UpdateAction(List<Key?> keys)
         {
-            Action<KeypressType> ManageAction = (key) =>
+            Action<Key?> ManageAction = (key) =>
             {
                 switch(key)
                 {
-                    case KeypressType.Left:
+                    case Key.Left:
                         _playerShip.MoveLeft();
                         break;
-                    case KeypressType.Right:
+                    case Key.Right:
                         _playerShip.MoveRight();
                         break;
-                    case KeypressType.Up:
+                    case Key.Up:
                         _playerShip.MoveUp();
                         break;
-                    case KeypressType.Down:
+                    case Key.Down:
                         _playerShip.MoveDown();
                         break;
-                    case KeypressType.Space :
+                    case Key.Space :
                         Console.WriteLine(string.Format("{0} : SPACE! The final frontier...", _debugCounter_++));
                         break;
                 }
@@ -75,26 +76,26 @@ namespace OuterSpace.GameObjects.Ships.Player
                 ManageAction(key);
         }
 
-        private void UpdateMovement(KeypressType key)
-        {
-            switch (key)
-            {
-                case KeypressType.Left:
-                    _playerShip.MoveLeft();
-                    break;
-                case KeypressType.Right:
-                    _playerShip.MoveRight();
-                    break;
-                case KeypressType.Up:
-                    _playerShip.MoveUp();
-                    break;
-                case KeypressType.Down:
-                    _playerShip.MoveDown();
-                    break;
-            }
-        }
+        //private void UpdateMovement(KeypressType key)
+        //{
+        //    switch (key)
+        //    {
+        //        case KeypressType.Left:
+        //            _playerShip.MoveLeft();
+        //            break;
+        //        case KeypressType.Right:
+        //            _playerShip.MoveRight();
+        //            break;
+        //        case KeypressType.Up:
+        //            _playerShip.MoveUp();
+        //            break;
+        //        case KeypressType.Down:
+        //            _playerShip.MoveDown();
+        //            break;
+        //    }
+        //}
 
-        public void Update(List<KeypressType> actionKeys)
+        public void Update(List<Key?> actionKeys)
         {
             //UpdateMovement(moveKey);
             UpdateAction(actionKeys);

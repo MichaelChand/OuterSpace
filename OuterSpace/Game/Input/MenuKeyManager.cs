@@ -11,8 +11,8 @@ namespace OuterSpace.Game.Input
     {
         private Key? _key = null;
         public bool IsKeyPressed = false;
-        private KeypressType _keypressed = KeypressType.NoKey;
-        private Dictionary<KeypressType, KeyInfo> _actionKeyList;
+        private Key? _keypressed = null;
+        private Dictionary<Key?, KeyInfo> _actionKeyList;
 
         public void KeyUp(Key? key)
         {
@@ -24,7 +24,7 @@ namespace OuterSpace.Game.Input
 
         }
 
-        public List<KeypressType> GetActiveKeyList()
+        public List<Key?> GetActiveKeyList()
         {
             throw new NotImplementedException();
         }
@@ -37,14 +37,14 @@ namespace OuterSpace.Game.Input
             _key = keyPressed;
             if (_key == null)
             {
-                _keypressed = KeypressType.NoKey;
+                _keypressed = null;
                 return false;
             }
 
             switch (_key)
             {
                 default:
-                    _keypressed = KeypressType.NoKey;
+                    _keypressed = null;
                     keyHandledState = false;
                     IsKeyPressed = false;
                     break;

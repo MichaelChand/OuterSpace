@@ -91,7 +91,7 @@ namespace OuterSpace.Game
 
         private void Update()
         {
-            //_levels[0].Update();
+            _levels[0].Update();
             _player.Update(_keyboardInput.GetActiveKeys());
         }
 

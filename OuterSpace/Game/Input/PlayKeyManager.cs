@@ -11,13 +11,13 @@ namespace OuterSpace.Game.Input
     {
         private Key? _key = null;
         public bool IsKeyPressed = false;
-        private KeypressType _keypressed = KeypressType.NoKey;
-        private Dictionary<KeypressType, KeyInfo> _actionKeyList;
-        private KeypressType _lastKeypressed = KeypressType.NoKey;
+        private Key? _keypressed = null;
+        private Dictionary<Key?, KeyInfo> _actionKeyList;
+        private Key? _lastKeypressed = null;
 
         public PlayKeyManager()
         {
-            _actionKeyList = new Dictionary<KeypressType, KeyInfo>();
+            _actionKeyList = new Dictionary<Key?, KeyInfo>();
         }
 
         public void KeyUp(Key? key)
@@ -25,11 +25,11 @@ namespace OuterSpace.Game.Input
             if (key == _key)
             {
                 IsKeyPressed = false;
-                _keypressed = KeypressType.NoKey; //Clear once released.
+                _keypressed = null; //Clear once released.
             }
 
-            if (key == ActionKeyRegistered((Key)key))
-                RemoveActionKey(TranslateActionKeyType(key));
+            if (key == ActionKeyRegistered(key))
+                RemoveActionKey(key);
         }
 
         public void KeyDown(Key? key)
@@ -37,54 +37,34 @@ namespace OuterSpace.Game.Input
 
         }
 
-        private KeypressType TranslateActionKeyType(Key? key)
+        private Key? ActionKeyRegistered(Key? testKey)
         {
-            switch (key)
-            {
-                case Key.Space:
-                    return KeypressType.Space;
-            }
-            return KeypressType.NoKey;
-        }
-
-        private Key? TranslateActionKey(KeypressType keypressType)
-        {
-            switch (keypressType)
-            {
-                case KeypressType.Space:
-                    return Key.Space;
-            }
-            return null;
-        }
-
-        private Key? ActionKeyRegistered(Key testKey)
-        {
-            KeypressType keypressType = TranslateActionKeyType(testKey);
+            Key? keypressType = testKey;
             KeyInfo actionKey;
             if (_actionKeyList.TryGetValue(keypressType, out actionKey))
-                return actionKey.key;
+                return actionKey.KeyPressed;
             return null;
         }
 
-        private bool AddActionKey(KeypressType keypressType)
+        private bool AddActionKey(Key? keypressType)
         {
             KeyInfo actionKey;
             if (_actionKeyList.TryGetValue(keypressType, out actionKey))
             {
-                ChangeActionKeyRegistry(actionKey.ActionKeyPressed, true);
+                ChangeActionKeyRegistry(actionKey.KeyPressed, true);
                 return false;
             }
             else
-                _actionKeyList.Add(keypressType, new KeyInfo { ActionKeyPressed = keypressType, key = TranslateActionKey(keypressType) });
+                _actionKeyList.Add(keypressType, new KeyInfo {KeyPressed = keypressType });
             return true;
         }
 
-        private void RemoveActionKey(KeypressType keypressType)
+        private void RemoveActionKey(Key? keypressType)
         {
             _actionKeyList.Remove(keypressType);
         }
 
-        private void ChangeActionKeyRegistry(KeypressType keypressType, bool registerStatus)
+        private void ChangeActionKeyRegistry(Key? keypressType, bool registerStatus)
         {
             KeyInfo actionKey = _actionKeyList[keypressType];
             actionKey.KeepRegistered = registerStatus;
@@ -98,30 +78,30 @@ namespace OuterSpace.Game.Input
             _key = keyPressed;
             if (_key == null)
             {
-                _keypressed = KeypressType.NoKey;
+                _keypressed = null;
                 return false;
             }
 
             switch (_key)
             {
                 case Key.Up:
-                    _keypressed = KeypressType.Up;
+                    _keypressed = Key.Up;
                     break;
                 case Key.Down:
-                    _keypressed = KeypressType.Down;
+                    _keypressed = Key.Down;
                     break;
                 case Key.Left:
-                    _keypressed = KeypressType.Left;
+                    _keypressed = Key.Left;
                     break;
                 case Key.Right:
-                    _keypressed = KeypressType.Right;
+                    _keypressed = Key.Right;
                     break;
                 case Key.Space:
-                    AddActionKey(KeypressType.Space);
+                    AddActionKey(Key.Space);
                     _key = oldkey;
                     break;
                 default:
-                    _keypressed = KeypressType.NoKey;
+                    _keypressed = null;
                     keyHandledState = false;
                     IsKeyPressed = false;
                     break;
@@ -130,27 +110,27 @@ namespace OuterSpace.Game.Input
             return keyHandledState;
         }
 
-        private KeypressType GetKeyPressed()
+        private Key? GetKeyPressed()
         {
             _lastKeypressed = _keypressed;
             return _lastKeypressed;
         }
 
-        public List<KeypressType> GetActiveKeyList()
+        public List<Key?> GetActiveKeyList()
         {
-            List<KeypressType> aakList = new List<KeypressType>();
+            List<Key?> aakList = new List<Key?>();
             if (_actionKeyList != null)
             {
                 for (int i = _actionKeyList.Count - 1; i >= 0; i--)
                 {
                     KeyInfo actionKey = _actionKeyList.ElementAt(i).Value;
                     if (actionKey.KeepRegistered)
-                        aakList.Add(actionKey.ActionKeyPressed);
+                        aakList.Add(actionKey.KeyPressed);
                     else
-                        ChangeActionKeyRegistry(actionKey.ActionKeyPressed, true);
+                        ChangeActionKeyRegistry(actionKey.KeyPressed, true);
 
                     if (aakList.Count > 0 && actionKey.KeepRegistered)
-                        ChangeActionKeyRegistry(actionKey.ActionKeyPressed, false);
+                        ChangeActionKeyRegistry(actionKey.KeyPressed, false);
                 }
                 aakList.Add(GetKeyPressed());
             }

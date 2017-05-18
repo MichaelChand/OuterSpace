@@ -10,7 +10,7 @@ namespace OuterSpace.Game.Input
     public interface IKeyManager
     {
         bool SetCurrentKeypressType(Key? keyPressed);
-        List<KeypressType> GetActiveKeyList();
+        List<Key?> GetActiveKeyList();
         void KeyUp(Key? key);
         void KeyDown(Key? key);
     }

@@ -9,8 +9,7 @@ namespace OuterSpace.Game.Input
 {
     public class KeyInfo
     {
-        public KeypressType ActionKeyPressed;
-        public Key? key;
+        public Key? KeyPressed;
         public bool KeepRegistered = true;
     }
 }

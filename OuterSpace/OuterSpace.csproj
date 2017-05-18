@@ -73,7 +73,6 @@
     <Compile Include="Game\Input\IKeyManager.cs" />
     <Compile Include="Game\Input\KeyboardInput.cs" />
     <Compile Include="Game\Input\KeyInfo.cs" />
-    <Compile Include="Game\Input\KeypressType.cs" />
     <Compile Include="Game\Input\MenuKeyManager.cs" />
     <Compile Include="Game\Input\PlayKeyManager.cs" />
     <Compile Include="Game\Levels\ILevel.cs" />

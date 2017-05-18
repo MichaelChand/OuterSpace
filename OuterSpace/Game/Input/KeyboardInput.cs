@@ -65,7 +65,7 @@ namespace ReConInvaders.Inputsystem
             keyEventArgs.Handled = status;
         }
 
-        public List<KeypressType> GetActiveKeys()
+        public List<Key?> GetActiveKeys()
         {
             return _keyManager.GetActiveKeyList();
         }
