@@ -1,9 +1,11 @@
 ﻿using OuterSpace.RenderSystem;
+using OuterSpace.Timers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,28 +16,76 @@ namespace OuterSpace.Game
     {
         private MainWindow _mainWindow;
         private GameEngine _gameEngine;
+        private GameTimer _gameTimer;
+        private Game _game;
+        private Page _renderPage;
+        private Func<int> TestCounter;
+        private bool tc = false;
+        public static int _FRAMES = 30;
+        private GameState _gameState;
 
         public  GameMain(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
         }
 
-        public void  AddToGrid<TGrid>(TGrid grid, UIElement element) where TGrid : Grid
+        private void  AddToGrid<TGrid>(TGrid grid, UIElement element) where TGrid : Grid
         {
             grid.Children.Add(element);
         }
 
         public void StartGame()
         {
-            _gameEngine.GameStart();
+            //StopGame();
+            //_gameEngine.GameStart();
         }
 
         public void StopGame()
         {
-            _gameEngine.GameStop();
+            //_gameEngine.GameStop();
         }
 
-        public Page InitialisePage(Page page)
+        public void Update(object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            switch (_gameState)
+            {
+                case GameState.Running:
+                    RunState();
+                    break;
+                case GameState.Paused:
+                    _gameState = GameState.InMenu;
+                    break;
+                case GameState.Stopped:
+                    _gameState = GameState.InMenu;
+                    break;
+            }
+
+            //if (_game.IsLevelRunning)
+            //    _game.Update();
+            //else if (_game.IsNewGame)
+            //    _game.StartGame();
+        }
+
+        public void RunState()
+        {
+            _game.Update();
+        }
+
+        public void MenuControl()
+        {
+
+        }
+
+        public void Run()
+        {
+            _gameTimer = new GameTimer(_FRAMES, Update);
+            _game = new Game(_renderPage, _FRAMES);
+            _gameState = GameState.Running;
+            _game.Run();
+            _gameTimer.Start();
+        }
+
+        private Page InitialisePage(Page page)
         {
             page.DataContext = this;
             return page;
@@ -43,11 +93,12 @@ namespace OuterSpace.Game
 
         public void Initialise<TGrid>(TGrid grid)
         {
-            Page renderPage = SetupRenderPage();
+            _gameState = GameState.InMenu;
+            _renderPage = SetupRenderPage();
             Frame frame = SetupRenderFrame();
-            AddPageToFrame(renderPage, frame);
+            AddPageToFrame(_renderPage, frame);
             AddToGrid(grid as Grid, frame);
-            _gameEngine = new GameEngine(renderPage);
+            //_gameEngine = new GameEngine(renderPage);
         }
 
         private Page SetupRenderPage()
@@ -76,7 +127,7 @@ namespace OuterSpace.Game
 
         private void CleanUp()
         {
-            _gameEngine?.Dispose();
+            //_gameEngine?.Dispose();
             _gameEngine = null;
         }
 

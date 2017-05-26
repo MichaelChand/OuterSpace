@@ -19,7 +19,7 @@ namespace OuterSpace.RenderSystem
     /// <summary>
     /// Interaction logic for RenderPage.xaml
     /// </summary>
-    public partial class RenderPage : Page
+    public partial class RenderPage : Page, IRender
     {
         private List<IAGameObject> _gameObjects = new List<IAGameObject>();
 
@@ -32,6 +32,11 @@ namespace OuterSpace.RenderSystem
 
             RenderGrid.Width = (int)(width / 1.05);
             RenderGrid.Height = (int)(height / 1.30);
+        }
+
+        public List<IAGameObject> GetGameObjectList()
+        {
+            return _gameObjects;
         }
 
         public void SetupWorldObjects(params IAGameObject[] gameObjects)
@@ -55,6 +60,12 @@ namespace OuterSpace.RenderSystem
             AddComponents(gameObject.GetElements());
         }
 
+        public void AddWorldObjects(List<IAGameObject> gameObjects)
+        {
+            for(int i = gameObjects.Count-1; i >=0 ; i--)
+                AddWorldObject(gameObjects[i]);
+        }
+
         private void RemoveFromRenderCanvas(UIElement[] components)
         {
             for (int i = 0; i < components.Length; i++)
@@ -72,6 +83,11 @@ namespace OuterSpace.RenderSystem
             //Call each component's render method. Assumption: Already in canvas.
             for (int i = _gameObjects.Count-1; i >= 0; i--)
                 _gameObjects[i].Render();
+        }
+
+        public void Render(List<IAGameObject> gameObjects)
+        {
+            _gameObjects = gameObjects;
         }
     }
 }

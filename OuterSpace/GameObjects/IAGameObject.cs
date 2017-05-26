@@ -16,6 +16,11 @@ namespace OuterSpace.GameObjects
             return _uiComponents.ToArray();
         }
 
+        public virtual List<UIElement> GetElementsAsList()
+        {
+            return _uiComponents;
+        }
+
         public abstract void Update();
         public abstract void Render();
     }

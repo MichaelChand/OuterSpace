@@ -48,6 +48,4 @@ namespace OuterSpace.Game.Levels
                 _enemies[i].Update();
         }
     }
-
-
 }

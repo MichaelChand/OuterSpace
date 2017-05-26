@@ -34,10 +34,12 @@ namespace OuterSpace
             InitializeComponent();            
         }
 
-        private void PostComponentInitialise()
+        private void PostLoadInitialise()
         {
             _keyboardInput = new KeyboardInput( new MenuKeyManager());
             _keyboardInput.KBPreviewEventInitialise();
+            _gameMain = new GameMain(this);
+            _gameMain.Initialise(GameGrid);
         }
 
         private void PreComponentInitialise()
@@ -48,10 +50,11 @@ namespace OuterSpace
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            _gameMain?.Dispose();
-            _gameMain = new GameMain(this);
-            _gameMain.Initialise(GameGrid);
-            _gameMain.StartGame();
+            //_gameMain?.Dispose();
+            //_gameMain = new GameMain(this);
+            //_gameMain.Initialise(GameGrid);
+            //_gameMain.StartGame();
+            _gameMain.Run();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
@@ -64,29 +67,9 @@ namespace OuterSpace
             Environment.Exit(0);
         }
 
-        private void MyCallbackMethod(object sender, ElapsedEventArgs eea)
-        {
-            
-        }
-
-        private void FrameSetup()
-        {
-            _gameMain.InitialisePage(MenuFrame.Content as Page);
-        }
-
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            PostComponentInitialise();
-        }
-
-        private void KeyboardEvent_KeyDown(object sender, KeyEventArgs keyEventArgs)
-        {
-            _keyboardInput.KeyboardEvent_KeyDown(sender, keyEventArgs);
-        }
-
-        private void KeyboardEvent_KeyUp(object sender, KeyEventArgs keyEventArgs)
-        {
-            _keyboardInput.KeyboardEvent_KeyUp(sender, keyEventArgs);
+            PostLoadInitialise();
         }
     }
 }

@@ -20,9 +20,11 @@ namespace OuterSpace.GameObjects.Ships.Player
         private PlayerShip _playerShip;
         private GameData _gameData;
         private int _debugCounter_ = 0;
+        private KeyboardInput _keyboardInput;
 
-        public Player(GameData gameData)
+        public Player(GameData gameData, KeyboardInput keyboardInput)
         {
+            _keyboardInput = keyboardInput;
             _gameData = gameData;
             PlayerSetup();
         }
@@ -48,8 +50,10 @@ namespace OuterSpace.GameObjects.Ships.Player
             return _playerShip;
         }
 
-        private void UpdateAction(List<Key?> keys)
+        private void UpdateAction()
         {
+            List<Key?> keys = _keyboardInput.GetActiveKeys();
+
             Action<Key?> ManageAction = (key) =>
             {
                 switch(key)
@@ -72,33 +76,13 @@ namespace OuterSpace.GameObjects.Ships.Player
                 }
             };
 
-            foreach (var key in keys)
-                ManageAction(key);
+            for(int i = keys.Count - 1; i >= 0; i--)
+                ManageAction(keys[i]);
         }
 
-        //private void UpdateMovement(KeypressType key)
-        //{
-        //    switch (key)
-        //    {
-        //        case KeypressType.Left:
-        //            _playerShip.MoveLeft();
-        //            break;
-        //        case KeypressType.Right:
-        //            _playerShip.MoveRight();
-        //            break;
-        //        case KeypressType.Up:
-        //            _playerShip.MoveUp();
-        //            break;
-        //        case KeypressType.Down:
-        //            _playerShip.MoveDown();
-        //            break;
-        //    }
-        //}
-
-        public void Update(List<Key?> actionKeys)
+        public void Update()
         {
-            //UpdateMovement(moveKey);
-            UpdateAction(actionKeys);
+            UpdateAction();
             _playerShip.Update();
         }
     }

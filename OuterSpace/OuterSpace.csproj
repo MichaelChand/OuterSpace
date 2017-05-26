@@ -67,15 +67,19 @@
     <Compile Include="GameObjects\Ships\Player\Player.cs" />
     <Compile Include="GameObjects\Ships\Player\PlayerShip.cs" />
     <Compile Include="GameObjects\Ships\Ship.cs" />
+    <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Game\GameMain.cs" />
+    <Compile Include="Game\GameState.cs" />
     <Compile Include="Game\Input\IKeyManager.cs" />
     <Compile Include="Game\Input\KeyboardInput.cs" />
     <Compile Include="Game\Input\KeyInfo.cs" />
+    <Compile Include="Game\Levels\LevelFactory.cs" />
     <Compile Include="Game\Input\MenuKeyManager.cs" />
     <Compile Include="Game\Input\PlayKeyManager.cs" />
     <Compile Include="Game\Levels\ILevel.cs" />
+    <Compile Include="Game\Levels\LevelManager.cs" />
     <Compile Include="Game\Levels\WaveOne.cs" />
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
@@ -83,6 +87,7 @@
     <Compile Include="Physics\BoundingBox.cs" />
     <Compile Include="Physics\Box.cs" />
     <Compile Include="Physics\PhysicsSystem.cs" />
+    <Compile Include="RenderSystem\IRender.cs" />
     <Compile Include="RenderSystem\RenderPage.xaml.cs">
       <DependentUpon>RenderPage.xaml</DependentUpon>
     </Compile>
