@@ -4,6 +4,7 @@ using OuterSpace.Common;
 using OuterSpace.Game.Input;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects;
+using OuterSpace.GameObjects.Ships;
 using OuterSpace.GameObjects.Ships.Player;
 using OuterSpace.Physics;
 using OuterSpace.RenderSystem;
@@ -12,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -24,7 +24,7 @@ namespace OuterSpace.Game
         public bool IsLevelRunning { get; private set; }
         public bool UserReady { get; set; }
 
-        private KeyboardInput _keyboardInput;
+        private IKeyboardInput _keyboardInput;
         private Mathematics _maths = new Mathematics();
         private int _frames;
         private RenderPage _renderer;
@@ -33,6 +33,7 @@ namespace OuterSpace.Game
         private LevelFactory _levelFactory;
         private int _levelCounter;
         private Player _player;
+        private int _intersetCount = 0;
 
         private GameEngine _gameEngine;
 
@@ -75,10 +76,20 @@ namespace OuterSpace.Game
             _gameEngine.AddWorldObject(_player.GetPlayerObject());
         }
 
+        private void CollisionTest()
+        {
+            BoundingBox playerBounds = (_player.GetPlayerObject() as Ship).GetBoundingBox();
+            BoundingBox eneymyBounds = (_level.GetLevelObjects()[0] as Ship).GetBoundingBox();
+            if (playerBounds.Intersects(eneymyBounds, ExtensionMethod.IntersectType.AxisAligned))
+                Console.WriteLine(string.Format("{0} COLLISION", _intersetCount++));
+        }
+
         public void Update()
         {
             _player.Update();
-            _gameEngine.Update();
+            //_gameEngine.Update();
+            _gameEngine.Render();
+            CollisionTest();
             //Update Game engine.
             //If level ended, process end level stuff.
             //Once user ready, load next level.

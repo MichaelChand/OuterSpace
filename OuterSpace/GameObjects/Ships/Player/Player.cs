@@ -20,9 +20,9 @@ namespace OuterSpace.GameObjects.Ships.Player
         private PlayerShip _playerShip;
         private GameData _gameData;
         private int _debugCounter_ = 0;
-        private KeyboardInput _keyboardInput;
+        private IKeyboardInput _keyboardInput;
 
-        public Player(GameData gameData, KeyboardInput keyboardInput)
+        public Player(GameData gameData, IKeyboardInput keyboardInput)
         {
             _keyboardInput = keyboardInput;
             _gameData = gameData;

@@ -14,33 +14,57 @@ namespace OuterSpace.Physics
         {
             int xScale = (int)scaler.X;
             int yScale = (int)scaler.Y;
-            CollisionDirection collisionDirection = BoundryCollisionDirection(boundry, boxB);
-            switch(collisionDirection)
+
+            Action<CollisionDirection> CollisionHandler = (collisionDir) =>
             {
-                case CollisionDirection.Left:
-                    xScale *= -1;
-                    break;
-                case CollisionDirection.Top:
-                    yScale *= -1;
-                    break;
-                case CollisionDirection.Right:
-                    xScale *= -1;
-                    break;
-                case CollisionDirection.Bottom:
-                    yScale *= -1;
-                    break;
-            }
+                switch (collisionDir)
+                {
+                    case CollisionDirection.Left:
+                        xScale *= -1;
+                        break;
+                    case CollisionDirection.Top:
+                        yScale *= -1;
+                        break;
+                    case CollisionDirection.Right:
+                        xScale *= -1;
+                        break;
+                    case CollisionDirection.Bottom:
+                        yScale *= -1;
+                        break;
+                }
+            };
+
+            CollisionDirection collisionDirection = LateralCollision(boundry, boxB);
+            CollisionHandler(collisionDirection);
+            collisionDirection = VentralCollision(boundry, boxB);
+            CollisionHandler(collisionDirection);
+
             return new Point(xScale, yScale);
         }
 
-        public CollisionDirection BoundryCollisionDirection(BoundingBox boundry, BoundingBox box)
+        public CollisionDirection[] BoundryCollisionDirections(BoundingBox boundry, BoundingBox box)
+        {
+            CollisionDirection[] collisionDirections = new CollisionDirection[2];
+            collisionDirections[0] = LateralCollision(boundry, box);
+            collisionDirections[1] = VentralCollision(boundry, box);
+
+            return collisionDirections;
+        }
+
+        private CollisionDirection LateralCollision(BoundingBox boundry, BoundingBox box)
         {
             if (box.Dimension.Left <= 0)
                 return CollisionDirection.Left;
-            if (box.Dimension.Top <= 0)
-                return CollisionDirection.Top;
             if (box.Dimension.Left + box.Dimension.Width >= boundry.Dimension.Left + boundry.Dimension.Width)
                 return CollisionDirection.Right;
+            return CollisionDirection.None;
+        }
+
+        private CollisionDirection VentralCollision(BoundingBox boundry, BoundingBox box)
+        {
+            if (box.Dimension.Top <= 0)
+                return CollisionDirection.Top;
+            
             if (box.Dimension.Top + box.Dimension.Height >= boundry.Dimension.Top + boundry.Dimension.Height)
                 return CollisionDirection.Bottom;
             return CollisionDirection.None;

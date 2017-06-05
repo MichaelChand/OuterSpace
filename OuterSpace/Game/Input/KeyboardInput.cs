@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace ReConInvaders.Inputsystem
 {
-    public class KeyboardInput : IDisposable
+    public class KeyboardInput : IDisposable, IKeyboardInput
     {
         private IKeyManager _keyManager;
         private Action<Key?> _kbEventCallback;

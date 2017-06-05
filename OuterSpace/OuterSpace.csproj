@@ -62,6 +62,7 @@
     <Compile Include="Common\Mathematics.cs" />
     <Compile Include="Common\TextureReader.cs" />
     <Compile Include="GameObjects\IAGameObject.cs" />
+    <Compile Include="GameObjects\Ships\Enemy\EnemyTwo.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyOne.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyShip.cs" />
     <Compile Include="GameObjects\Ships\Player\Player.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Game\GameMain.cs" />
     <Compile Include="Game\GameState.cs" />
+    <Compile Include="Game\Input\IKeyboardInput.cs" />
     <Compile Include="Game\Input\IKeyManager.cs" />
     <Compile Include="Game\Input\KeyboardInput.cs" />
     <Compile Include="Game\Input\KeyInfo.cs" />

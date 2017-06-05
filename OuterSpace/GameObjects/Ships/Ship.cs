@@ -142,24 +142,35 @@ namespace OuterSpace.GameObjects.Ships
 
         protected bool BoundryCorrection(BoundingBox boundry)
         {
-            CollisionDirection collisionDirection = _physics.BoundryCollisionDirection(boundry, _boundingBox);
-            switch(collisionDirection)
+            bool collisionDetected = false;
+            Func<CollisionDirection, bool> CorrectBoundryIntrusion = (collisionDirection) =>
             {
-                case CollisionDirection.Left:
-                    _boundingBox.Dimension.Left = 0;
-                    return true;
-                case CollisionDirection.Top:
-                    _boundingBox.Dimension.Top = 0;
-                    return true;
-                case CollisionDirection.Right:
-                    _boundingBox.Dimension.Left = boundry.Dimension.Left + boundry.Dimension.Width - _boundingBox.Dimension.Width;
-                    return true;
-                case CollisionDirection.Bottom:
-                    _boundingBox.Dimension.Top = boundry.Dimension.Top + boundry.Dimension.Height - _boundingBox.Dimension.Height;
-                    return true;
-            }
+                switch (collisionDirection)
+                {
+                    case CollisionDirection.Left:
+                        _boundingBox.Dimension.Left = 0;
+                        return true;
+                    case CollisionDirection.Top:
+                        _boundingBox.Dimension.Top = 0;
+                        return true;
+                    case CollisionDirection.Right:
+                        _boundingBox.Dimension.Left = boundry.Dimension.Left + boundry.Dimension.Width - _boundingBox.Dimension.Width;
+                        return true;
+                    case CollisionDirection.Bottom:
+                        _boundingBox.Dimension.Top = boundry.Dimension.Top + boundry.Dimension.Height - _boundingBox.Dimension.Height;
+                        return true;
+                    default:
+                        return false;
+                }
+            };
 
-            return false;
+            CollisionDirection[] collisionDirections = _physics.BoundryCollisionDirections(boundry, _boundingBox);
+
+            for(int i = 1; i >=0; i--)
+                if (CorrectBoundryIntrusion(collisionDirections[i]))
+                    collisionDetected = true;
+
+            return collisionDetected;
         }
 
         #region Notify event handlers

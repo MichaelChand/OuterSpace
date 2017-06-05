@@ -20,6 +20,11 @@ namespace OuterSpace.Game
             Initialise(renderPage);
         }
 
+        private void Initialise(IRender renderPage)
+        {
+            _renderer = renderPage;
+        }
+
         public void AddWorldObject(IAGameObject worldObject)
         {
             _renderer.AddWorldObject(worldObject);
@@ -32,12 +37,7 @@ namespace OuterSpace.Game
             _worldObjects = _renderer.GetGameObjectList();
         }
 
-        private void Initialise(IRender renderPage)
-        {
-            _renderer = renderPage;
-        }
-
-        private void RenderUpdate()
+        public void Render()
         {
             _renderer.Render();
         }
@@ -46,12 +46,6 @@ namespace OuterSpace.Game
         {
             for (int i = _worldObjects.Count - 1; i >= 0; i--)
                 _worldObjects[i].Update();
-            RenderUpdate();
-        }
-
-        private void CleanUp()
-        {
-            //_keyboardInput?.Dispose();
         }
     }
 }

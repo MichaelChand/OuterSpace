@@ -26,7 +26,7 @@ namespace OuterSpace
     public partial class MainWindow : Window
     {
         private GameMain _gameMain;
-        private KeyboardInput _keyboardInput;
+        private IKeyboardInput _keyboardInput;
 
         public MainWindow()
         {

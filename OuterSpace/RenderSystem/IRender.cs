@@ -10,8 +10,11 @@ namespace OuterSpace.RenderSystem
     public interface IRender
     {
         List<IAGameObject> GetGameObjectList();
+        void SetupWorldObjects(params IAGameObject[] gameObjects);
         void AddWorldObject(IAGameObject gameObject);
         void AddWorldObjects(List<IAGameObject> gameObjects);
+        void RemoveWorldObject(IAGameObject gameObject);
         void Render();
+        void Render(List<IAGameObject> gameObjects);
     }
 }

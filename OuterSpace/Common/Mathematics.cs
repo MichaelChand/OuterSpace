@@ -48,5 +48,43 @@ namespace OuterSpace.Common
         {
             return radians * (180.0/Math.PI);
         }
+
+        public Point GetRectangleCenterPoint(Point position, double width, double height)
+        {
+            return new Point(position.X + width / 2.0f, position.Y + height / 2.0f);
+        }
+
+        public double DistanceBetweenPoints(Point p1, Point p2)
+        {
+            double xDifSquared = Math.Pow((p2.X - p1.X), 2.0);
+            double yDifSquared = Math.Pow((p2.Y - p1.Y), 2.0);
+            return Math.Sqrt(xDifSquared + yDifSquared);
+        }
+
+        public double LengthOfHypotenuse(double width, double height)
+        {
+            return Math.Sqrt(Math.Pow(width, 2) + Math.Pow(height, 2));
+        }
+
+        public double LengthOfHypotenuseFromAngleAndAdjacent(double angle, double adjacent)
+        {
+            return adjacent / Math.Cos(DegreesToRadians(angle));
+        }
+
+        public double LengthOfHypotenuseFromSinAngleAndAdjacent(double angle, double adjacent)
+        {
+            return adjacent / Math.Sin(DegreesToRadians(angle));
+        }
+
+        public double GetLateralDistanceBetweenPoints(Point p1, Point p2)
+        {
+            return Math.Abs(p2.X - p1.X);
+        }
+
+        public double GetAngleAH(double adjacent, double hypotenuse)
+        {
+            return RadiansToDegrees(Math.Acos(adjacent / hypotenuse));
+            
+        }
     }
 }
