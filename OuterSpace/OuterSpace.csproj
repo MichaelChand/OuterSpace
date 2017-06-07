@@ -61,6 +61,11 @@
     <Compile Include="Common\ExtensionMethod.cs" />
     <Compile Include="Common\Mathematics.cs" />
     <Compile Include="Common\TextureReader.cs" />
+    <Compile Include="GameObjects\Armory\Armory.cs" />
+    <Compile Include="GameObjects\Armory\ArmoryType.cs" />
+    <Compile Include="GameObjects\Armory\IArmory.cs" />
+    <Compile Include="GameObjects\Armory\Weapons\PulseCannon.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\IAGameObject.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyTwo.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyOne.cs" />
@@ -88,6 +93,7 @@
     </Compile>
     <Compile Include="Physics\BoundingBox.cs" />
     <Compile Include="Physics\Box.cs" />
+    <Compile Include="Physics\CollisionDetector.cs" />
     <Compile Include="Physics\PhysicsSystem.cs" />
     <Compile Include="RenderSystem\IRender.cs" />
     <Compile Include="RenderSystem\RenderPage.xaml.cs">

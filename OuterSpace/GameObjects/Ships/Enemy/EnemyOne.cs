@@ -24,7 +24,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private int _speedRange = 5;
         private Mathematics _maths = new Mathematics();
 
-        public EnemyOne(GameData gameData, int framesPerSecond) : this(gameData, null, null)
+        public EnemyOne(GameData gameData, int framesPerSecond) : base(gameData, null, null)
         {
             _texturePath = "Assets//Images//SampleBlank.png";
             _framesPerSecond = framesPerSecond;
@@ -39,8 +39,8 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         {
             _boundingBox = new BoundingBox (new Box { Left = 0, Top = 0, Width = _width, Height = _height } );
             SetRandomStartPosition();
-            _shipDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
-            SetupShip();
+            _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
+            SetupGameObject();
             _angle = GenerateRangedRandom(1, _headingAngleRange);
             AutoSpeed();
             Update();
@@ -66,9 +66,9 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Point SpeedAndHeadingControl()
         {
-            double angle = _angle;
             Heading();
-            return new Point(_maths.GetX(_angle, _speed), _maths.GetY(_angle, _speed));
+            // new Point(_maths.GetX(_angle, _speed), _maths.GetY(_angle, _speed));
+            return _maths.GetXY(_angle, _speed);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

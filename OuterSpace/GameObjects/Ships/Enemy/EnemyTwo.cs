@@ -41,8 +41,8 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             //SetRandomStartPosition();
             _boundingBox.Dimension.Left = 100;
             _boundingBox.Dimension.Top = 500;
-            _shipDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
-            SetupShip();
+            _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
+            SetupGameObject();
             _angle = GenerateRangedRandom(1, _headingAngleRange);
             AutoSpeed();
             Update();

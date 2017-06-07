@@ -4,6 +4,8 @@ using OuterSpace.Common;
 using OuterSpace.Game.Input;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects;
+using OuterSpace.GameObjects.Armory;
+using OuterSpace.GameObjects.Armory.Weapons;
 using OuterSpace.GameObjects.Ships;
 using OuterSpace.GameObjects.Ships.Player;
 using OuterSpace.Physics;
@@ -34,6 +36,7 @@ namespace OuterSpace.Game
         private int _levelCounter;
         private Player _player;
         private int _intersetCount = 0;
+        private CollisionDetector _collisionDetection = new CollisionDetector();
 
         private GameEngine _gameEngine;
 
@@ -70,24 +73,26 @@ namespace OuterSpace.Game
 
         public void Run()
         {
+            IAGameObject pulseCannon = new PulseCannon(_gameData, new Point(100, 400));
             _level = _levelFactory.MakeLevel(_levelCounter++);
             _level.Load();
             _gameEngine.AddWorldObjects(_level.GetLevelObjects());
             _gameEngine.AddWorldObject(_player.GetPlayerObject());
+            _gameEngine.AddWorldObject((pulseCannon as IAGameObject));
         }
 
         private void CollisionTest()
         {
-            BoundingBox playerBounds = (_player.GetPlayerObject() as Ship).GetBoundingBox();
-            BoundingBox eneymyBounds = (_level.GetLevelObjects()[0] as Ship).GetBoundingBox();
-            if (playerBounds.Intersects(eneymyBounds, ExtensionMethod.IntersectType.AxisAligned))
-                Console.WriteLine(string.Format("{0} COLLISION", _intersetCount++));
+            //BoundingBox playerBounds = (_player.GetPlayerObject() as Ship).GetBoundingBox();
+            //BoundingBox enemyBounds = (_level.GetLevelObjects()[0] as Ship).GetBoundingBox();
+            //if (_collisionDetection.Collision(playerBounds, enemyBounds))
+            //    Console.WriteLine(string.Format("{0} COLLISION", _intersetCount++));
         }
 
         public void Update()
         {
             _player.Update();
-            //_gameEngine.Update();
+            _gameEngine.Update();
             _gameEngine.Render();
             CollisionTest();
             //Update Game engine.
