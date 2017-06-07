@@ -25,7 +25,7 @@ namespace OuterSpace.GameObjects.Armory.Weapons
             _magnetude = _speed;
             _texturePath = "Assets//Images//SampleBlank.png";
             SetStartPosition();
-            _isActive = true;
+            IsActive = true;
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
             SetupGameObject();
             if (_gameData.ViewportBounding.Dimension.Top + _gameData.ViewportBounding.Dimension.Height > _firedFromPosition.Y)
@@ -41,9 +41,9 @@ namespace OuterSpace.GameObjects.Armory.Weapons
 
         public override void Update()
         {
-            if (_isActive && _boundingBox.Dimension.Top <= _gameData.ViewPortHeight && _boundingBox.Dimension.Top + _boundingBox.Dimension.Height >= 0 && _boundingBox.Dimension.Left + _boundingBox.Dimension.Width > 0 && _boundingBox.Dimension.Left < _gameData.ViewPortWidth)
+            if (IsActive && _boundingBox.Dimension.Top <= _gameData.ViewPortHeight && _boundingBox.Dimension.Top + _boundingBox.Dimension.Height >= 0 && _boundingBox.Dimension.Left + _boundingBox.Dimension.Width > 0 && _boundingBox.Dimension.Left < _gameData.ViewPortWidth)
                 base.Update();
-            else _isActive = false;
+            else IsActive = false;
         }
 
     }

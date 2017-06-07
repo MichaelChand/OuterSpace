@@ -74,7 +74,8 @@ namespace OuterSpace.RenderSystem
 
         public void RemoveWorldObject(IAGameObject gameObject)
         {
-            RemoveFromRenderCanvas(gameObject.GetElements());
+            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => RemoveFromRenderCanvas(gameObject.GetElements())));
+            //RemoveFromRenderCanvas(gameObject.GetElements());
             _gameObjects.Remove(gameObject);
         }
 

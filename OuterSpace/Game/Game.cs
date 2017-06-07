@@ -37,6 +37,7 @@ namespace OuterSpace.Game
         private Player _player;
         private int _intersetCount = 0;
         private CollisionDetector _collisionDetection = new CollisionDetector();
+        private IAGameObject _pulseCannon;
 
         private GameEngine _gameEngine;
 
@@ -73,12 +74,12 @@ namespace OuterSpace.Game
 
         public void Run()
         {
-            IAGameObject pulseCannon = new PulseCannon(_gameData, new Point(100, 400));
+            _pulseCannon = new PulseCannon(_gameData, new Point(100, 500));
             _level = _levelFactory.MakeLevel(_levelCounter++);
             _level.Load();
             _gameEngine.AddWorldObjects(_level.GetLevelObjects());
             _gameEngine.AddWorldObject(_player.GetPlayerObject());
-            _gameEngine.AddWorldObject((pulseCannon as IAGameObject));
+            _gameEngine.AddWorldObject((_pulseCannon as IAGameObject));
         }
 
         private void CollisionTest()
@@ -94,6 +95,8 @@ namespace OuterSpace.Game
             _player.Update();
             _gameEngine.Update();
             _gameEngine.Render();
+            if (!(_pulseCannon as PulseCannon).IsActive)
+                _renderer.RemoveWorldObject(_pulseCannon);
             CollisionTest();
             //Update Game engine.
             //If level ended, process end level stuff.

@@ -27,7 +27,8 @@ namespace OuterSpace.GameObjects.Armory
         protected Point _firedFromPosition;
         protected double _width;
         protected double _height;
-        protected bool _isActive = false;
+
+        public bool IsActive { get; protected set; }
 
         public Armory(GameData gameData, Point firedFromPosition)
         {
