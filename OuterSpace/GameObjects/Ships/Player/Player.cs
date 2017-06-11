@@ -84,8 +84,10 @@ namespace OuterSpace.GameObjects.Ships.Player
                         _playerShip.MoveDown();
                         break;
                     case Key.Space :
-                        _newWeapon = _munitionsFactory.MakeArmament(ArmamentType.Pulsecannon, new Point(_playerShip.GetBoundingBox().Dimension.Left + _playerShip.GetBoundingBox().Dimension.Width / 2, _playerShip.GetBoundingBox().Dimension.Top));
-                        _weapon.Add(_newWeapon);
+                        _weapon.Add
+                        (
+                            _munitionsFactory.MakeArmament(ArmamentType.Pulsecannon, new Point(_playerShip.GetBoundingBox().Dimension.Left + _playerShip.GetBoundingBox().Dimension.Width / 2, _playerShip.GetBoundingBox().Dimension.Top))
+                        );
                         Console.WriteLine(string.Format("{0} : SPACE! The final frontier...", _debugCounter_++));
                         break;
                 }
