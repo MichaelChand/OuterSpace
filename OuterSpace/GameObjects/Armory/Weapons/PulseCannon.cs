@@ -11,7 +11,7 @@ namespace OuterSpace.GameObjects.Armory.Weapons
 {
     public class PulseCannon : Armory
     {
-        private int _speed = 1;
+        private int _speed = 10;
 
         public PulseCannon(GameData gameData, Point firedFromPosition) : base(gameData, firedFromPosition)
         {
@@ -20,8 +20,8 @@ namespace OuterSpace.GameObjects.Armory.Weapons
 
         private void Initialise()
         {
-            _width = 10;
-            _height = 60;
+            _width = 4;
+            _height = 25;
             _magnetude = _speed;
             _texturePath = "Assets//Images//SampleBlank.png";
             SetStartPosition();
@@ -41,6 +41,8 @@ namespace OuterSpace.GameObjects.Armory.Weapons
 
         public override void Update()
         {
+            //if (IsActive && !BoundryCorrection(_boundingBox))
+            //    base.Update();
             if (IsActive && _boundingBox.Dimension.Top <= _gameData.ViewPortHeight && _boundingBox.Dimension.Top + _boundingBox.Dimension.Height >= 0 && _boundingBox.Dimension.Left + _boundingBox.Dimension.Width > 0 && _boundingBox.Dimension.Left < _gameData.ViewPortWidth)
                 base.Update();
             else IsActive = false;

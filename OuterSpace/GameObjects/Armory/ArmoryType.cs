@@ -5,4 +5,9 @@ namespace OuterSpace.GameObjects.Armory
     {
         Player, AI
     }
+
+    public enum ArmamentType
+    {
+        Pulsecannon
+    }
 }

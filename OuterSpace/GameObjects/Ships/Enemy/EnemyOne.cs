@@ -7,7 +7,7 @@ using OuterSpace.Physics;
 using OuterSpace.Game;
 using System.Windows;
 using System.Runtime.CompilerServices;
-using OuterSpace.Common;
+using Common.Common;
 
 namespace OuterSpace.GameObjects.Ships.Enemy
 {

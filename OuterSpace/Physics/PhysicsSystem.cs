@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OuterSpace.Common;
+using Common.Common;
 using System.Windows;
 
 namespace OuterSpace.Physics

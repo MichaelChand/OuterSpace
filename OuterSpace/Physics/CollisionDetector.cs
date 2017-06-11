@@ -1,4 +1,4 @@
-﻿using OuterSpace.Common;
+﻿using Common.Common;
 using OuterSpace.GameObjects;
 using System;
 using System.Collections.Generic;
