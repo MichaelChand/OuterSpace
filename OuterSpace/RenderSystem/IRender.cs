@@ -12,8 +12,7 @@ namespace OuterSpace.RenderSystem
         List<IAGameObject> GetGameObjectList();
         void SetupWorldObjects(params IAGameObject[] gameObjects);
         void AddWorldObject(IAGameObject gameObject);
-        void AddWorldObjectList(List<IAGameObject> gameObjects);
-        void DynamicAdd(IAGameObject gameObject);
+        void AddWorldObjects(List<IAGameObject> gameObjects);
         void RemoveWorldObject(IAGameObject gameObject);
         void Render();
         void Render(List<IAGameObject> gameObjects);

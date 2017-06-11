@@ -22,9 +22,8 @@ namespace OuterSpace.Game.Levels
             {
                 case 0:
                     return new WaveOne(_gameData);
-                default :
-                    return null;
             }
+            return null;
         }
     }
 }

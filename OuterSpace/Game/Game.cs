@@ -1,6 +1,6 @@
 ﻿// The game itself. Deals with How the game is structured. Relying on Renderer to render provided components.
 //Components are processed here as per the game logic in this class and member instances.
-using Common.Common;
+using OuterSpace.Common;
 using OuterSpace.Game.Input;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects;
@@ -33,13 +33,11 @@ namespace OuterSpace.Game
         private GameData _gameData;
         private ILevel _level;
         private LevelFactory _levelFactory;
-        private MunitionsFactory _munitionsFactory;
         private int _levelCounter;
         private Player _player;
         private int _intersetCount = 0;
         private CollisionDetector _collisionDetection = new CollisionDetector();
-        private List<IAGameObject> _weaponEnemy;
-        private List<IAGameObject> _weaponPlayer;
+        private IAGameObject _pulseCannon;
 
         private GameEngine _gameEngine;
 
@@ -60,11 +58,8 @@ namespace OuterSpace.Game
             UserReady = false;
             IsNewGame = false;
             SetupGameData();
-            _weaponEnemy = new List<IAGameObject>();
             _levelFactory = new LevelFactory(_gameData);
-            _munitionsFactory = new MunitionsFactory(_gameData);
-            _weaponPlayer = new List<IAGameObject>();
-            _player = new Player(_gameData, _keyboardInput, _weaponPlayer);
+            _player = new Player(_gameData, _keyboardInput);
         }
 
         private void SetupGameData()
@@ -79,11 +74,12 @@ namespace OuterSpace.Game
 
         public void Run()
         {
+            _pulseCannon = new PulseCannon(_gameData, new Point(100, 500));
             _level = _levelFactory.MakeLevel(_levelCounter++);
             _level.Load();
             _gameEngine.AddWorldObjects(_level.GetLevelObjects());
             _gameEngine.AddWorldObject(_player.GetPlayerObject());
-            _gameEngine.AddWorldObjects(_weaponPlayer);
+            _gameEngine.AddWorldObject((_pulseCannon as IAGameObject));
         }
 
         private void CollisionTest()
@@ -94,35 +90,13 @@ namespace OuterSpace.Game
             //    Console.WriteLine(string.Format("{0} COLLISION", _intersetCount++));
         }
 
-        private void WeaponPersistanceCheck(List<IAGameObject> weaponList)
-        {
-            for (int i = weaponList.Count - 1; i >= 0; i--)
-            {
-                if (!(weaponList[i] as Armory).IsActive)
-                    _renderer.RemoveWorldObject(weaponList[i]);
-            }
-
-            List<IAGameObject> inactiveObjects = (from IAGameObject go in weaponList
-                                                  where (!(go as Armory).IsActive)
-                                                  select go).ToList();
-            for (int i = inactiveObjects.Count - 1; i >= 0; i--)
-                weaponList.Remove(inactiveObjects[i]);
-        }
-
-        private void CheckForNewPlayerWeaponToAdd()
-        {
-            IAGameObject weapon = _player.GetNewWeapon();
-            if (weapon != null)
-                _gameEngine.DynamicAdd(weapon);
-        }
-
         public void Update()
         {
             _player.Update();
             _gameEngine.Update();
             _gameEngine.Render();
-            WeaponPersistanceCheck(_weaponPlayer);
-            CheckForNewPlayerWeaponToAdd();
+            if (!(_pulseCannon as PulseCannon).IsActive)
+                _renderer.RemoveWorldObject(_pulseCannon);
             CollisionTest();
             //Update Game engine.
             //If level ended, process end level stuff.

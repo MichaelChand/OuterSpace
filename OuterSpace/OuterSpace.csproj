@@ -57,7 +57,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GameObjects\Armory\MunitionsFactory.cs" />
+    <Compile Include="Common\DataType.cs" />
+    <Compile Include="Common\ExtensionMethod.cs" />
+    <Compile Include="Common\Mathematics.cs" />
+    <Compile Include="Common\TextureReader.cs" />
     <Compile Include="GameObjects\Armory\Armory.cs" />
     <Compile Include="GameObjects\Armory\ArmoryType.cs" />
     <Compile Include="GameObjects\Armory\IArmory.cs" />
@@ -97,7 +100,6 @@
       <DependentUpon>RenderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="Timers\GameDispatcherTimer.cs" />
     <Compile Include="Timers\GameTimer.cs" />
     <Compile Include="Timers\ITimer.cs" />
     <Page Include="MainWindow.xaml">
@@ -156,7 +158,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="..\Common\Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
