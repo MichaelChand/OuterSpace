@@ -16,7 +16,7 @@ namespace OuterSpace.Game
     {
         private MainWindow _mainWindow;
         private GameEngine _gameEngine;
-        private GameTimer _gameTimer;
+        private GameDispatcherTimer _gameTimer;
         private Game _game;
         private Page _renderPage;
         private Func<int> TestCounter;
@@ -45,7 +45,7 @@ namespace OuterSpace.Game
             //_gameEngine.GameStop();
         }
 
-        public void Update(object sender, ElapsedEventArgs elapsedEventArgs)
+        public void Update(object sender, EventArgs elapsedEventArgs)
         {
             switch (_gameState)
             {
@@ -78,7 +78,7 @@ namespace OuterSpace.Game
 
         public void Run()
         {
-            _gameTimer = new GameTimer(_FRAMES, Update);
+            _gameTimer = new GameDispatcherTimer(_FRAMES, Update);
             _game = new Game(_renderPage, _FRAMES);
             _gameState = GameState.Running;
             _game.Run();

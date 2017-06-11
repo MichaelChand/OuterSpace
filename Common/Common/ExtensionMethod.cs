@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace OuterSpace.Common
+namespace Common.Common
 {
     public static class ExtensionMethod
     {

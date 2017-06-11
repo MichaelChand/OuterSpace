@@ -1,4 +1,5 @@
-﻿using OuterSpace.Common;
+﻿using Common;
+using Common.Common;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects;
 using OuterSpace.RenderSystem;
@@ -33,8 +34,13 @@ namespace OuterSpace.Game
 
         public void AddWorldObjects(List<IAGameObject> worldObjects)
         {
-            _renderer.AddWorldObjects(worldObjects);
+            _renderer.AddWorldObjectList(worldObjects);
             _worldObjects = _renderer.GetGameObjectList();
+        }
+
+        public void DynamicAdd(IAGameObject gameObject)
+        {
+            _renderer.DynamicAdd(gameObject);
         }
 
         public void Render()

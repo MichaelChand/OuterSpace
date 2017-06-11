@@ -60,10 +60,15 @@ namespace OuterSpace.RenderSystem
             AddComponents(gameObject.GetElements());
         }
 
-        public void AddWorldObjects(List<IAGameObject> gameObjects)
+        public void AddWorldObjectList(List<IAGameObject> gameObjects)
         {
-            for(int i = gameObjects.Count-1; i >=0 ; i--)
+            for(int i = gameObjects.Count-1; i >= 0 ; i--)
                 AddWorldObject(gameObjects[i]);
+        }
+
+        public void DynamicAdd(IAGameObject gameObject)
+        {
+            AddWorldObject(gameObject);
         }
 
         private void RemoveFromRenderCanvas(UIElement[] components)

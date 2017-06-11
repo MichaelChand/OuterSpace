@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace OuterSpace.Common
+namespace Common.Common
 {
     public class TextureReader
     {

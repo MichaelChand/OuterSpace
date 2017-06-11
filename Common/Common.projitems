@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>46f089e6-50f4-4179-bf36-6dbdca6810ef</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Common</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DataType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ExtensionMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\Mathematics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\TextureReader.cs" />
+  </ItemGroup>
+</Project>

@@ -1,5 +1,4 @@
 ﻿using OuterSpace;
-using OuterSpace.Common;
 using OuterSpace.Game.Input;
 using System;
 using System.Collections.Generic;
