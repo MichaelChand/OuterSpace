@@ -1,6 +1,6 @@
-﻿using OuterSpace.Game;
+﻿using OuterSpace.Common;
+using OuterSpace.Game;
 using OuterSpace.Game.Input;
-using OuterSpace.GameObjects.Armory;
 using OuterSpace.Physics;
 using OuterSpace.RenderSystem;
 using ReConInvaders.Inputsystem;
@@ -21,24 +21,18 @@ namespace OuterSpace.GameObjects.Ships.Player
         private GameData _gameData;
         private int _debugCounter_ = 0;
         private IKeyboardInput _keyboardInput;
-        private List<IAGameObject> _weapon;
-        private IAGameObject _newWeapon = null;
-        private MunitionsFactory _munitionsFactory;
-        private int _speed = 10;
 
-        public Player(GameData gameData, IKeyboardInput keyboardInput, List<IAGameObject> weapon)
+        public Player(GameData gameData, IKeyboardInput keyboardInput)
         {
             _keyboardInput = keyboardInput;
             _gameData = gameData;
-            _weapon = weapon;
             PlayerSetup();
         }
 
         private void PlayerSetup()
         {
-            _munitionsFactory = new MunitionsFactory(_gameData);
             _playerShip = new PlayerShip(GetPlayerGameData());
-            _playerShip.SpeedChange(_speed);
+            _playerShip.SpeedChange(1);
         }
 
         private GameData GetPlayerGameData()
@@ -54,13 +48,6 @@ namespace OuterSpace.GameObjects.Ships.Player
         public IAGameObject GetPlayerObject()
         {
             return _playerShip;
-        }
-
-        public IAGameObject GetNewWeapon()
-        {
-            IAGameObject weapon = _newWeapon;
-            _newWeapon = null;
-            return weapon;
         }
 
         private void UpdateAction()
@@ -84,8 +71,6 @@ namespace OuterSpace.GameObjects.Ships.Player
                         _playerShip.MoveDown();
                         break;
                     case Key.Space :
-                        _newWeapon = _munitionsFactory.MakeArmament(ArmamentType.Pulsecannon, new Point(_playerShip.GetBoundingBox().Dimension.Left + _playerShip.GetBoundingBox().Dimension.Width / 2, _playerShip.GetBoundingBox().Dimension.Top));
-                        _weapon.Add(_newWeapon);
                         Console.WriteLine(string.Format("{0} : SPACE! The final frontier...", _debugCounter_++));
                         break;
                 }

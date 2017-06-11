@@ -1,4 +1,4 @@
-﻿using Common.Common;
+﻿using OuterSpace.Common;
 using OuterSpace.Game;
 using OuterSpace.Physics;
 using System;
@@ -22,14 +22,13 @@ namespace OuterSpace.GameObjects.Armory
         public int Strength { get; protected set; }
         protected ArmoryType _armoryType; 
         protected int _magnetude = 1;
-        protected double _angle = 90;
+        protected double _angle = 180;
         protected Mathematics _maths = new Mathematics();
         protected Point _firedFromPosition;
         protected double _width;
         protected double _height;
 
         public bool IsActive { get; protected set; }
-        public bool IsHandled { get; set; }
 
         public Armory(GameData gameData, Point firedFromPosition)
         {
@@ -40,7 +39,6 @@ namespace OuterSpace.GameObjects.Armory
         {
             _gameData = gameData;
             _firedFromPosition = firedFromPosition;
-            IsHandled = false;
         }
 
         public override void Update()
@@ -50,7 +48,7 @@ namespace OuterSpace.GameObjects.Armory
 
         public virtual void Move()
         {
-            Point p = _maths.GetXY(_angle, _magnetude);
+            Point p = _maths.GetXY(_angle, 1);
             _boundingBox.Dimension = new Box{ Left = _boundingBox.Dimension.Left + p.X, Top = _boundingBox.Dimension.Top + p.Y, Width = _boundingBox.Dimension.Width, Height = _boundingBox.Dimension.Height};
         }
     }

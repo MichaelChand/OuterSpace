@@ -10,7 +10,7 @@ namespace OuterSpace.Timers
     {
         void Start();
         void Stop();
-        void SetCallBack<TypeCB>(TypeCB CallbackType);
+        void SetCallBack<TypeCB>(TypeCB Callback);
         void Dispose(bool disposing);
     }
 }
