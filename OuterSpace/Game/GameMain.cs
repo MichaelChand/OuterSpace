@@ -45,7 +45,7 @@ namespace OuterSpace.Game
             //_gameEngine.GameStop();
         }
 
-        public void Update(object sender, EventArgs elapsedEventArgs)
+        public void Update(object sender, EventArgs eventArgs)
         {
             switch (_gameState)
             {

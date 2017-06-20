@@ -43,5 +43,15 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         {
             return _random.Next(min, max);
         }
+
+        public virtual void AdjustFiringClock()
+        {
+            SetRandomFiringMilliFrequency();
+        }
+
+        protected void SetRandomFiringMilliFrequency()
+        {
+            FiringClock = (long)GenerateRangedRandom(1, _gameData.FramesPerSecond) + _gameData.FramesPerSecond; //minimum 1 second interval.
+        }
     }
 }

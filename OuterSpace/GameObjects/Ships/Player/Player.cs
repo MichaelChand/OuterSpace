@@ -2,16 +2,10 @@
 using OuterSpace.Game.Input;
 using OuterSpace.GameObjects.Armory;
 using OuterSpace.Physics;
-using OuterSpace.RenderSystem;
-using ReConInvaders.Inputsystem;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using static ReConInvaders.Inputsystem.KeyboardInput;
 
 namespace OuterSpace.GameObjects.Ships.Player
 {
@@ -19,10 +13,8 @@ namespace OuterSpace.GameObjects.Ships.Player
     {
         private PlayerShip _playerShip;
         private GameData _gameData;
-        private int _debugCounter_ = 0;
         private IKeyboardInput _keyboardInput;
         private List<IAGameObject> _weapon;
-        private IAGameObject _newWeapon = null;
         private MunitionsFactory _munitionsFactory;
         private int _speed = 10;
 
@@ -56,12 +48,6 @@ namespace OuterSpace.GameObjects.Ships.Player
             return _playerShip;
         }
 
-        public IAGameObject GetNewWeapon()
-        {
-            IAGameObject weapon = _newWeapon;
-            _newWeapon = null;
-            return weapon;
-        }
 
         private void UpdateAction()
         {
@@ -84,9 +70,7 @@ namespace OuterSpace.GameObjects.Ships.Player
                         _playerShip.MoveDown();
                         break;
                     case Key.Space :
-                        _newWeapon = _munitionsFactory.MakeArmament(ArmamentType.Pulsecannon, new Point(_playerShip.GetBoundingBox().Dimension.Left + _playerShip.GetBoundingBox().Dimension.Width / 2, _playerShip.GetBoundingBox().Dimension.Top));
-                        _weapon.Add(_newWeapon);
-                        Console.WriteLine(string.Format("{0} : SPACE! The final frontier...", _debugCounter_++));
+                        _weapon.Add(_munitionsFactory.MakeArmament(ArmamentType.Pulsecannon, _playerShip.GetPositionOfCentre()));
                         break;
                 }
             };

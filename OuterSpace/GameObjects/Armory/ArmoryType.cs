@@ -8,6 +8,6 @@ namespace OuterSpace.GameObjects.Armory
 
     public enum ArmamentType
     {
-        Pulsecannon
+        Pulsecannon, Missile
     }
 }

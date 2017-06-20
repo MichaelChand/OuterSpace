@@ -73,5 +73,11 @@ namespace Common.Common
                     return false;
             }
         }
+
+        public static List<T> CapacityTrim<T>(this List<T> list)
+        {
+            list.Capacity = list.Count + 2;
+            return list;
+        }
     }
 }

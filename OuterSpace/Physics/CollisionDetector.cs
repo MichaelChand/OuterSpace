@@ -19,7 +19,7 @@ namespace OuterSpace.Physics
         public BoundingBox CollisionWith(BoundingBox boxA, List<BoundingBox> boxes)
         {
             return (from box in boxes
-                    where (boxA.Intersects(box))
+                    where (boxA.Intersects(box, ExtensionMethod.IntersectType.AxisAligned))
                     select box).ToArray()[0];
         }
     }

@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Threading;
 
 namespace OuterSpace.Timers
 {
     public class GameDispatcherTimer : ITimer
     {
-        public delegate void Callback(object sender, EventArgs eea);
+        public delegate void Callback<TEvent>(object sender, TEvent eventArgs);
 
         public bool TimerRunning = false;
         private DispatcherTimer _ticks = new DispatcherTimer();
         private TimeSpan _frameInterval;
         private int _frames;
 
-        private Callback _callback;
+        private Callback<EventArgs> _callback;
 
-        public GameDispatcherTimer(int frames, Callback callback)
+        public GameDispatcherTimer(int frames, Callback<EventArgs> callback)
         {
             _frames = frames;
             SetCallBack(callback);
@@ -44,7 +39,7 @@ namespace OuterSpace.Timers
 
         public void SetCallBack<TypeCB>(TypeCB CallbackType)
         {
-            _callback = Convert.ChangeType(CallbackType, typeof(Callback)) as Callback;
+            _callback = Convert.ChangeType(CallbackType, typeof(Callback<EventArgs>)) as Callback<EventArgs>;
             _ticks.Tick += new EventHandler(_callback);
         }
 

@@ -24,6 +24,8 @@ namespace OuterSpace.GameObjects.Armory
             {
                 case ArmamentType.Pulsecannon:
                     return new PulseCannon(_gameData, firedFromPosition);
+                case ArmamentType.Missile:
+                    return new Missile(_gameData, firedFromPosition);
                 default :
                     return null;
             }

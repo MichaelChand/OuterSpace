@@ -28,6 +28,7 @@ namespace OuterSpace.GameObjects.Armory
         protected double _width;
         protected double _height;
 
+        public bool Fired { get; set; }
         public bool IsActive { get; protected set; }
         public bool IsHandled { get; set; }
 
@@ -41,6 +42,7 @@ namespace OuterSpace.GameObjects.Armory
             _gameData = gameData;
             _firedFromPosition = firedFromPosition;
             IsHandled = false;
+            Fired = false;
         }
 
         public override void Update()

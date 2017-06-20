@@ -8,6 +8,7 @@ using OuterSpace.Game;
 using System.Windows;
 using System.Runtime.CompilerServices;
 using Common.Common;
+using OuterSpace.GameObjects.Armory;
 
 namespace OuterSpace.GameObjects.Ships.Enemy
 {
@@ -23,6 +24,8 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private int _waitToChangeHeadingSeconds = 10;
         private int _speedRange = 5;
         private Mathematics _maths = new Mathematics();
+        private ArmamentType _weaponType = ArmamentType.Missile;
+        private int _firingClockGranularity = 5;
 
         public EnemyOne(GameData gameData, int framesPerSecond) : base(gameData, null, null)
         {
@@ -37,6 +40,11 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         private void Initialise()
         {
+            _armoryType = ArmoryType.AI;
+            _armamentType = _weaponType;
+            FireAngle = 90;
+            AdjustFiringClock();
+
             _boundingBox = new BoundingBox (new Box { Left = 0, Top = 0, Width = _width, Height = _height } );
             SetRandomStartPosition();
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
@@ -44,6 +52,12 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             _angle = GenerateRangedRandom(1, _headingAngleRange);
             AutoSpeed();
             Update();
+        }
+
+        public override void AdjustFiringClock()
+        {
+            SetRandomFiringMilliFrequency();
+            FiringClock *= _firingClockGranularity;
         }
 
         private void Heading()

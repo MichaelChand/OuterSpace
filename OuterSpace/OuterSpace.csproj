@@ -61,6 +61,7 @@
     <Compile Include="GameObjects\Armory\Armory.cs" />
     <Compile Include="GameObjects\Armory\ArmoryType.cs" />
     <Compile Include="GameObjects\Armory\IArmory.cs" />
+    <Compile Include="GameObjects\Armory\Weapons\Missile.cs" />
     <Compile Include="GameObjects\Armory\Weapons\PulseCannon.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\IAGameObject.cs" />
@@ -70,10 +71,12 @@
     <Compile Include="GameObjects\Ships\Player\Player.cs" />
     <Compile Include="GameObjects\Ships\Player\PlayerShip.cs" />
     <Compile Include="GameObjects\Ships\Ship.cs" />
+    <Compile Include="Game\AiManager.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Game\GameMain.cs" />
+    <Compile Include="Game\GameManager.cs" />
     <Compile Include="Game\GameState.cs" />
     <Compile Include="Game\Input\IKeyboardInput.cs" />
     <Compile Include="Game\Input\IKeyManager.cs" />

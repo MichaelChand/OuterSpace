@@ -82,6 +82,7 @@ namespace OuterSpace.RenderSystem
             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => RemoveFromRenderCanvas(gameObject.GetElements())));
             //RemoveFromRenderCanvas(gameObject.GetElements());
             _gameObjects.Remove(gameObject);
+            _gameObjects.Capacity = _gameObjects.Count + 4;
         }
 
         public void Render()

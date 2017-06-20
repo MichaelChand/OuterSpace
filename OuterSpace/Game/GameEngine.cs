@@ -1,9 +1,6 @@
-﻿using Common;
-using Common.Common;
-using OuterSpace.Game.Levels;
+﻿using Common.Common;
 using OuterSpace.GameObjects;
 using OuterSpace.RenderSystem;
-using System;
 using System.Collections.Generic;
 
 namespace OuterSpace.Game
@@ -11,7 +8,6 @@ namespace OuterSpace.Game
     public class GameEngine
     {
         private IRender _renderer;
-        private List<ILevel> _levels = new List<ILevel>();
         private Mathematics _maths = new Mathematics();
 
         private List<IAGameObject> _worldObjects;

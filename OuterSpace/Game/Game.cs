@@ -5,8 +5,6 @@ using OuterSpace.Game.Input;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects;
 using OuterSpace.GameObjects.Armory;
-using OuterSpace.GameObjects.Armory.Weapons;
-using OuterSpace.GameObjects.Ships;
 using OuterSpace.GameObjects.Ships.Player;
 using OuterSpace.Physics;
 using OuterSpace.RenderSystem;
@@ -36,16 +34,31 @@ namespace OuterSpace.Game
         private MunitionsFactory _munitionsFactory;
         private int _levelCounter;
         private Player _player;
-        private int _intersetCount = 0;
         private CollisionDetector _collisionDetection = new CollisionDetector();
         private List<IAGameObject> _weaponEnemy;
         private List<IAGameObject> _weaponPlayer;
-
+        private GameManager _gameManager;
         private GameEngine _gameEngine;
+        private Func<long> _elapsed;
+        private long _delta;
+
+        private static System.Diagnostics.Stopwatch _stopWatch = new System.Diagnostics.Stopwatch();
 
         public Game(Page renderPage, int frames)
         {
             Initialise(renderPage, frames);
+        }
+
+        private Func<long> ElapsedTime(Func<long> ElapsedFunction = null)
+        {
+            long time = DateTime.Now.Millisecond;
+            Func<long> elapsedTime;
+            if(ElapsedFunction == null)
+                ElapsedFunction = () => time;
+            _delta = time - ElapsedFunction();
+            elapsedTime = () => _delta;
+
+            return elapsedTime;
         }
 
         private void Initialise(Page renderPage, int frames)
@@ -84,6 +97,8 @@ namespace OuterSpace.Game
             _gameEngine.AddWorldObjects(_level.GetLevelObjects());
             _gameEngine.AddWorldObject(_player.GetPlayerObject());
             _gameEngine.AddWorldObjects(_weaponPlayer);
+            _gameEngine.AddWorldObjects(_weaponEnemy);
+            _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level);
         }
 
         private void CollisionTest()
@@ -94,36 +109,20 @@ namespace OuterSpace.Game
             //    Console.WriteLine(string.Format("{0} COLLISION", _intersetCount++));
         }
 
-        private void WeaponPersistanceCheck(List<IAGameObject> weaponList)
-        {
-            for (int i = weaponList.Count - 1; i >= 0; i--)
-            {
-                if (!(weaponList[i] as Armory).IsActive)
-                    _renderer.RemoveWorldObject(weaponList[i]);
-            }
-
-            List<IAGameObject> inactiveObjects = (from IAGameObject go in weaponList
-                                                  where (!(go as Armory).IsActive)
-                                                  select go).ToList();
-            for (int i = inactiveObjects.Count - 1; i >= 0; i--)
-                weaponList.Remove(inactiveObjects[i]);
-        }
-
-        private void CheckForNewPlayerWeaponToAdd()
-        {
-            IAGameObject weapon = _player.GetNewWeapon();
-            if (weapon != null)
-                _gameEngine.DynamicAdd(weapon);
-        }
-
         public void Update()
         {
+            //_stopWatch.Reset();
+            //_stopWatch.Start();
             _player.Update();
             _gameEngine.Update();
-            _gameEngine.Render();
-            WeaponPersistanceCheck(_weaponPlayer);
-            CheckForNewPlayerWeaponToAdd();
+            _gameManager.Update();
             CollisionTest();
+            _gameEngine.Render();
+            //_elapsed =  ElapsedTime(_elapsed);
+            //Console.WriteLine(string.Format("ELAPSED : {0}", _elapsed.Invoke() / 1000));
+            //_stopWatch.Stop();
+            //TimeSpan ts = _stopWatch.Elapsed;
+            //Console.WriteLine(string.Format("{0}, WeaponList Size: {1}", _stopWatch.Elapsed.TotalMilliseconds, _weaponPlayer.Capacity));
             //Update Game engine.
             //If level ended, process end level stuff.
             //Once user ready, load next level.
