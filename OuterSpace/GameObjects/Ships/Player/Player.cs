@@ -1,7 +1,8 @@
-﻿using OuterSpace.Game;
+﻿using CommonRelay.Common;
+using CommonRelay.DataObjects;
+using GameObjects.Interfaces;
 using OuterSpace.Game.Input;
 using OuterSpace.GameObjects.Armory;
-using OuterSpace.Physics;
 using System;
 using System.Collections.Generic;
 using System.Windows;

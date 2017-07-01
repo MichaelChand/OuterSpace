@@ -1,13 +1,15 @@
 ﻿// The game itself. Deals with How the game is structured. Relying on Renderer to render provided components.
 //Components are processed here as per the game logic in this class and member instances.
-using Common.Common;
+using CommonRelay.Common;
+using CommonRelay.DataObjects;
+using GameObjects.Interfaces;
 using OuterSpace.Game.Input;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects;
 using OuterSpace.GameObjects.Armory;
 using OuterSpace.GameObjects.Ships.Player;
-using OuterSpace.Physics;
 using OuterSpace.RenderSystem;
+using PhysicsSystem;
 using ReConInvaders.Inputsystem;
 using System;
 using System.Collections.Generic;
@@ -111,21 +113,11 @@ namespace OuterSpace.Game
 
         public void Update()
         {
-            //_stopWatch.Reset();
-            //_stopWatch.Start();
             _player.Update();
             _gameEngine.Update();
             _gameManager.Update();
             CollisionTest();
             _gameEngine.Render();
-            //_elapsed =  ElapsedTime(_elapsed);
-            //Console.WriteLine(string.Format("ELAPSED : {0}", _elapsed.Invoke() / 1000));
-            //_stopWatch.Stop();
-            //TimeSpan ts = _stopWatch.Elapsed;
-            //Console.WriteLine(string.Format("{0}, WeaponList Size: {1}", _stopWatch.Elapsed.TotalMilliseconds, _weaponPlayer.Capacity));
-            //Update Game engine.
-            //If level ended, process end level stuff.
-            //Once user ready, load next level.
         }
     }
 }

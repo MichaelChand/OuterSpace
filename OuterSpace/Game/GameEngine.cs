@@ -1,6 +1,8 @@
-﻿using Common.Common;
-using OuterSpace.GameObjects;
+﻿using CommonRelay.Common;
+using GameObjects.Interfaces;
+
 using OuterSpace.RenderSystem;
+using RenderSystem.Interfaces;
 using System.Collections.Generic;
 
 namespace OuterSpace.Game

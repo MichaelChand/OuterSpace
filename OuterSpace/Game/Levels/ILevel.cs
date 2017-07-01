@@ -1,4 +1,5 @@
-﻿using OuterSpace.GameObjects;
+﻿using GameObjects.Interfaces;
+using OuterSpace.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

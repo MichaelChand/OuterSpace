@@ -1,5 +1,5 @@
-﻿using OuterSpace.GameObjects.Armory;
-using OuterSpace.Physics;
+﻿using CommonRelay.DataObjects;
+using OuterSpace.GameObjects.Armory;
 using System.Windows;
 
 namespace OuterSpace.GameObjects.Ships

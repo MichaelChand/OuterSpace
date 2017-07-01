@@ -1,4 +1,6 @@
-﻿using OuterSpace.GameObjects;
+﻿using CommonRelay.DataObjects;
+using GameObjects.Interfaces;
+using OuterSpace.GameObjects;
 using OuterSpace.GameObjects.Ships.Enemy;
 using System;
 using System.Collections.Generic;

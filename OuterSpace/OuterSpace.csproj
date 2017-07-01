@@ -63,8 +63,6 @@
     <Compile Include="GameObjects\Armory\IArmory.cs" />
     <Compile Include="GameObjects\Armory\Weapons\Missile.cs" />
     <Compile Include="GameObjects\Armory\Weapons\PulseCannon.cs" />
-    <Compile Include="GameObjects\GameObject.cs" />
-    <Compile Include="GameObjects\IAGameObject.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyTwo.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyOne.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyShip.cs" />
@@ -73,7 +71,6 @@
     <Compile Include="GameObjects\Ships\Ship.cs" />
     <Compile Include="Game\AiManager.cs" />
     <Compile Include="Game\Game.cs" />
-    <Compile Include="Game\GameData.cs" />
     <Compile Include="Game\GameEngine.cs" />
     <Compile Include="Game\GameMain.cs" />
     <Compile Include="Game\GameManager.cs" />
@@ -91,18 +88,7 @@
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Physics\BoundingBox.cs" />
-    <Compile Include="Physics\Box.cs" />
-    <Compile Include="Physics\CollisionDetector.cs" />
-    <Compile Include="Physics\PhysicsSystem.cs" />
-    <Compile Include="RenderSystem\IRender.cs" />
-    <Compile Include="RenderSystem\RenderPage.xaml.cs">
-      <DependentUpon>RenderPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="Timers\GameDispatcherTimer.cs" />
-    <Compile Include="Timers\GameTimer.cs" />
-    <Compile Include="Timers\ITimer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,10 +102,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NavigationPages\MenuPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RenderSystem\RenderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,7 +141,28 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="..\Common\Common.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\Chronometers\Chronometers.csproj">
+      <Project>{7ced1186-14a2-4eb8-9697-55fcedae3f6f}</Project>
+      <Name>Chronometers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonRelay\CommonRelay.csproj">
+      <Project>{637706f7-bb9d-49a7-a2b0-007f8494e8e2}</Project>
+      <Name>CommonRelay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameObjects\GameObjects.csproj">
+      <Project>{acb151f2-758e-404e-bf75-6561240cc2de}</Project>
+      <Name>GameObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhysicsSystem\PhysicsSystem.csproj">
+      <Project>{E72A8B61-1958-4F43-BC15-92429DA8420A}</Project>
+      <Name>PhysicsSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RenderSystem\RenderSystem.csproj">
+      <Project>{84de6543-72ef-418e-8e4c-16edfc58b1c8}</Project>
+      <Name>RenderSystem</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

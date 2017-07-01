@@ -1,14 +1,12 @@
-﻿using Common.Common;
+﻿using CommonRelay.Common;
+using CommonRelay.DataObjects;
+using GameObjects.Interfaces;
 using OuterSpace.GameObjects;
 using OuterSpace.GameObjects.Armory;
 using OuterSpace.GameObjects.Ships;
 using OuterSpace.GameObjects.Ships.Enemy;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace OuterSpace.Game
 {
@@ -30,7 +28,7 @@ namespace OuterSpace.Game
             _gameData = gameData;
             _aiWeapons = aiWeapons;
             ManagerInitialise();
-            _maths = new Common.Common.Mathematics();
+            _maths = new Mathematics();
         }
 
         private void ManagerInitialise()
@@ -65,16 +63,6 @@ namespace OuterSpace.Game
             double time = _maths.FramesToSeconds((_aiPlayer as Ship).FrameTimeStamp++, _gameData.FramesPerSecond);
             if (_maths.FramesToSeconds((_aiPlayer as Ship).FrameTimeStamp++, _gameData.FramesPerSecond) >= _maths.FramesToSeconds((int)(_aiPlayer as Ship).FiringClock, _gameData.FramesPerSecond))
                 Fire();
-            //long timeStamp = DateTime.Now.Ticks;
-            //int firingTimer = (int)Math.Abs(timeStamp - (_aiPlayer as Ship).TimeStamp);
-            //if ((_aiPlayer as Ship).TimeStamp < 0)
-            //    (_aiPlayer as Ship).TimeStamp = DateTime.Now.Ticks;
-
-            //else if (firingTimer * 10 >= ((_aiPlayer as Ship).FiringClock * 1000))
-            //{
-            //    Fire();
-            //    (_aiPlayer as Ship).TimeStamp = DateTime.Now.Ticks;
-            //}
         }
     }
 }
