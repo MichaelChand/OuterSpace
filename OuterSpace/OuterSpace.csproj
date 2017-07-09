@@ -150,6 +150,10 @@
       <Project>{637706f7-bb9d-49a7-a2b0-007f8494e8e2}</Project>
       <Name>CommonRelay</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConsoleOutput\ConsoleOutput.csproj">
+      <Project>{54d8b44d-8b93-4600-a3eb-46bcb451d765}</Project>
+      <Name>ConsoleOutput</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GameObjects\GameObjects.csproj">
       <Project>{acb151f2-758e-404e-bf75-6561240cc2de}</Project>
       <Name>GameObjects</Name>

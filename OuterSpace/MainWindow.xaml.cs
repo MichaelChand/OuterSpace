@@ -1,6 +1,6 @@
 ﻿using OuterSpace.Game;
 using OuterSpace.Game.Input;
-using OuterSpace.RenderSystem;
+using RenderSystem;
 using ReConInvaders.Inputsystem;
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ConsoleOutput;
+using CommonRelay.DataObjects;
 
 namespace OuterSpace
 {
@@ -27,6 +29,8 @@ namespace OuterSpace
     {
         private GameMain _gameMain;
         private IKeyboardInput _keyboardInput;
+        private OutputConsole _outputConsole;
+        internal Action<string[]> ConsoleWrite;
 
         public MainWindow()
         {
@@ -34,18 +38,26 @@ namespace OuterSpace
             InitializeComponent();            
         }
 
+        internal void WriteToConsole(string[] message)
+        {
+            _outputConsole.WriteOutput(message);
+        }
+
         private void PostLoadInitialise()
         {
-            _keyboardInput = new KeyboardInput( new MenuKeyManager());
+            _keyboardInput = new KeyboardInput(new MenuKeyManager());
             _keyboardInput.KBPreviewEventInitialise();
             _gameMain = new GameMain(this);
             _gameMain.Initialise(GameGrid);
         }
 
         private void PreComponentInitialise()
-        {
+        {     
+             _outputConsole = new OutputConsole();
+            ConsoleWrite = WriteToConsole;
             this.Width = SystemParameters.MaximizedPrimaryScreenWidth;
             this.Height = SystemParameters.MaximizedPrimaryScreenHeight;
+            _outputConsole.Show();
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -70,6 +82,7 @@ namespace OuterSpace
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             PostLoadInitialise();
+            
         }
     }
 }

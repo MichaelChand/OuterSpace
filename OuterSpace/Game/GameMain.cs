@@ -1,4 +1,4 @@
-﻿using OuterSpace.RenderSystem;
+﻿using RenderSystem;
 using Chronometers;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using CommonRelay.DataObjects;
 
 namespace OuterSpace.Game
 {
@@ -23,10 +24,13 @@ namespace OuterSpace.Game
         private bool tc = false;
         public static int _FRAMES = 30;
         private GameState _gameState;
+        private GameData _gameData;
 
         public  GameMain(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
+            _gameData = new GameData();
+            _gameData.WriteToConsole = _mainWindow.ConsoleWrite;
         }
 
         private void  AddToGrid<TGrid>(TGrid grid, UIElement element) where TGrid : Grid
@@ -79,7 +83,7 @@ namespace OuterSpace.Game
         public void Run()
         {
             _gameTimer = new GameDispatcherTimer(_FRAMES, Update);
-            _game = new Game(_renderPage, _FRAMES);
+            _game = new Game(_renderPage, _FRAMES, _gameData);
             _gameState = GameState.Running;
             _game.Run();
             _gameTimer.Start();

@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace OuterSpace.RenderSystem
+namespace RenderSystem
 {
     /// <summary>
     /// Interaction logic for RenderPage.xaml
@@ -81,8 +81,8 @@ namespace OuterSpace.RenderSystem
 
         public void RemoveWorldObject(IAGameObject gameObject)
         {
-            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => RemoveFromRenderCanvas(gameObject.GetElements())));
-            //RemoveFromRenderCanvas(gameObject.GetElements());
+            //Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => RemoveFromRenderCanvas(gameObject.GetElements())));
+            RemoveFromRenderCanvas(gameObject.GetElements());
             _gameObjects.Remove(gameObject);
             _gameObjects.Capacity = _gameObjects.Count + 4;
         }

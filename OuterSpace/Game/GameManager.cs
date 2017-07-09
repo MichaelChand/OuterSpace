@@ -5,7 +5,7 @@ using GameObjects.Interfaces;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects;
 using OuterSpace.GameObjects.Armory;
-using OuterSpace.RenderSystem;
+using RenderSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
 ﻿using CommonRelay.Common;
 using GameObjects.Interfaces;
 
-using OuterSpace.RenderSystem;
+using RenderSystem;
 using RenderSystem.Interfaces;
 using System.Collections.Generic;
 

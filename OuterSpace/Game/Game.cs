@@ -8,7 +8,7 @@ using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects;
 using OuterSpace.GameObjects.Armory;
 using OuterSpace.GameObjects.Ships.Player;
-using OuterSpace.RenderSystem;
+using RenderSystem;
 using PhysicsSystem;
 using ReConInvaders.Inputsystem;
 using System;
@@ -46,9 +46,9 @@ namespace OuterSpace.Game
 
         private static System.Diagnostics.Stopwatch _stopWatch = new System.Diagnostics.Stopwatch();
 
-        public Game(Page renderPage, int frames)
+        public Game(Page renderPage, int frames, GameData gameData)
         {
-            Initialise(renderPage, frames);
+            Initialise(renderPage, frames, gameData);
         }
 
         private Func<long> ElapsedTime(Func<long> ElapsedFunction = null)
@@ -63,8 +63,10 @@ namespace OuterSpace.Game
             return elapsedTime;
         }
 
-        private void Initialise(Page renderPage, int frames)
+        private void Initialise(Page renderPage, int frames, GameData gameData)
         {
+            _gameData = gameData;
+            _gameData.WriteToConsole.Invoke(new[] { "\rInitialising...\r"});
             _keyboardInput = new KeyboardInput(new PlayKeyManager());
             _keyboardInput.KBPreviewEventInitialise();
             _frames = frames;
@@ -85,7 +87,6 @@ namespace OuterSpace.Game
         private void SetupGameData()
         {
             BoundingBox ViewPortBounding = new BoundingBox(new Point(0, 0), _renderer.cnvViewPort.Width, _maths.RemoveByPercentage(_renderer.cnvViewPort.Height, 30));
-            _gameData = new GameData();
             _gameData.ViewPortWidth = (int)_renderer.cnvViewPort.Width;
             _gameData.ViewPortHeight = (int)_renderer.cnvViewPort.Height;
             _gameData.ViewportBounding = ViewPortBounding;
@@ -94,6 +95,7 @@ namespace OuterSpace.Game
 
         public void Run()
         {
+            _gameData.WriteToConsole.Invoke(new[] { string.Format("Loading Level {0}\r", _levelCounter) });
             _level = _levelFactory.MakeLevel(_levelCounter++);
             _level.Load();
             _gameEngine.AddWorldObjects(_level.GetLevelObjects());

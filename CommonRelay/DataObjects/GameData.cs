@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace CommonRelay.DataObjects
 {
     public class GameData
@@ -7,5 +9,6 @@ namespace CommonRelay.DataObjects
         public int ViewPortHeight { get; set; }
         public BoundingBox ViewportBounding { get; set; }
         public int FramesPerSecond;
+        public Action<string[]> WriteToConsole;
     }
 }
