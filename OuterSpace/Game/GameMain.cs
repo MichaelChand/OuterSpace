@@ -129,6 +129,7 @@ namespace OuterSpace.Game
             frame.Navigate(InitialisePage(page));
         }
 
+        //make progress bar. add collision detection. export Ai and level making to xml. Make menu system
         private void CleanUp()
         {
             //_gameEngine?.Dispose();

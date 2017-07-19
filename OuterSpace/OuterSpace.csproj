@@ -63,6 +63,7 @@
     <Compile Include="GameObjects\Armory\IArmory.cs" />
     <Compile Include="GameObjects\Armory\Weapons\Missile.cs" />
     <Compile Include="GameObjects\Armory\Weapons\PulseCannon.cs" />
+    <Compile Include="GameObjects\ShipComponents\Hitbar.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyTwo.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyOne.cs" />
     <Compile Include="GameObjects\Ships\Enemy\EnemyShip.cs" />

@@ -1,6 +1,7 @@
 ﻿
 using CommonRelay.Common;
 using CommonRelay.DataObjects;
+using OuterSpace.GameObjects.ShipComponents;
 using System;
 
 namespace OuterSpace.GameObjects.Ships.Enemy
@@ -11,6 +12,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         protected int _moveScaleX = 1;
         protected int _moveScaleY = 1;
         protected int _speed = 2;
+        protected Hitbar _hitbar;
 
         public EnemyShip()
         {

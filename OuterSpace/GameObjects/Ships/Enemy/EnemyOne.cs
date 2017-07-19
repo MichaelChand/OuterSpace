@@ -44,6 +44,10 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
             SetupGameObject();
             _angle = GenerateRangedRandom(1, _headingAngleRange);
+
+            _hitbar = new ShipComponents.Hitbar(new Point(_boundingBox.Dimension.Left, _boundingBox.Dimension.Top), _boundingBox);
+            _uiComponents.Add(_hitbar.GetElements()[0]);
+
             AutoSpeed();
             Update();
         }
@@ -100,6 +104,13 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         {
             SetMovementScaler();
             AdjustPositionAndBounding();
+            _hitbar.Update();
+        }
+
+        public override void Render()
+        {
+            _hitbar.Render();
+            base.Render();
         }
     }
 }
