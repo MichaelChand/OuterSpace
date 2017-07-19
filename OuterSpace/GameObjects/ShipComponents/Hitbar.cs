@@ -46,6 +46,11 @@ namespace OuterSpace.GameObjects.ShipComponents
             _uiComponents.Add(_progressbar);
         }
 
+        public void HitpointSubtract(double value)
+        {
+            Hitpoint = Hitpoint - value;
+        }
+
         protected override void ApplyBinding()
         {
             Binding DrawPositionBinding = new Binding("DrawPosition");
