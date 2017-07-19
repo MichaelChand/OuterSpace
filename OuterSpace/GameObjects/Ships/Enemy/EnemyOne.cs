@@ -21,10 +21,11 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private ArmamentType _weaponType = ArmamentType.Missile;
         private int _firingClockGranularity = 5;
 
-        public EnemyOne(GameData gameData, int framesPerSecond) : base(gameData, null, null)
+        public EnemyOne(GameData gameData, int framesPerSecond, bool showhitbar) : base(gameData, null, null)
         {
             _texturePath = "Assets//Images//SampleBlank.png";
             _framesPerSecond = framesPerSecond;
+            ShowHitbar = showhitbar;
             Initialise();
         }
 
@@ -45,8 +46,8 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             SetupGameObject();
             _angle = GenerateRangedRandom(1, _headingAngleRange);
 
-            _hitbar = new ShipComponents.Hitbar(new Point(_boundingBox.Dimension.Left, _boundingBox.Dimension.Top), _boundingBox);
-            _uiComponents.Add(_hitbar.GetElements()[0]);
+            if(ShowHitbar)
+                HitbarInit();
 
             AutoSpeed();
             Update();
@@ -104,13 +105,6 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         {
             SetMovementScaler();
             AdjustPositionAndBounding();
-            _hitbar.Update();
-        }
-
-        public override void Render()
-        {
-            _hitbar.Render();
-            base.Render();
         }
     }
 }

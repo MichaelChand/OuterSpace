@@ -14,6 +14,8 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         protected int _speed = 2;
         protected Hitbar _hitbar;
 
+        public bool ShowHitbar { get; set; }
+
         public EnemyShip()
         {
 
@@ -24,7 +26,13 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             _gameData = gameData;
             _texturePath = texturePath;
             _boundingBox = boundingBox;
-            //SetupShip();
+            //HitbarInit();
+        }
+
+        protected void HitbarInit()
+        {
+            _hitbar = new ShipComponents.Hitbar(_boundingBox);
+            _uiComponents.Add(_hitbar.GetElements()[0]);
         }
 
         public virtual void SetRandomStartPosition()
@@ -46,6 +54,13 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         protected void SetRandomFiringMilliFrequency()
         {
             FiringClock = (long)GenerateRangedRandom(1, _gameData.FramesPerSecond) + _gameData.FramesPerSecond; //minimum 1 second interval.
+        }
+
+        public override void Render()
+        {
+            if(ShowHitbar)
+                _hitbar.Render();
+            base.Render();
         }
     }
 }
