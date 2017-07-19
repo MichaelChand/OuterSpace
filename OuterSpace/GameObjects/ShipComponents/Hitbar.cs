@@ -46,9 +46,9 @@ namespace OuterSpace.GameObjects.ShipComponents
             _uiComponents.Add(_progressbar);
         }
 
-        public void HitpointSubtract(double value)
+        public void HitpointSubtract(double deductValue)
         {
-            Hitpoint = Hitpoint - value;
+            Hitpoint = Hitpoint - deductValue;
         }
 
         protected override void ApplyBinding()
