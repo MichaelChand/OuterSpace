@@ -11,7 +11,7 @@ namespace OuterSpace.GameObjects.Armory.Weapons
     public class PulseCannon : Armory
     {
         private int _speed = 10;
-        private int _strength = 2;
+        private int _strength = 5;
 
         public PulseCannon(GameData gameData, Point firedFromPosition) : base(gameData, firedFromPosition)
         {
