@@ -102,7 +102,7 @@ namespace OuterSpace.Game
             _gameEngine.AddWorldObject(_player.GetPlayerObject());
             _gameEngine.AddWorldObjects(_weaponPlayer);
             _gameEngine.AddWorldObjects(_weaponEnemy);
-            _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level);
+            _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level, _player);
         }
 
         private void CollisionTest()

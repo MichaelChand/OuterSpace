@@ -12,7 +12,7 @@ namespace OuterSpace.GameObjects.Armory.Weapons
     public class Missile : Armory
     {
         private int _speed = 5;
-
+        private int _strength = 5;
         public Missile(GameData gameData, Point firedFromPosition) : base(gameData, firedFromPosition)
         {
             Initialise();
@@ -20,6 +20,7 @@ namespace OuterSpace.GameObjects.Armory.Weapons
 
         private void Initialise()
         {
+            Strength = _strength;
             _width = 4;
             _height = 25;
             _magnetude = _speed;
@@ -30,6 +31,7 @@ namespace OuterSpace.GameObjects.Armory.Weapons
             SetupGameObject();
             _angle = 90;
             Update();
+
         }
 
         private void SetStartPosition()
