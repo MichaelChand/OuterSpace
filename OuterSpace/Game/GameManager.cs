@@ -5,6 +5,10 @@ using GameObjects.Interfaces;
 using OuterSpace.Game.Levels;
 using OuterSpace.GameObjects;
 using OuterSpace.GameObjects.Armory;
+using OuterSpace.GameObjects.Ships;
+using OuterSpace.GameObjects.Ships.Enemy;
+using OuterSpace.GameObjects.Ships.Player;
+using PhysicsSystem;
 using RenderSystem;
 using System;
 using System.Collections.Generic;
@@ -24,8 +28,10 @@ namespace OuterSpace.Game
         private AiManager _aiManager;
         private MunitionsFactory _munitionsFactory;
         private ILevel _level;
+        private Player _player;
+        private CollisionDetector _collisionDetector;
 
-        public GameManager(List<IAGameObject> playerWeaponList, List<IAGameObject> enemyWeaponList, GameData gameData, GameEngine gameEngine, MunitionsFactory munitionsFactory, RenderPage renderer, ILevel level)
+        public GameManager(List<IAGameObject> playerWeaponList, List<IAGameObject> enemyWeaponList, GameData gameData, GameEngine gameEngine, MunitionsFactory munitionsFactory, RenderPage renderer, ILevel level, Player player)
         {
             _level = level;
             _playerWeaponList = playerWeaponList;
@@ -35,6 +41,8 @@ namespace OuterSpace.Game
             _renderer = renderer;
             _munitionsFactory = munitionsFactory;
             _aiManager = new AiManager(_gameData, enemyWeaponList, _munitionsFactory);
+            _player = player;
+            _collisionDetector = new CollisionDetector();
         }
 
 
@@ -76,8 +84,41 @@ namespace OuterSpace.Game
             }
         }
 
+        private bool HitTest(GameObject ship, List<IAGameObject> weaponList)
+        {
+            IAGameObject[] collidedWeapon = (from weapon in weaponList
+                                             where _collisionDetector.Collision(ship.GetBoundingBox(), (weapon as GameObject).GetBoundingBox())
+                                             select weapon).ToArray();
+            if(collidedWeapon.Length > 0)
+            {
+                for(int i = 0; i < collidedWeapon.Length; i++)
+                {
+                    (collidedWeapon[i] as Armory).IsActive = false;
+                    (ship as Ship).Strength -= (collidedWeapon[i] as Armory).Strength;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private void EnemyHitTest(List<IAGameObject> ships, List<IAGameObject> weaponList)
+        {
+            List<IAGameObject> aiShips = ships;
+            for(int i = aiShips.Count -1; i >= 0; i--)
+            {
+                HitTest(aiShips[i] as GameObject, weaponList);
+                (aiShips[i] as EnemyShip).HitPointBar.SetHitpoint((aiShips[i] as Ship).Strength);
+                if ((aiShips[i] as EnemyShip).HitPointBar.Hitpoint < 0)
+                {
+                    _renderer.RemoveWorldObject(aiShips[i]);
+                    aiShips.Remove(aiShips[i]);
+                }
+            }
+        }
+
         public void Update()
         {
+            EnemyHitTest(_level.GetLevelObjects(), _playerWeaponList);
             UpdateAi();
             CheckForNewWeaponToAdd(_playerWeaponList);
             CheckForNewWeaponToAdd(_enemyWeaponList);

@@ -12,7 +12,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         protected int _moveScaleX = 1;
         protected int _moveScaleY = 1;
         protected int _speed = 2;
-        protected Hitbar _hitbar;
+        public Hitbar HitPointBar { get; set; }
 
         public bool ShowHitbar { get; set; }
 
@@ -31,8 +31,14 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         protected void HitbarInit()
         {
-            _hitbar = new ShipComponents.Hitbar(_boundingBox);
-            _uiComponents.Add(_hitbar.GetElements()[0]);
+            
+            HitPointBar = new ShipComponents.Hitbar(_boundingBox, Strength);
+            _uiComponents.Add(HitPointBar.GetElements()[0]);
+        }
+
+        public void AdjustHitBar(double value)
+        {
+            HitPointBar.HitpointSubtract(value);
         }
 
         public virtual void SetRandomStartPosition()
@@ -59,7 +65,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         public override void Render()
         {
             if(ShowHitbar)
-                _hitbar.Render();
+                HitPointBar.Render();
             base.Render();
         }
     }

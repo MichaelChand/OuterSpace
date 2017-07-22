@@ -20,11 +20,13 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private Mathematics _maths = new Mathematics();
         private ArmamentType _weaponType = ArmamentType.Missile;
         private int _firingClockGranularity = 5;
+        private double _hitpoint = 50;
 
         public EnemyOne(GameData gameData, int framesPerSecond, bool showhitbar) : base(gameData, null, null)
         {
             _texturePath = "Assets//Images//SampleBlank.png";
             _framesPerSecond = framesPerSecond;
+            base.Strength = _hitpoint;
             ShowHitbar = showhitbar;
             Initialise();
         }

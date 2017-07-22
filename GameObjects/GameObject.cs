@@ -37,7 +37,7 @@ namespace OuterSpace.GameObjects
             private set
             {
                 _textureLOD = value;
-                OnShipPropertyChanged("TextureLOD");
+                OnGameObjectPropertyChanged("TextureLOD");
             }
         }
 
@@ -47,7 +47,7 @@ namespace OuterSpace.GameObjects
             set
             {
                 _drawPosition = value;
-                OnShipPropertyChanged("DrawPosition");
+                OnGameObjectPropertyChanged("DrawPosition");
             }
         }
 
@@ -138,7 +138,7 @@ namespace OuterSpace.GameObjects
         }
 
         #region Notify event handlers
-        protected void OnShipPropertyChanged(string property)
+        protected void OnGameObjectPropertyChanged(string property)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }

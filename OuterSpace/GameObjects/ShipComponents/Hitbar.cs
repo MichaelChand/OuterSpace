@@ -23,14 +23,15 @@ namespace OuterSpace.GameObjects.ShipComponents
             set
             {
                 _hitpoint = value;
-                OnShipPropertyChanged("HitPoint");
+                OnGameObjectPropertyChanged("Hitpoint");
             }
         }
 
-        public Hitbar(BoundingBox boundingBox)
+        public Hitbar(BoundingBox boundingBox, double hitpoint)
         {
             _gameObjectDim = new Size(boundingBox.Dimension.Width, _height);
             _boundingBox = boundingBox;
+            Hitpoint = hitpoint;
             DrawPosition = new Thickness(_boundingBox.Dimension.Left, _boundingBox.Dimension.Top, DrawPosition.Right, DrawPosition.Bottom);
             SetupProgressBar();
         }
@@ -46,9 +47,14 @@ namespace OuterSpace.GameObjects.ShipComponents
             _uiComponents.Add(_progressbar);
         }
 
-        public void HitpointSubtract(double value)
+        public void HitpointSubtract(double deductValue)
         {
-            Hitpoint = Hitpoint - value;
+            Hitpoint = Hitpoint - deductValue;
+        }
+
+        public void SetHitpoint(double value)
+        {
+            Hitpoint = value;
         }
 
         protected override void ApplyBinding()
