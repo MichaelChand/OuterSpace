@@ -81,9 +81,9 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private Point SpeedAndHeadingControl()
         {
+            double angle = _angle;
             Heading();
-            // new Point(_maths.GetX(_angle, _speed), _maths.GetY(_angle, _speed));
-            return _maths.GetXY(_angle, _speed);
+            return new Point(_maths.GetX(_angle, _speed), _maths.GetY(_angle, _speed));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

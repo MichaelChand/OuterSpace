@@ -36,6 +36,7 @@ namespace OuterSpace.Game.Levels
         {
             List<IAGameObject> enemies = new List<IAGameObject>();
             enemies.Add(new EnemyOne(_gameData, _framesPerSecond, true));
+            enemies.Add(new EnemyTwo(_gameData, _framesPerSecond, true));
             return enemies;
         }
 

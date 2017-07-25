@@ -33,6 +33,7 @@ namespace OuterSpace.Game
 
         public GameManager(List<IAGameObject> playerWeaponList, List<IAGameObject> enemyWeaponList, GameData gameData, GameEngine gameEngine, MunitionsFactory munitionsFactory, RenderPage renderer, ILevel level, Player player)
         {
+
             _level = level;
             _playerWeaponList = playerWeaponList;
             _enemyWeaponList = enemyWeaponList;
@@ -108,7 +109,7 @@ namespace OuterSpace.Game
             {
                 HitTest(aiShips[i] as GameObject, weaponList);
                 (aiShips[i] as EnemyShip).HitPointBar.SetHitpoint((aiShips[i] as Ship).Strength);
-                if ((aiShips[i] as EnemyShip).HitPointBar.Hitpoint < 0)
+                if ((aiShips[i] as EnemyShip).HitPointBar.Hitpoint <= 0)
                 {
                     _renderer.RemoveWorldObject(aiShips[i]);
                     aiShips.Remove(aiShips[i]);
@@ -116,9 +117,17 @@ namespace OuterSpace.Game
             }
         }
 
+        private void PlayerHitTest(List<IAGameObject> ships, List<IAGameObject> weaponList)
+        {
+            HitTest((_player.GetPlayerObject() as PlayerShip), weaponList);
+            if ((_player.GetPlayerObject() as Ship).Strength <= 0)
+                _renderer.RemoveWorldObject(_player.GetPlayerObject());
+        }
+
         public void Update()
         {
             EnemyHitTest(_level.GetLevelObjects(), _playerWeaponList);
+            PlayerHitTest(_level.GetLevelObjects(), _enemyWeaponList);
             UpdateAi();
             CheckForNewWeaponToAdd(_playerWeaponList);
             CheckForNewWeaponToAdd(_enemyWeaponList);
