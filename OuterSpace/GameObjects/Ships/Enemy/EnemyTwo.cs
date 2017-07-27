@@ -17,6 +17,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private int _waitToChangeHeadingSeconds = 10;
         private int _speedRange = 5;
         private Mathematics _maths = new Mathematics();
+        private int _firingClockGranularity = 2;
         private double _hitpoint = 50;
 
         public EnemyTwo(GameData gameData, bool showHitbar) : this(gameData, null, null)
@@ -41,10 +42,17 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
             SetupGameObject();
             _angle = GenerateRangedRandom(1, _headingAngleRange);
+            AdjustFiringClock();
             if (ShowHitbar)
                 HitbarInit();
             AutoSpeed();
             Update();
+        }
+
+        public override void AdjustFiringClock()
+        {
+            SetRandomFiringMilliFrequency();
+            FiringClock *= _firingClockGranularity;
         }
 
         private void Heading()
