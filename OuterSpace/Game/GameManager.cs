@@ -135,6 +135,7 @@ namespace OuterSpace.Game
             CheckForNewWeaponToAdd(_enemyWeaponList);
             WeaponPersistanceCheck(_playerWeaponList);
             WeaponPersistanceCheck(_enemyWeaponList);
+            UpdateAi();
         }
     }
 }
