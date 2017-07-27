@@ -129,21 +129,13 @@ namespace OuterSpace.Game
 
         public void Update()
         {
-            _level.GetLevelObjects();
             EnemyHitTest(_level.GetLevelObjects(), _playerWeaponList);
-            _level.GetLevelObjects();
             PlayerHitTest(_level.GetLevelObjects(), _enemyWeaponList);
-            _level.GetLevelObjects();
             UpdateAi();
-            _level.GetLevelObjects();
             CheckForNewWeaponToAdd(_playerWeaponList);
-            _level.GetLevelObjects();
             CheckForNewWeaponToAdd(_enemyWeaponList);
-            _level.GetLevelObjects();
             WeaponPersistanceCheck(_playerWeaponList);
-            _level.GetLevelObjects();
             WeaponPersistanceCheck(_enemyWeaponList);
-            _level.GetLevelObjects();
         }
     }
 }
