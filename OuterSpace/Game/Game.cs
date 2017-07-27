@@ -105,20 +105,11 @@ namespace OuterSpace.Game
             _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level, _player);
         }
 
-        private void CollisionTest()
-        {
-            //BoundingBox playerBounds = (_player.GetPlayerObject() as Ship).GetBoundingBox();
-            //BoundingBox enemyBounds = (_level.GetLevelObjects()[0] as Ship).GetBoundingBox();
-            //if (_collisionDetection.Collision(playerBounds, enemyBounds))
-            //    Console.WriteLine(string.Format("{0} COLLISION", _intersetCount++));
-        }
-
         public void Update()
         {
+            _gameManager.Update();
             _player.Update();
             _gameEngine.Update();
-            _gameManager.Update();
-            CollisionTest();
             _gameEngine.Render();
         }
     }

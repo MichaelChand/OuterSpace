@@ -82,8 +82,11 @@ namespace OuterSpace.GameObjects.Ships.Player
 
         public void Update()
         {
-            UpdateAction();
-            _playerShip.Update();
+            if (_playerShip.Alive)
+            {
+                UpdateAction();
+                _playerShip.Update();
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ namespace OuterSpace.GameObjects.Ships.Player
         private int _height = 50;
         private int _speed = 10;
         private Point _position;
+        private double _strength = 1;
 
         public PlayerShip(GameData gameData)
         {
@@ -21,6 +22,8 @@ namespace OuterSpace.GameObjects.Ships.Player
 
         private void Initialise()
         {
+            Strength = _strength;
+            Alive = true;
             _boundingBox = new BoundingBox(new Box { Left = 0, Top = 0, Width = _width, Height = _height });
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
             SetStartPosition();

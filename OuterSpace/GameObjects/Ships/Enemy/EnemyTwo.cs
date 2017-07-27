@@ -17,11 +17,14 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private int _waitToChangeHeadingSeconds = 10;
         private int _speedRange = 5;
         private Mathematics _maths = new Mathematics();
+        private double _hitpoint = 50;
 
-        public EnemyTwo(GameData gameData, int framesPerSecond) : this(gameData, null, null)
+        public EnemyTwo(GameData gameData, bool showHitbar) : this(gameData, null, null)
         {
             _texturePath = "Assets//Images//SampleBlank.png";
-            _framesPerSecond = framesPerSecond;
+            _framesPerSecond = gameData.FramesPerSecond;
+            base.Strength = _hitpoint;
+            ShowHitbar = showHitbar;
             Initialise();
         }
 
@@ -38,6 +41,8 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
             SetupGameObject();
             _angle = GenerateRangedRandom(1, _headingAngleRange);
+            if (ShowHitbar)
+                HitbarInit();
             AutoSpeed();
             Update();
         }

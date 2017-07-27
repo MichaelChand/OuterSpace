@@ -12,7 +12,7 @@ namespace OuterSpace.GameObjects.Armory.Weapons
     public class Missile : Armory
     {
         private int _speed = 5;
-        private int _strength = 5;
+        private int _strength = 2;
         public Missile(GameData gameData, Point firedFromPosition) : base(gameData, firedFromPosition)
         {
             Initialise();
