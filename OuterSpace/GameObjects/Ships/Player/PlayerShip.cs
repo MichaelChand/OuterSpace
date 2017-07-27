@@ -23,6 +23,7 @@ namespace OuterSpace.GameObjects.Ships.Player
         private void Initialise()
         {
             Strength = _strength;
+            Alive = true;
             _boundingBox = new BoundingBox(new Box { Left = 0, Top = 0, Width = _width, Height = _height });
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
             SetStartPosition();

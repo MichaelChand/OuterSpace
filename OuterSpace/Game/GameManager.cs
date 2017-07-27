@@ -121,18 +121,29 @@ namespace OuterSpace.Game
         {
             HitTest((_player.GetPlayerObject() as PlayerShip), weaponList);
             if ((_player.GetPlayerObject() as Ship).Strength <= 0)
+            {
                 _renderer.RemoveWorldObject(_player.GetPlayerObject());
+                (_player.GetPlayerObject() as Ship).Alive = false;
+            }
         }
 
         public void Update()
         {
+            _level.GetLevelObjects();
             EnemyHitTest(_level.GetLevelObjects(), _playerWeaponList);
+            _level.GetLevelObjects();
             PlayerHitTest(_level.GetLevelObjects(), _enemyWeaponList);
+            _level.GetLevelObjects();
             UpdateAi();
+            _level.GetLevelObjects();
             CheckForNewWeaponToAdd(_playerWeaponList);
+            _level.GetLevelObjects();
             CheckForNewWeaponToAdd(_enemyWeaponList);
+            _level.GetLevelObjects();
             WeaponPersistanceCheck(_playerWeaponList);
+            _level.GetLevelObjects();
             WeaponPersistanceCheck(_enemyWeaponList);
+            _level.GetLevelObjects();
         }
     }
 }

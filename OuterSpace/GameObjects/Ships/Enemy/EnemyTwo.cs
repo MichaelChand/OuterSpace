@@ -17,11 +17,13 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private int _waitToChangeHeadingSeconds = 10;
         private int _speedRange = 5;
         private Mathematics _maths = new Mathematics();
+        private double _hitpoint = 50;
 
-        public EnemyTwo(GameData gameData, int framesPerSecond, bool showHitbar) : this(gameData, null, null)
+        public EnemyTwo(GameData gameData, bool showHitbar) : this(gameData, null, null)
         {
             _texturePath = "Assets//Images//SampleBlank.png";
-            _framesPerSecond = framesPerSecond;
+            _framesPerSecond = gameData.FramesPerSecond;
+            base.Strength = _hitpoint;
             ShowHitbar = showHitbar;
             Initialise();
         }
