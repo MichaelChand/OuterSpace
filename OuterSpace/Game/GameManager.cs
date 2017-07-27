@@ -131,11 +131,11 @@ namespace OuterSpace.Game
         {
             EnemyHitTest(_level.GetLevelObjects(), _playerWeaponList);
             PlayerHitTest(_level.GetLevelObjects(), _enemyWeaponList);
-            UpdateAi();
             CheckForNewWeaponToAdd(_playerWeaponList);
             CheckForNewWeaponToAdd(_enemyWeaponList);
             WeaponPersistanceCheck(_playerWeaponList);
             WeaponPersistanceCheck(_enemyWeaponList);
+            UpdateAi();
         }
     }
 }
