@@ -16,6 +16,7 @@ namespace OuterSpace.GameObjects.ShipComponents
         private ProgressBar _progressbar;
         private double _hitpoint;
         private int _height = 2;
+        private int minimumWidth = 50;
 
         public double Hitpoint
         {
@@ -41,7 +42,7 @@ namespace OuterSpace.GameObjects.ShipComponents
             _progressbar = new ProgressBar();
             _progressbar.Maximum = 100;
             _progressbar.Minimum = 0;
-            _progressbar.Width = _boundingBox.Dimension.Width;
+            _progressbar.Width = _boundingBox.Dimension.Width >= minimumWidth ? _boundingBox.Dimension.Width : minimumWidth;
             Hitpoint = 80;
             ApplyBinding();
             _uiComponents.Add(_progressbar);
@@ -67,6 +68,18 @@ namespace OuterSpace.GameObjects.ShipComponents
 
             _progressbar.SetBinding(ProgressBar.MarginProperty, DrawPositionBinding);
             _progressbar.SetBinding(ProgressBar.ValueProperty, HitPointBinding);
+        }
+
+        private Thickness GetAlignedDrawPosition()
+        {
+            double horizontalAlignment = _boundingBox.Dimension.Left - (_boundingBox.Dimension.Width >= minimumWidth ? 0f : (minimumWidth /2));
+            return new Thickness(horizontalAlignment, _boundingBox.Dimension.Top, DrawPosition.Right, DrawPosition.Bottom);
+        }
+
+        //Perform its own render calculation because the hitbar needs its own alignment.
+        public override void Render()
+        {
+            DrawPosition = GetAlignedDrawPosition();
         }
     }
 }

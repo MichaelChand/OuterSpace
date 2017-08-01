@@ -20,8 +20,6 @@ namespace OuterSpace.Game
         private GameDispatcherTimer _gameTimer;
         private Game _game;
         private Page _renderPage;
-        private Func<int> TestCounter;
-        private bool tc = false;
         public static int _FRAMES = 30;
         private GameState _gameState;
         private GameData _gameData;

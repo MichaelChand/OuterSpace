@@ -17,7 +17,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         private int _waitToChangeHeadingSeconds = 10;
         private int _speedRange = 5;
         private Mathematics _maths = new Mathematics();
-        private int _firingClockGranularity = 2;
+        private int _firingClockGranularity = 1;
         private double _hitpoint = 50;
 
         public EnemyTwo(GameData gameData, bool showHitbar) : this(gameData, null, null)
