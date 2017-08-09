@@ -15,7 +15,7 @@ namespace OuterSpace.GameObjects.ShipComponents
     {
         private ProgressBar _progressbar;
         private double _hitpoint;
-        private int _height = 2;
+        private int _height = 3;
         private int minimumWidth = 50;
 
         public double Hitpoint
@@ -43,6 +43,7 @@ namespace OuterSpace.GameObjects.ShipComponents
             _progressbar.Maximum = 100;
             _progressbar.Minimum = 0;
             _progressbar.Width = _boundingBox.Dimension.Width >= minimumWidth ? _boundingBox.Dimension.Width : minimumWidth;
+            _progressbar.Height = _height;
             Hitpoint = 80;
             ApplyBinding();
             _uiComponents.Add(_progressbar);

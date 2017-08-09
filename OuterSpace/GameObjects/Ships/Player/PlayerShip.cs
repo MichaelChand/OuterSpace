@@ -15,7 +15,7 @@ namespace OuterSpace.GameObjects.Ships.Player
 
         public PlayerShip(GameData gameData)
         {
-            _texturePath = "Assets//Images//SampleBlank2.png";
+            _texturePath = "Assets//Images//SamplePlayerShip.png";
             _gameData = gameData;
             Initialise();
         }

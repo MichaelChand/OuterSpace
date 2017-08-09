@@ -27,6 +27,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             _gameData = gameData;
             _texturePath = texturePath;
             _boundingBox = boundingBox;
+            Alive = true;
             //HitbarInit();
         }
 

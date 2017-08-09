@@ -22,7 +22,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         public EnemyTwo(GameData gameData, bool showHitbar) : this(gameData, null, null)
         {
-            _texturePath = "Assets//Images//SampleBlank.png";
+            _texturePath = "Assets//Images//SampleEnemyShip.png";
             _framesPerSecond = gameData.FramesPerSecond;
             base.Strength = _hitpoint;
             ShowHitbar = showHitbar;
