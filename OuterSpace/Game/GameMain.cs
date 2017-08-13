@@ -16,7 +16,6 @@ namespace OuterSpace.Game
     public class GameMain : IDisposable
     {
         private MainWindow _mainWindow;
-        private GameEngine _gameEngine;
         private GameDispatcherTimer _gameTimer;
         private Game _game;
         private Page _renderPage;
@@ -45,6 +44,12 @@ namespace OuterSpace.Game
         public void StopGame()
         {
             //_gameEngine.GameStop();
+            _gameState = GameState.Stopped;
+        }
+
+        public void PauseGame()
+        {
+            _gameState = _gameState == GameState.Running ? GameState.InMenu : GameState.Running;
         }
 
         public void Update(object sender, EventArgs eventArgs)
@@ -131,7 +136,17 @@ namespace OuterSpace.Game
         private void CleanUp()
         {
             //_gameEngine?.Dispose();
-            _gameEngine = null;
+            //_gameEngine = null;
+            _gameTimer = null;
+            _gameData = null;
+            _game = null;
+        }
+
+        public void DeInitialise()
+        {
+            _gameTimer.Dispose();
+            _game.DeInitialise();
+            CleanUp();
         }
 
         #region IDisposable Support

@@ -58,5 +58,11 @@ namespace OuterSpace.Game.Levels
             for (int i = _enemies.Count-1; i >= 0; i--)
                 _enemies[i].Update();
         }
+
+        public void DeInitialise()
+        {
+            _enemies.Clear();
+            _enemies = null;
+        }
     }
 }

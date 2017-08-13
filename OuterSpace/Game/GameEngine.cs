@@ -51,5 +51,11 @@ namespace OuterSpace.Game
             for (int i = _worldObjects.Count - 1; i >= 0; i--)
                 _worldObjects[i].Update();
         }
+
+        public void DeInitialise()
+        {
+            for (int i = 0; i < _worldObjects.Count; i++)
+                _renderer.RemoveWorldObject(_worldObjects[i]);
+        }
     }
 }

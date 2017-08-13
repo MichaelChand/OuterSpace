@@ -139,5 +139,21 @@ namespace OuterSpace.Game
             CheckForNewWeaponToAdd(_enemyWeaponList);
             UpdateAi();
         }
+
+        private void RemoveGameObjectsInList(List<IAGameObject> objects)
+        {
+            for (int i = 0; i < objects.Count; i++)
+                _renderer.RemoveWorldObject(objects[i]);
+        }
+
+        public void DeInitialise()
+        {
+            _collisionDetector = null;
+            _aiManager.DeInitialise();
+            RemoveGameObjectsInList(new List<IAGameObject> { _player.GetPlayerObject() });
+            RemoveGameObjectsInList(_playerWeaponList);
+            RemoveGameObjectsInList(_enemyWeaponList);
+            RemoveGameObjectsInList(_level.GetLevelObjects());
+        }
     }
 }
