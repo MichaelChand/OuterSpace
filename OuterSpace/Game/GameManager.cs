@@ -140,6 +140,8 @@ namespace OuterSpace.Game
             UpdateAi();
         }
 
+        #region Deinitialise Methods
+
         private void RemoveGameObjectsInList(List<IAGameObject> objects)
         {
             for (int i = 0; i < objects.Count; i++)
@@ -155,5 +157,7 @@ namespace OuterSpace.Game
             RemoveGameObjectsInList(_enemyWeaponList);
             RemoveGameObjectsInList(_level.GetLevelObjects());
         }
+
+        #endregion
     }
 }

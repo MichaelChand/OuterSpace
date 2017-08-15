@@ -46,8 +46,8 @@ namespace OuterSpace
         private void PostLoadInitialise()
         {
             _keyboardInput = new KeyboardInput(new MenuKeyManager());
-            _keyboardInput.KBPreviewEventInitialise();
-            //_keyboardInput.KBEventInitialise();
+            //_keyboardInput.KBPreviewEventInitialise();
+            _keyboardInput.KBEventInitialise();
             _gameMain = new GameMain(this);
             _gameMain.Initialise(GameGrid);
         }
@@ -78,7 +78,6 @@ namespace OuterSpace
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             _gameMain.StopGame();
-            _gameMain.DeInitialise();
             _gameMain = null;
         }
 
@@ -98,6 +97,7 @@ namespace OuterSpace
             
         }
 
+        #region Key trap hook for main window
         /// <summary>
         /// Deactivate certain windows modifier keys such as "ALT"
         /// </summary>
@@ -119,15 +119,14 @@ namespace OuterSpace
         /// Manage responses based on keys pressed for main menu and overall game state management
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void KeyDown_Pressed(object sender, KeyEventArgs e)
+        /// <param name="kea"></param>
+        private void KeyDown_Pressed(object sender, KeyEventArgs kea)
         {
             List<Key?> keys = _keyboardInput.GetActiveKeys();
             Action<Key?> ManageAction = (key) =>
             {
                 switch (key)
                 {
-                    
                     case Key.P:
                         btnPause_Click(sender, null);
                         break;
@@ -137,5 +136,7 @@ namespace OuterSpace
             for (int i = keys.Count - 1; i >= 0; i--)
                 ManageAction(keys[i]);
         }
+
+        #endregion
     }
 }
