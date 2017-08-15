@@ -130,6 +130,9 @@ namespace OuterSpace
                     case Key.P:
                         btnPause_Click(sender, null);
                         break;
+                    case Key.Escape:
+                        btnPause_Click(sender, null);
+                        break;
                 }
             };
 
