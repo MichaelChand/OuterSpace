@@ -11,17 +11,16 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using CommonRelay.DataObjects;
 
+//make progress bar. add collision detection. export Ai and level making to xml. Make menu system
+
 namespace OuterSpace.Game
 {
     public class GameMain : IDisposable
     {
         private MainWindow _mainWindow;
-        private GameEngine _gameEngine;
         private GameDispatcherTimer _gameTimer;
         private Game _game;
         private Page _renderPage;
-        private Func<int> TestCounter;
-        private bool tc = false;
         public static int _FRAMES = 30;
         private GameState _gameState;
         private GameData _gameData;
@@ -47,6 +46,14 @@ namespace OuterSpace.Game
         public void StopGame()
         {
             //_gameEngine.GameStop();
+            _gameState = GameState.Stopped;
+            Update(null, null);
+            DeInitialise();
+        }
+
+        public void PauseGame()
+        {
+            _gameState = _gameState == GameState.Running ? GameState.Paused : GameState.Running;
         }
 
         public void Update(object sender, EventArgs eventArgs)
@@ -54,13 +61,19 @@ namespace OuterSpace.Game
             switch (_gameState)
             {
                 case GameState.Running:
+                    if (!_renderPage.IsVisible)
+                        (_renderPage as RenderPage).SetVisible();
                     RunState();
                     break;
                 case GameState.Paused:
-                    _gameState = GameState.InMenu;
+                    PauseState();
                     break;
                 case GameState.Stopped:
                     _gameState = GameState.InMenu;
+                    MenuState();
+                    break;
+                default:
+                    MenuState();
                     break;
             }
 
@@ -68,6 +81,17 @@ namespace OuterSpace.Game
             //    _game.Update();
             //else if (_game.IsNewGame)
             //    _game.StartGame();
+        }
+
+        private void PauseState()
+        {
+            // Call to Pause Menu;
+        }
+
+        private void MenuState()
+        {
+            if (_renderPage.IsVisible)
+                (_renderPage as RenderPage).SetHidden();
         }
 
         public void RunState()
@@ -129,11 +153,20 @@ namespace OuterSpace.Game
             frame.Navigate(InitialisePage(page));
         }
 
-        //make progress bar. add collision detection. export Ai and level making to xml. Make menu system
         private void CleanUp()
         {
             //_gameEngine?.Dispose();
-            _gameEngine = null;
+            //_gameEngine = null;
+            _gameTimer = null;
+            _gameData = null;
+            _game = null;
+        }
+
+        public void DeInitialise()
+        {
+            _gameTimer.Dispose();
+            _game.DeInitialise();
+            CleanUp();
         }
 
         #region IDisposable Support
@@ -149,7 +182,7 @@ namespace OuterSpace.Game
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                CleanUp();
+                DeInitialise();
                 // TODO: set large fields to null.
                 disposedValue = true;
             }

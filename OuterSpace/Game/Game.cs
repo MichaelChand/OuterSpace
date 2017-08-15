@@ -41,7 +41,6 @@ namespace OuterSpace.Game
         private List<IAGameObject> _weaponPlayer;
         private GameManager _gameManager;
         private GameEngine _gameEngine;
-        private Func<long> _elapsed;
         private long _delta;
 
         private static System.Diagnostics.Stopwatch _stopWatch = new System.Diagnostics.Stopwatch();
@@ -111,6 +110,16 @@ namespace OuterSpace.Game
             _player.Update();
             _gameEngine.Update();
             _gameEngine.Render();
+        }
+
+        public void DeInitialise()
+        {
+            _gameData = null;
+            _gameManager.DeInitialise();
+            _gameEngine.DeInitialise();
+            _level.DeInitialise();
+            (_keyboardInput as KeyboardInput).Dispose();
+            _keyboardInput = null;
         }
     }
 }

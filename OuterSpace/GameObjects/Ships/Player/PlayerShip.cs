@@ -11,11 +11,11 @@ namespace OuterSpace.GameObjects.Ships.Player
         private int _height = 50;
         private int _speed = 10;
         private Point _position;
-        private double _strength = 2;
+        private double _strength = 50;
 
         public PlayerShip(GameData gameData)
         {
-            _texturePath = "Assets//Images//SampleBlank2.png";
+            _texturePath = "Assets//Images//SamplePlayerShip.png";
             _gameData = gameData;
             Initialise();
         }

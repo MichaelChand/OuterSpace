@@ -46,7 +46,8 @@ namespace OuterSpace
         private void PostLoadInitialise()
         {
             _keyboardInput = new KeyboardInput(new MenuKeyManager());
-            _keyboardInput.KBPreviewEventInitialise();
+            //_keyboardInput.KBPreviewEventInitialise();
+            _keyboardInput.KBEventInitialise();
             _gameMain = new GameMain(this);
             _gameMain.Initialise(GameGrid);
         }
@@ -66,12 +67,23 @@ namespace OuterSpace
             //_gameMain = new GameMain(this);
             //_gameMain.Initialise(GameGrid);
             //_gameMain.StartGame();
+            if(_gameMain == null)
+            {
+                _gameMain = new GameMain(this);
+                _gameMain.Initialise(GameGrid);
+            }
             _gameMain.Run();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             _gameMain.StopGame();
+            _gameMain = null;
+        }
+
+        private void btnPause_Click(object sender, RoutedEventArgs e)
+        {
+            _gameMain.PauseGame();
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
@@ -84,5 +96,47 @@ namespace OuterSpace
             PostLoadInitialise();
             
         }
+
+        #region Key trap hook for main window
+        /// <summary>
+        /// Deactivate certain windows modifier keys such as "ALT"
+        /// </summary>
+        /// <param name="kea"></param>
+        protected override void OnKeyDown(KeyEventArgs kea)
+        {
+            switch (Keyboard.Modifiers)
+            {
+                case ModifierKeys.Alt:
+                    kea.Handled = true;
+                    break;
+                default:
+                    base.OnKeyDown(kea);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Manage responses based on keys pressed for main menu and overall game state management
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="kea"></param>
+        private void KeyDown_Pressed(object sender, KeyEventArgs kea)
+        {
+            List<Key?> keys = _keyboardInput.GetActiveKeys();
+            Action<Key?> ManageAction = (key) =>
+            {
+                switch (key)
+                {
+                    case Key.P:
+                        btnPause_Click(sender, null);
+                        break;
+                }
+            };
+
+            for (int i = keys.Count - 1; i >= 0; i--)
+                ManageAction(keys[i]);
+        }
+
+        #endregion
     }
 }

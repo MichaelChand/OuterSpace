@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OuterSpace.Game.Levels
@@ -36,6 +37,14 @@ namespace OuterSpace.Game.Levels
             List<IAGameObject> enemies = new List<IAGameObject>();
             enemies.Add(new EnemyOne(_gameData, true));
             enemies.Add(new EnemyTwo(_gameData, true));
+            enemies.Add(new EnemyOne(_gameData, true));
+            enemies.Add(new EnemyTwo(_gameData, true));
+            enemies.Add(new EnemyOne(_gameData, true));
+            enemies.Add(new EnemyTwo(_gameData, true));
+            enemies.Add(new EnemyOne(_gameData, true));
+            enemies.Add(new EnemyTwo(_gameData, true));
+            enemies.Add(new EnemyOne(_gameData, true));
+            enemies.Add(new EnemyTwo(_gameData, true));
             return enemies;
         }
 
@@ -48,6 +57,12 @@ namespace OuterSpace.Game.Levels
         {
             for (int i = _enemies.Count-1; i >= 0; i--)
                 _enemies[i].Update();
+        }
+
+        public void DeInitialise()
+        {
+            _enemies.Clear();
+            _enemies = null;
         }
     }
 }

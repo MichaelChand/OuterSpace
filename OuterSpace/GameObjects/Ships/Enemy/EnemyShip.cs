@@ -8,7 +8,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 {
     public class EnemyShip : Ship
     {
-        private Random _random = new Random();
+        private Random _random;
         protected int _moveScaleX = 1;
         protected int _moveScaleY = 1;
         protected int _speed = 2;
@@ -23,9 +23,11 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         public EnemyShip(GameData gameData, BoundingBox boundingBox, string texturePath)
         {
+            _random = new Random(GetHashCode());
             _gameData = gameData;
             _texturePath = texturePath;
             _boundingBox = boundingBox;
+            Alive = true;
             //HitbarInit();
         }
 
@@ -50,6 +52,11 @@ namespace OuterSpace.GameObjects.Ships.Enemy
         protected double GenerateRangedRandom(int min, int max)
         {
             return _random.Next(min, max);
+        }
+
+        protected double GenerateRangedRandom(int seed)
+        {
+            return _random.Next();
         }
 
         public virtual void AdjustFiringClock()

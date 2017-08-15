@@ -24,7 +24,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         public EnemyOne(GameData gameData, bool showhitbar) : base(gameData, null, null)
         {
-            _texturePath = "Assets//Images//SampleBlank.png";
+            _texturePath = "Assets//Images//SampleEnemyShip.png";
             _framesPerSecond = gameData.FramesPerSecond;
             base.Strength = _hitpoint;
             ShowHitbar = showhitbar;

@@ -87,6 +87,8 @@ namespace OuterSpace.Game
 
         private bool HitTest(GameObject ship, List<IAGameObject> weaponList)
         {
+            if (!(ship as Ship).Alive)
+                return false;
             IAGameObject[] collidedWeapon = (from weapon in weaponList
                                              where _collisionDetector.Collision(ship.GetBoundingBox(), (weapon as GameObject).GetBoundingBox())
                                              select weapon).ToArray();
@@ -131,11 +133,31 @@ namespace OuterSpace.Game
         {
             EnemyHitTest(_level.GetLevelObjects(), _playerWeaponList);
             PlayerHitTest(_level.GetLevelObjects(), _enemyWeaponList);
-            CheckForNewWeaponToAdd(_playerWeaponList);
-            CheckForNewWeaponToAdd(_enemyWeaponList);
             WeaponPersistanceCheck(_playerWeaponList);
             WeaponPersistanceCheck(_enemyWeaponList);
+            CheckForNewWeaponToAdd(_playerWeaponList);
+            CheckForNewWeaponToAdd(_enemyWeaponList);
             UpdateAi();
         }
+
+        #region Deinitialise Methods
+
+        private void RemoveGameObjectsInList(List<IAGameObject> objects)
+        {
+            for (int i = 0; i < objects.Count; i++)
+                _renderer.RemoveWorldObject(objects[i]);
+        }
+
+        public void DeInitialise()
+        {
+            _collisionDetector = null;
+            _aiManager.DeInitialise();
+            RemoveGameObjectsInList(new List<IAGameObject> { _player.GetPlayerObject() });
+            RemoveGameObjectsInList(_playerWeaponList);
+            RemoveGameObjectsInList(_enemyWeaponList);
+            RemoveGameObjectsInList(_level.GetLevelObjects());
+        }
+
+        #endregion
     }
 }

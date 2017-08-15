@@ -36,6 +36,16 @@ namespace RenderSystem
             RenderGrid.Height = (int)(height / 1.30);
         }
 
+        public void SetVisible()
+        {
+            pgRenderViewPort.Visibility = Visibility.Visible;
+        }
+
+        public void SetHidden()
+        {
+            pgRenderViewPort.Visibility = Visibility.Hidden;
+        }
+
         public List<IAGameObject> GetGameObjectList()
         {
             return _gameObjects;
