@@ -3,6 +3,7 @@ using CommonRelay.DataObjects;
 using GameObjects.Interfaces;
 using OuterSpace.Game.Input;
 using OuterSpace.GameObjects.Armory;
+using ReConInvaders.Inputsystem;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -65,10 +66,10 @@ namespace OuterSpace.GameObjects.Ships.Player
                         _playerShip.MoveRight();
                         break;
                     case Key.Up:
-                        _playerShip.MoveUp();
+                        //_playerShip.MoveUp();
                         break;
                     case Key.Down:
-                        _playerShip.MoveDown();
+                        //_playerShip.MoveDown();
                         break;
                     case Key.Space :
                         _weapon.Add(_munitionsFactory.MakeArmament(ArmamentType.Pulsecannon, _playerShip.GetPositionOfCentre()));
@@ -87,6 +88,12 @@ namespace OuterSpace.GameObjects.Ships.Player
                 UpdateAction();
                 _playerShip.Update();
             }
+        }
+
+        public void DeInitialise()
+        {
+            _playerShip = null;
+            (_keyboardInput as KeyboardInput).Dispose();
         }
     }
 }

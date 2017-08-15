@@ -14,9 +14,18 @@ namespace OuterSpace.Game.Input
         private Key? _keypressed = null;
         private Dictionary<Key?, KeyInfo> _actionKeyList;
 
+
+        public MenuKeyManager()
+        {
+        }
+
         public void KeyUp(Key? key)
         {
-
+            if (key == _key)
+            {
+                IsKeyPressed = false;
+                _keypressed = null; //Clear once released.
+            }
         }
 
         public void KeyDown(Key? key)
@@ -26,7 +35,7 @@ namespace OuterSpace.Game.Input
 
         public List<Key?> GetActiveKeyList()
         {
-            throw new NotImplementedException();
+            return new List<Key?> { _key };
         }
 
         public bool SetCurrentKeypressType(Key? keyPressed)
@@ -43,6 +52,16 @@ namespace OuterSpace.Game.Input
 
             switch (_key)
             {
+
+                case Key.LeftAlt:
+                    _keypressed = _key;
+                    break;
+                case Key.Escape:
+                    _keypressed = _key;
+                    break;
+                case Key.P:
+                    _keypressed = _key;
+                    break;
                 default:
                     _keypressed = null;
                     keyHandledState = false;

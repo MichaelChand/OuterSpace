@@ -64,5 +64,11 @@ namespace OuterSpace.Game
             if (_maths.FramesToSeconds((_aiPlayer as Ship).FrameTimeStamp++, _gameData.FramesPerSecond) >= _maths.FramesToSeconds((int)(_aiPlayer as Ship).FiringClock, _gameData.FramesPerSecond))
                 Fire();
         }
+
+        public void DeInitialise()
+        {
+            _maths = null;
+            _random = null;
+        }
     }
 }
