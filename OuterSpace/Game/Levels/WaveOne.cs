@@ -1,5 +1,7 @@
 ﻿using CommonRelay.DataObjects;
 using GameObjects.Interfaces;
+using OuterSpace.Game.Loaders;
+using OuterSpace.GameEntities.Ships.Enemy;
 using OuterSpace.GameObjects;
 using OuterSpace.GameObjects.Ships.Enemy;
 using System;
@@ -15,6 +17,7 @@ namespace OuterSpace.Game.Levels
     {
         private List<IAGameObject> _enemies;
         private GameData _gameData;
+        private AiFactory _aiFactory;
 
         public WaveOne(GameData gameData)
         {
@@ -24,6 +27,8 @@ namespace OuterSpace.Game.Levels
         public void Load()
         {
             //Load Level data here.
+            GameObjectLoader gol = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
+            _aiFactory = new AiFactory(gol.GetAiParser(), _gameData);
             CreateLevel();
         }
 
@@ -35,16 +40,16 @@ namespace OuterSpace.Game.Levels
         public List<IAGameObject> CreateEnemies()
         {
             List<IAGameObject> enemies = new List<IAGameObject>();
-            enemies.Add(new EnemyOne(_gameData, true));
-            enemies.Add(new EnemyTwo(_gameData, true));
-            enemies.Add(new EnemyOne(_gameData, true));
-            enemies.Add(new EnemyTwo(_gameData, true));
-            enemies.Add(new EnemyOne(_gameData, true));
-            enemies.Add(new EnemyTwo(_gameData, true));
-            enemies.Add(new EnemyOne(_gameData, true));
-            enemies.Add(new EnemyTwo(_gameData, true));
-            enemies.Add(new EnemyOne(_gameData, true));
-            enemies.Add(new EnemyTwo(_gameData, true));
+            enemies.Add(_aiFactory.GetAi(0));
+            enemies.Add(_aiFactory.GetAi(1));
+            enemies.Add(_aiFactory.GetAi(0));
+            enemies.Add(_aiFactory.GetAi(1));
+            enemies.Add(_aiFactory.GetAi(0));
+            enemies.Add(_aiFactory.GetAi(1));
+            enemies.Add(_aiFactory.GetAi(0));
+            enemies.Add(_aiFactory.GetAi(1));
+            enemies.Add(_aiFactory.GetAi(0));
+            enemies.Add(_aiFactory.GetAi(1));
             return enemies;
         }
 

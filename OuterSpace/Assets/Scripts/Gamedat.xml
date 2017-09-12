@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Gamedata>
+  <Ships>
+    <Ai>
+      <ID>0</ID>
+      <Texture>SampleEnemyShip.png</Texture>
+      <Strength>100</Strength>
+      <HeadingRange>160</HeadingRange>
+      <RandomStart>-1</RandomStart>
+      <WeaponType>0</WeaponType>
+      <FireFrequency>10</FireFrequency>
+      <Scanrange>90</Scanrange>
+      <Speed>5</Speed> <!-- 0 = Auto speed -->
+      <ShowHitbar>true</ShowHitbar>
+      <Width>50</Width>
+      <Height>50</Height>
+    </Ai>
+    <Ai>
+      <ID>1</ID>
+      <Texture>SampleEnemyShip.png</Texture>
+      <Strength>150</Strength>
+      <HeadingRange>160</HeadingRange>
+      <RandomStart>-1</RandomStart>
+      <WeaponType>0</WeaponType>
+      <FireFrequency>5</FireFrequency>
+      <Scanrange>90</Scanrange>
+      <Speed>0</Speed> <!-- 0 = Auto speed -->
+      <ShowHitbar>true</ShowHitbar>
+      <Width>10</Width>
+      <Height>70</Height>
+    </Ai>
+  </Ships>
+  <Levels>
+    
+  </Levels>
+</Gamedata> 

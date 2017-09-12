@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using OuterSpace.Game.Loaders;
 
 namespace OuterSpace.Game
 {
@@ -42,6 +43,7 @@ namespace OuterSpace.Game
         private GameManager _gameManager;
         private GameEngine _gameEngine;
         private long _delta;
+        private EnemyShipParser _enemyShipParser;
 
         private static System.Diagnostics.Stopwatch _stopWatch = new System.Diagnostics.Stopwatch();
 
