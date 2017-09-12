@@ -57,19 +57,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GameObjects\Armory\MunitionsFactory.cs" />
-    <Compile Include="GameObjects\Armory\Armory.cs" />
-    <Compile Include="GameObjects\Armory\ArmoryType.cs" />
-    <Compile Include="GameObjects\Armory\IArmory.cs" />
-    <Compile Include="GameObjects\Armory\Weapons\Missile.cs" />
-    <Compile Include="GameObjects\Armory\Weapons\PulseCannon.cs" />
-    <Compile Include="GameObjects\ShipComponents\Hitbar.cs" />
-    <Compile Include="GameObjects\Ships\Enemy\EnemyTwo.cs" />
-    <Compile Include="GameObjects\Ships\Enemy\EnemyOne.cs" />
-    <Compile Include="GameObjects\Ships\Enemy\EnemyShip.cs" />
-    <Compile Include="GameObjects\Ships\Player\Player.cs" />
-    <Compile Include="GameObjects\Ships\Player\PlayerShip.cs" />
-    <Compile Include="GameObjects\Ships\Ship.cs" />
+    <Compile Include="GameEntities\Armory\MunitionsFactory.cs" />
+    <Compile Include="GameEntities\Armory\Armory.cs" />
+    <Compile Include="GameEntities\Armory\ArmoryType.cs" />
+    <Compile Include="GameEntities\Armory\IArmory.cs" />
+    <Compile Include="GameEntities\Armory\Weapons\Missile.cs" />
+    <Compile Include="GameEntities\Armory\Weapons\PulseCannon.cs" />
+    <Compile Include="GameEntities\ShipComponents\Hitbar.cs" />
+    <Compile Include="GameEntities\Ships\Enemy\AiFactory.cs" />
+    <Compile Include="GameEntities\Ships\Enemy\AiShip.cs" />
+    <Compile Include="GameEntities\Ships\Enemy\EnemyTwo.cs" />
+    <Compile Include="GameEntities\Ships\Enemy\EnemyOne.cs" />
+    <Compile Include="GameEntities\Ships\Enemy\EnemyShip.cs" />
+    <Compile Include="GameEntities\Ships\Player\Player.cs" />
+    <Compile Include="GameEntities\Ships\Player\PlayerShip.cs" />
+    <Compile Include="GameEntities\Ships\Ship.cs" />
     <Compile Include="Game\AiManager.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Game\GameEngine.cs" />
@@ -86,6 +88,9 @@
     <Compile Include="Game\Levels\ILevel.cs" />
     <Compile Include="Game\Levels\LevelManager.cs" />
     <Compile Include="Game\Levels\WaveOne.cs" />
+    <Compile Include="Game\Loaders\EnemyShipParser.cs" />
+    <Compile Include="Game\Loaders\GameObjectLoader.cs" />
+    <Compile Include="Models\AiModel.cs" />
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
@@ -167,6 +172,10 @@
       <Project>{84de6543-72ef-418e-8e4c-16edfc58b1c8}</Project>
       <Name>RenderSystem</Name>
     </ProjectReference>
+    <ProjectReference Include="..\XMLParser\XMLParser.csproj">
+      <Project>{b1bb8e6c-5b74-4303-90eb-5ae77b6d7c56}</Project>
+      <Name>XMLParser</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Images\SamplePlayerShip.png">
@@ -177,6 +186,13 @@
     <None Include="Assets\Images\SampleEnemyShip.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\Scripts\Gamedat.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
