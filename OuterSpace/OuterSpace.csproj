@@ -189,6 +189,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Assets\Images\SampleBlank_Gap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Images\EnemyOne.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Assets\Scripts\Gamedat.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

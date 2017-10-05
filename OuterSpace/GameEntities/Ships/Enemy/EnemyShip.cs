@@ -31,16 +31,23 @@ namespace OuterSpace.GameObjects.Ships.Enemy
             //HitbarInit();
         }
 
-        protected void HitbarInit()
+        protected void HitbarInit(bool show = true)
         {
             
-            HitPointBar = new ShipComponents.Hitbar(_boundingBox, Strength);
+            HitPointBar = new ShipComponents.Hitbar(_boundingBox, Strength, show);
             _uiComponents.Add(HitPointBar.GetElements()[0]);
         }
 
         public void AdjustHitBar(double value)
         {
+            double val = Strength % 100;
             HitPointBar.HitpointSubtract(value);
+        }
+
+        public void SetHitpoint(double value)
+        {
+            double factor = 100 / MaxStrength;
+            HitPointBar.SetHitpoint(100 - ((factor * value) - 100));
         }
 
         public virtual void SetRandomStartPosition()

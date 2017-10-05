@@ -4,11 +4,44 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:OuterSpace.NavigationPages"
-      mc:Ignorable="d" 
-      d:DesignHeight="30" d:DesignWidth="750"
-      Title="MenuPage">
+      mc:Ignorable="d"
+      x:Name="MenuPageFrame"
+      Title="MenuPage" Height="1000" Width="600" Loaded="MenuPage_Loaded">
 
-    <Grid>
-        
+    <Page.Resources>
+        <Style x:Key="StyleMenuButton" TargetType="Button">
+            <Setter Property="Background" Value="DarkBlue"/>
+            <Setter Property="Opacity" Value="0.5"/>
+            <Setter Property="Width" Value="380"/>
+            <Setter Property="Height" Value="80"/>
+            <Setter Property="FontSize" Value="56"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Blue"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <Grid Background="Black">
+        <Rectangle HorizontalAlignment="Center" Height="515"  Width="400" Margin="5,5,5,5" Stroke="Yellow" VerticalAlignment="Center" Fill="Black" StrokeThickness="2"/>
+        <Rectangle HorizontalAlignment="Center" Height="505"  Width="390" Margin="5,5,5,5" Stroke="Yellow" VerticalAlignment="Center" Fill="Black" StrokeThickness="2"/>
+        <Grid Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" Height="482" Width="380">
+            <Button x:Name="btnNewGame" Style="{StaticResource StyleMenuButton}" Content="New Game" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" Click="btnNewGame_Click" />
+            <Button x:Name="btnPaused" Style="{StaticResource StyleMenuButton}" Content="Resume" HorizontalAlignment="Left" Margin="0,81,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" Click="btnResume_Click"/>
+            <Button x:Name="btnTopScores" Style="{StaticResource StyleMenuButton}" Content="Top Scores" HorizontalAlignment="Left" Margin="0,162,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" />
+            <Button x:Name="btnHelp" Style="{StaticResource StyleMenuButton}" Content="Help" HorizontalAlignment="Left" Margin="0,243,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" />
+            <Button x:Name="btnCredits" Style="{StaticResource StyleMenuButton}" Content="Credits" HorizontalAlignment="Left" Margin="0,324,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" />
+            <Button x:Name="btnQuit" Style="{StaticResource StyleMenuButton}" Content="Quit" HorizontalAlignment="Left" Margin="0,405,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" Click="btnQuit_Click" />
+        </Grid>
     </Grid>
 </Page>

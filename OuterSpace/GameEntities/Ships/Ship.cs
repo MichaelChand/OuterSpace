@@ -8,6 +8,7 @@ namespace OuterSpace.GameObjects.Ships
     {
 
         public double Strength { get; set; }
+        public double MaxStrength { get; set; }
         public bool Alive { get; set; }
         public ArmoryType _armoryType { get; set; }
         public ArmamentType _armamentType { get; set; }

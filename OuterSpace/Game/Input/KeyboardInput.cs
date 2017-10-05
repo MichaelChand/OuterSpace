@@ -69,6 +69,11 @@ namespace ReConInvaders.Inputsystem
             return _keyManager.GetActiveKeyList();
         }
 
+        public void ClearKeys()
+        {
+            _keyManager.ClearKeys();
+        }
+
         public Key? GetRawKeyObject()
         {
             return _key;

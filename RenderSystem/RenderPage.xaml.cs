@@ -56,20 +56,23 @@ namespace RenderSystem
             for (int i = 0; i < gameObjects.Length; i++)
             {
                 _gameObjects.Add(gameObjects[i]);
-                AddComponents(gameObjects[i].GetElements());
+                AddComponents(gameObjects[i].GetElements(), (gameObjects[i] as GameObject).ZIndex);
             }
         }
 
-        private void AddComponents(UIElement[] components)
+        private void AddComponents(UIElement[] components, int zIndex)
         {
             for (int i = 0; i < components.Length; i++)
+            {
                 cnvViewPort.Children.Add(components[i]);
+                Canvas.SetZIndex(components[i], zIndex);
+            }
         }
 
         public void AddWorldObject(IAGameObject gameObject)
         {
             _gameObjects.Add(gameObject);
-            AddComponents(gameObject.GetElements());
+            AddComponents(gameObject.GetElements(), (gameObject as GameObject).ZIndex);
         }
 
         public void AddWorldObjectList(List<IAGameObject> gameObjects)

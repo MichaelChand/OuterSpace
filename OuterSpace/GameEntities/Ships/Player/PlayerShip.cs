@@ -28,6 +28,7 @@ namespace OuterSpace.GameObjects.Ships.Player
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
             SetStartPosition();
             SetupGameObject();
+            ZIndex = 100;
             Update();
         }
 

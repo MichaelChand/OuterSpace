@@ -41,15 +41,15 @@ namespace OuterSpace.Game.Levels
         {
             List<IAGameObject> enemies = new List<IAGameObject>();
             enemies.Add(_aiFactory.GetAi(0));
-            enemies.Add(_aiFactory.GetAi(1));
+            //enemies.Add(_aiFactory.GetAi(1));
             enemies.Add(_aiFactory.GetAi(0));
-            enemies.Add(_aiFactory.GetAi(1));
+            //enemies.Add(_aiFactory.GetAi(1));
             enemies.Add(_aiFactory.GetAi(0));
-            enemies.Add(_aiFactory.GetAi(1));
+            //enemies.Add(_aiFactory.GetAi(1));
             enemies.Add(_aiFactory.GetAi(0));
-            enemies.Add(_aiFactory.GetAi(1));
+            //enemies.Add(_aiFactory.GetAi(1));
             enemies.Add(_aiFactory.GetAi(0));
-            enemies.Add(_aiFactory.GetAi(1));
+            //enemies.Add(_aiFactory.GetAi(1));
             return enemies;
         }
 

@@ -11,6 +11,7 @@ namespace OuterSpace.Game.Input
     {
         bool SetCurrentKeypressType(Key? keyPressed);
         List<Key?> GetActiveKeyList();
+        void ClearKeys();
         void KeyUp(Key? key);
         void KeyDown(Key? key);
     }

@@ -24,7 +24,7 @@ namespace OuterSpace.GameObjects.Armory.Weapons
             _width = 4;
             _height = 25;
             _magnetude = _speed;
-            _texturePath = "Assets//Images//SampleBlank2.png";
+            _texturePath = "Assets//Images//SampleBlank_Gap.png";
             SetStartPosition();
             IsActive = true;
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
