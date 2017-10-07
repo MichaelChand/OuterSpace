@@ -12,6 +12,7 @@ namespace OuterSpace.Game.Loaders
     public class GameObjectLoader
     {
         private EnemyShipParser _enemyShipParser;
+        private LevelParser _levelParser;
         private string _filename;
 
         public GameObjectLoader(string filename)
@@ -26,10 +27,21 @@ namespace OuterSpace.Game.Loaders
             //return _enemyShipParser.GetEnemiesList();
         }
 
+        public void LoadLevel()
+        {
+            _levelParser = new LevelParser(_filename);
+        }
+
         public EnemyShipParser GetAiParser()
         {
             LoadAi();
             return _enemyShipParser;
+        }
+
+        public LevelParser GetLevelParser()
+        {
+            LoadLevel();
+            return _levelParser;
         }
     }
 }

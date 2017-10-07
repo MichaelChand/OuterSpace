@@ -4,14 +4,14 @@
     <Ai>
       <ID>0</ID>
       <Texture>EnemyOne.png</Texture>
-      <Strength>200</Strength>
+      <Strength>500</Strength>
       <HeadingRange>160</HeadingRange>
       <RandomStart>-1</RandomStart> <!-- -1 = Random start. Else enter position as x,y -->
       <WeaponType>0</WeaponType>
       <FireGranularity>1</FireGranularity>
       <Scanrange>90</Scanrange>
       <Speed>5</Speed> <!-- 0 = Auto speed -->
-      <ShowHitbar>false</ShowHitbar>
+      <ShowHitbar>true</ShowHitbar>
       <Width>100</Width>
       <Height>100</Height>
     </Ai>
@@ -40,14 +40,10 @@
       <Ai>0</Ai>
       <Ai>0</Ai>
       <Ai>0</Ai>
-      <Ai>0</Ai>
-      <Ai>0</Ai>
-      <Ai>0</Ai>
-      <Ai>0</Ai>
       <Speed>1</Speed>
       <LevelStartAnimationType>0</LevelStartAnimationType>
       <LevelEndAnimationType>0</LevelEndAnimationType>
-      <LevelBackGroundType>0</LevelBackGroundType>
+      <LevelBackgroundType>0</LevelBackgroundType>
     </Level>  
     <Level>
         <ID>1</ID>
@@ -65,7 +61,7 @@
         <Speed>1</Speed>
         <LevelStartAnimationType>0</LevelStartAnimationType>
         <LevelEndAnimationType>0</LevelEndAnimationType>
-        <LevelBackGroundType>0</LevelBackGroundType>
+        <LevelBackgroundType>0</LevelBackgroundType>
       </Level>  
   </Levels>
 </Gamedata> 

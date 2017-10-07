@@ -17,7 +17,7 @@ namespace OuterSpace.GameObjects.ShipComponents
         private ProgressBar _progressbar;
         private double _hitpoint;
         private int _height = 4;
-        private int minimumWidth = 50;
+        private int minimumWidth = 20;
         private bool _visibility;
         private double _minimum = 0;
         private double _maximum = 100;
@@ -45,12 +45,12 @@ namespace OuterSpace.GameObjects.ShipComponents
 
         private void SetupProgressBar()
         {
-            RotateTransform rt = new RotateTransform(-90);
+            RotateTransform rt = new RotateTransform(0);
             _progressbar = new ProgressBar();
             _progressbar.LayoutTransform = rt;
             _progressbar.Maximum = _maximum;
             _progressbar.Minimum = _minimum;
-            _progressbar.Width = _boundingBox.Dimension.Width >= minimumWidth ? _boundingBox.Dimension.Width : minimumWidth;
+            _progressbar.Width = _boundingBox.Dimension.Width/4.0f >= minimumWidth ? _boundingBox.Dimension.Width/4.0f : minimumWidth;
             _progressbar.Height = _height;
             _progressbar.Background = new SolidColorBrush(Colors.Transparent);
             _progressbar.Visibility = _visibility ? Visibility.Visible : Visibility.Hidden;
@@ -85,8 +85,8 @@ namespace OuterSpace.GameObjects.ShipComponents
         {
             //double horizontalAlignment = _boundingBox.Dimension.Left - (_boundingBox.Dimension.Width >= minimumWidth ? 0f : (minimumWidth /2));
             //return new Thickness(horizontalAlignment, _boundingBox.Dimension.Top - _height, DrawPosition.Right, DrawPosition.Bottom);
-            double horizontalAlignment = _boundingBox.Dimension.Left + _boundingBox.Dimension.Width / 2;
-            return new Thickness(horizontalAlignment, _boundingBox.Dimension.Top - _height, DrawPosition.Right, DrawPosition.Bottom);
+            double horizontalAlignment = _boundingBox.Dimension.Left + _boundingBox.Dimension.Width / 2.75f;
+            return new Thickness(horizontalAlignment, _boundingBox.Dimension.Top + (_boundingBox.Dimension.Height/16.0f), DrawPosition.Right, DrawPosition.Bottom);
         }
 
         //Perform its own render calculation because the hitbar needs its own alignment.

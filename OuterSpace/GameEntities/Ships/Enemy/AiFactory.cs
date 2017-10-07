@@ -12,12 +12,12 @@ namespace OuterSpace.GameEntities.Ships.Enemy
 {
     public class AiFactory
     {
-        private EnemyShipParser _enemyShipPArser;
+        private EnemyShipParser _enemyShipParser;
         private GameData _gameData;
 
         public AiFactory(EnemyShipParser enemyShipParser, GameData gameData)
         {
-            _enemyShipPArser = enemyShipParser;
+            _enemyShipParser = enemyShipParser;
             _gameData = gameData;
         }
         
@@ -30,7 +30,7 @@ namespace OuterSpace.GameEntities.Ships.Enemy
 
         public EnemyShip GetAi(int id)
         {
-            List<AiModel> aiModelList = _enemyShipPArser.GetEnemiesList();
+            List<AiModel> aiModelList = _enemyShipParser.GetEnemiesList();
             return FindShip(id, aiModelList);
         }
     }
