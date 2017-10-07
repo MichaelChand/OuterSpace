@@ -87,10 +87,13 @@
     <Compile Include="Game\Input\PlayKeyManager.cs" />
     <Compile Include="Game\Levels\ILevel.cs" />
     <Compile Include="Game\Levels\LevelManager.cs" />
+    <Compile Include="Game\Levels\Level.cs" />
     <Compile Include="Game\Levels\WaveOne.cs" />
     <Compile Include="Game\Loaders\EnemyShipParser.cs" />
     <Compile Include="Game\Loaders\GameObjectLoader.cs" />
+    <Compile Include="Game\Loaders\LevelParser.cs" />
     <Compile Include="Models\AiModel.cs" />
+    <Compile Include="Models\LevelModel.cs" />
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
@@ -189,6 +192,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Assets\Images\SampleBlank_Gap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Images\EnemyOne.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Images\MissileOne.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Assets\Scripts\Gamedat.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

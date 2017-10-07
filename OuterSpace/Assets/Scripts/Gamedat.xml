@@ -3,34 +3,65 @@
   <Ships>
     <Ai>
       <ID>0</ID>
-      <Texture>SampleEnemyShip.png</Texture>
-      <Strength>100</Strength>
+      <Texture>EnemyOne.png</Texture>
+      <Strength>500</Strength>
       <HeadingRange>160</HeadingRange>
-      <RandomStart>-1</RandomStart>
+      <RandomStart>-1</RandomStart> <!-- -1 = Random start. Else enter position as x,y -->
       <WeaponType>0</WeaponType>
-      <FireFrequency>10</FireFrequency>
+      <FireGranularity>1</FireGranularity>
       <Scanrange>90</Scanrange>
       <Speed>5</Speed> <!-- 0 = Auto speed -->
       <ShowHitbar>true</ShowHitbar>
-      <Width>50</Width>
-      <Height>50</Height>
+      <Width>100</Width>
+      <Height>100</Height>
     </Ai>
     <Ai>
       <ID>1</ID>
       <Texture>SampleEnemyShip.png</Texture>
-      <Strength>150</Strength>
+      <Strength>400</Strength>
       <HeadingRange>160</HeadingRange>
-      <RandomStart>-1</RandomStart>
-      <WeaponType>0</WeaponType>
-      <FireFrequency>5</FireFrequency>
+      <RandomStart>-1</RandomStart> <!-- -1 = Random start. Else enter position as x,y -->
+      <WeaponType>1</WeaponType>
+      <FireGranularity>1</FireGranularity>
       <Scanrange>90</Scanrange>
-      <Speed>0</Speed> <!-- 0 = Auto speed -->
+      <Speed>2</Speed> <!-- 0 = Auto speed -->
       <ShowHitbar>true</ShowHitbar>
       <Width>10</Width>
       <Height>70</Height>
     </Ai>
   </Ships>
   <Levels>
-    
+    <Level>
+      <ID>0</ID>
+      <Chapter>Slow lunacy</Chapter>
+      <Ai>0</Ai>
+      <Ai>0</Ai>
+      <Ai>0</Ai>
+      <Ai>0</Ai>
+      <Ai>0</Ai>
+      <Ai>0</Ai>
+      <Speed>1</Speed>
+      <LevelStartAnimationType>0</LevelStartAnimationType>
+      <LevelEndAnimationType>0</LevelEndAnimationType>
+      <LevelBackgroundType>0</LevelBackgroundType>
+    </Level>  
+    <Level>
+        <ID>1</ID>
+        <Chapter>Rain Storm</Chapter>
+        <Ai>1</Ai>
+        <Ai>1</Ai>
+        <Ai>1</Ai>
+        <Ai>1</Ai>
+        <Ai>1</Ai>
+        <Ai>1</Ai>
+        <Ai>1</Ai>
+        <Ai>1</Ai>
+        <Ai>1</Ai>
+        <Ai>1</Ai>
+        <Speed>1</Speed>
+        <LevelStartAnimationType>0</LevelStartAnimationType>
+        <LevelEndAnimationType>0</LevelEndAnimationType>
+        <LevelBackgroundType>0</LevelBackgroundType>
+      </Level>  
   </Levels>
 </Gamedata> 

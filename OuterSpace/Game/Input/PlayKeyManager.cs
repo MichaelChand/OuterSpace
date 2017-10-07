@@ -124,5 +124,10 @@ namespace OuterSpace.Game.Input
             }
             return aakList;
         }
+
+        public void ClearKeys()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

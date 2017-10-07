@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OuterSpace.Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,29 @@ namespace OuterSpace.NavigationPages
         public MenuPage()
         {
             InitializeComponent();
+        }
+
+        private void btnNewGame_Click(object sender, RoutedEventArgs e)
+        {
+            //New Game, pause, resume button. Type should be checked via button label.
+            (DataContext as MainWindow).btnStop_Click(sender, e);
+            (DataContext as MainWindow).btnStart_Click(sender, e);
+        }
+
+        private void btnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainWindow).btnStop_Click(sender, e);
+            (DataContext as MainWindow).btnExit_Click(sender, e);
+        }
+
+        private void MenuPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            //MenuPageFrame.DataContext = DataContext;
+        }
+
+        private void btnResume_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainWindow).btnPause_Click(sender, e);
         }
     }
 }

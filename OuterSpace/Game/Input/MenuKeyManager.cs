@@ -35,7 +35,14 @@ namespace OuterSpace.Game.Input
 
         public List<Key?> GetActiveKeyList()
         {
+            Key? somekey = _keypressed;
             return new List<Key?> { _key };
+        }
+
+        public void ClearKeys()
+        {
+            _key = null;
+            _keypressed = null;
         }
 
         public bool SetCurrentKeypressType(Key? keyPressed)

@@ -21,14 +21,15 @@ namespace OuterSpace.GameObjects
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public bool IsWireframe = false;
-        private Thickness _drawPosition;
-        private BitmapImage _textureLOD;
+        public int ZIndex = 0;
         protected BoundingBox _boundingBox;
         protected string _texturePath;
         protected Image _gameObjectTexture;
         protected GameData _gameData;
         protected PhysicsSystems _physics = new PhysicsSystems();
         protected Size _gameObjectDim { get; set; }
+        private Thickness _drawPosition;
+        private BitmapImage _textureLOD;
         private Rectangle _rectangle;
 
         public BitmapImage TextureLOD

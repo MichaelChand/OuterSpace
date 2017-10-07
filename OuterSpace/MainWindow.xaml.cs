@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 
 using ConsoleOutput;
+using System.Windows.Controls;
 
 namespace OuterSpace
 {
@@ -15,7 +16,7 @@ namespace OuterSpace
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GameMain _gameMain;
+        internal GameMain _gameMain;
         private IKeyboardInput _keyboardInput;
         private OutputConsole _outputConsole;
         internal Action<string[]> ConsoleWrite;
@@ -31,6 +32,30 @@ namespace OuterSpace
             _outputConsole.WriteOutput(message);
         }
 
+        internal void GameStateCallback()
+        {
+            switch(_gameMain._gameState)
+            {
+                case GameState.InMenu:
+                    GameGrid.Visibility = Visibility.Hidden;
+                    MenuGrid.Visibility = Visibility.Visible;
+                    break;
+                case GameState.Paused:
+                    GameGrid.Visibility = Visibility.Hidden;
+                    MenuGrid.Visibility = Visibility.Visible;
+                    break;
+                case GameState.Running:
+                    GameGrid.Visibility = Visibility.Visible;
+                    MenuGrid.Visibility = Visibility.Hidden;
+                    break;
+                case GameState.Stopped:
+                    GameGrid.Visibility = Visibility.Hidden;
+                    MenuGrid.Visibility = Visibility.Visible;
+                    break;
+
+            }
+        }
+
         private void PostLoadInitialise()
         {
             _keyboardInput = new KeyboardInput(new MenuKeyManager());
@@ -38,6 +63,12 @@ namespace OuterSpace
             _keyboardInput.KBEventInitialise();
             _gameMain = new GameMain(this);
             _gameMain.Initialise(GameGrid);
+            SetupDataContext();
+        }
+
+        private void SetupDataContext()
+        {
+            (MenuFrame.Content as Page).DataContext = this;
         }
 
         private void PreComponentInitialise()
@@ -55,7 +86,7 @@ namespace OuterSpace
             //XmlDocument xd =  xmlFileReader.GetDocumentObject();
         }
 
-        private void btnStart_Click(object sender, RoutedEventArgs e)
+        internal void btnStart_Click(object sender, RoutedEventArgs e)
         {
             //_gameMain?.Dispose();
             //_gameMain = new GameMain(this);
@@ -69,18 +100,18 @@ namespace OuterSpace
             _gameMain.Run();
         }
 
-        private void btnStop_Click(object sender, RoutedEventArgs e)
+        internal void btnStop_Click(object sender, RoutedEventArgs e)
         {
             _gameMain.StopGame();
             _gameMain = null;
         }
 
-        private void btnPause_Click(object sender, RoutedEventArgs e)
+        internal void btnPause_Click(object sender, RoutedEventArgs e)
         {
             _gameMain.PauseGame();
         }
 
-        private void btnExit_Click(object sender, RoutedEventArgs e)
+        internal void btnExit_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
         }
@@ -96,25 +127,25 @@ namespace OuterSpace
         /// Deactivate certain windows modifier keys such as "ALT"
         /// </summary>
         /// <param name="kea"></param>
-        protected override void OnKeyDown(KeyEventArgs kea)
-        {
-            switch (Keyboard.Modifiers)
-            {
-                case ModifierKeys.Alt:
-                    kea.Handled = true;
-                    break;
-                default:
-                    base.OnKeyDown(kea);
-                    break;
-            }
-        }
+        //protected override void OnKeyDown(KeyEventArgs kea)
+        //{
+        //    switch (Keyboard.Modifiers)
+        //    {
+        //        case ModifierKeys.Alt:
+        //            kea.Handled = true;
+        //            break;
+        //        default:
+        //            base.OnKeyDown(kea);
+        //            break;
+        //    }
+        //}
 
         /// <summary>
         /// Manage responses based on keys pressed for main menu and overall game state management
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="kea"></param>
-        private void KeyDown_Pressed(object sender, KeyEventArgs kea)
+        private void KeyUp_Pressed(object sender, KeyEventArgs kea)
         {
             List<Key?> keys = _keyboardInput.GetActiveKeys();
             Action<Key?> ManageAction = (key) =>
@@ -132,6 +163,8 @@ namespace OuterSpace
 
             for (int i = keys.Count - 1; i >= 0; i--)
                 ManageAction(keys[i]);
+
+            _keyboardInput.ClearKeys();
         }
 
         #endregion

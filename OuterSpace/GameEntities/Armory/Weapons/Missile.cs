@@ -11,7 +11,7 @@ namespace OuterSpace.GameObjects.Armory.Weapons
 {
     public class Missile : Armory
     {
-        private int _speed = 5;
+        private int _speed = 10;
         private int _strength = 10;
         public Missile(GameData gameData, Point firedFromPosition) : base(gameData, firedFromPosition)
         {
@@ -21,10 +21,10 @@ namespace OuterSpace.GameObjects.Armory.Weapons
         private void Initialise()
         {
             Strength = _strength;
-            _width = 4;
+            _width = 10;
             _height = 25;
             _magnetude = _speed;
-            _texturePath = "Assets//Images//SampleBlank.png";
+            _texturePath = "Assets//Images//MissileOne.png";
             SetStartPosition();
             IsActive = true;
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);

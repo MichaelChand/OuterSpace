@@ -22,7 +22,7 @@ namespace OuterSpace.Game
         private Game _game;
         private Page _renderPage;
         public static int _FRAMES = 30;
-        private GameState _gameState;
+        internal GameState _gameState;
         private GameData _gameData;
 
         public  GameMain(MainWindow mainWindow)
@@ -61,9 +61,10 @@ namespace OuterSpace.Game
             switch (_gameState)
             {
                 case GameState.Running:
-                    if (!_renderPage.IsVisible)
-                        (_renderPage as RenderPage).SetVisible();
+                    //if (!_renderPage.IsVisible)
+                    //    (_renderPage as RenderPage).SetVisible();
                     RunState();
+                    _mainWindow.GameStateCallback(); //Can I avoid placing this here?
                     break;
                 case GameState.Paused:
                     PauseState();
@@ -86,12 +87,14 @@ namespace OuterSpace.Game
         private void PauseState()
         {
             // Call to Pause Menu;
+            _mainWindow.GameStateCallback();
         }
 
         private void MenuState()
         {
-            if (_renderPage.IsVisible)
-                (_renderPage as RenderPage).SetHidden();
+            //if (_renderPage.IsVisible)
+            //    (_renderPage as RenderPage).SetHidden();
+            _mainWindow.GameStateCallback();
         }
 
         public void RunState()
@@ -111,6 +114,7 @@ namespace OuterSpace.Game
             _gameState = GameState.Running;
             _game.Run();
             _gameTimer.Start();
+            _mainWindow.GameStateCallback();
         }
 
         private Page InitialisePage(Page page)
@@ -135,6 +139,7 @@ namespace OuterSpace.Game
             RenderPage.Margin = new Thickness(0, 0, 0, 0);
             RenderPage.VerticalAlignment = VerticalAlignment.Top;
             RenderPage.HorizontalAlignment = HorizontalAlignment.Left;
+            RenderPage.Visibility = Visibility.Visible;
             return RenderPage;
         }
 
@@ -164,8 +169,8 @@ namespace OuterSpace.Game
 
         public void DeInitialise()
         {
-            _gameTimer.Dispose();
-            _game.DeInitialise();
+            _gameTimer?.Dispose();
+            _game?.DeInitialise();
             CleanUp();
         }
 

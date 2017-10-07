@@ -41,6 +41,8 @@ namespace OuterSpace.GameEntities.Ships.Enemy
             {
                 case 0:
                     return ArmamentType.Missile;
+                case 1:
+                    return ArmamentType.Pulsecannon;
                 default:
                     return ArmamentType.Missile;
             }
@@ -48,10 +50,13 @@ namespace OuterSpace.GameEntities.Ships.Enemy
 
         private void Initialise()
         {
+            _speedRange = _aiModel.Speed;
             _headingAngleRange = (int)_aiModel.HeadingRange;
+            _firingClockGranularity = _aiModel.FireGranularity;
             _texturePath = string.Format("Assets//Images//{0}", _aiModel.Texture);
             _framesPerSecond = _gameData.FramesPerSecond;
             base.Strength = _aiModel.Strength;
+            base.MaxStrength = _aiModel.Strength;
             _weaponType = GetArmanamentType();
 
             _armoryType = ArmoryType.AI;
@@ -63,18 +68,19 @@ namespace OuterSpace.GameEntities.Ships.Enemy
             if (_aiModel.RandomStart.Contains("-1"))
                 SetRandomStartPosition();
             else
-                _boundingBox = new BoundingBox(new Box { Left = Double.Parse(_aiModel.RandomStart.Split(new char[] { ',' }).ToArray()[0]), Top = Double.Parse(_aiModel.RandomStart.Split(new char[] { ',' }).ToArray()[0]), Width = _aiModel.Width, Height = _aiModel.Height });
+                _boundingBox = new BoundingBox(new Box { Left = Double.Parse(_aiModel.RandomStart.Split(new char[] { ',' }).ToArray()[0]), Top = Double.Parse(_aiModel.RandomStart.Split(new char[] { ',' }).ToArray()[1]), Width = _aiModel.Width, Height = _aiModel.Height });
 
             _gameObjectDim = new Size(_boundingBox.Dimension.Width, _boundingBox.Dimension.Height);
             SetupGameObject();
             _angle = GenerateRangedRandom(1, _headingAngleRange);
 
-            if (_aiModel.HitBarShow)
-                HitbarInit();
+            HitbarInit(_aiModel.HitBarShow);
 
             _speed = _aiModel.Speed;
             if(_aiModel.Speed <= 0)
                 AutoSpeed();
+
+            ZIndex = 100;
 
             Update();
         }
@@ -82,7 +88,7 @@ namespace OuterSpace.GameEntities.Ships.Enemy
         public override void AdjustFiringClock()
         {
             SetRandomFiringMilliFrequency();
-            FiringClock *= _aiModel.FireFrequency;
+            FiringClock *= _aiModel.FireGranularity;
         }
 
         private void Heading()

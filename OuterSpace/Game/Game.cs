@@ -35,7 +35,7 @@ namespace OuterSpace.Game
         private ILevel _level;
         private LevelFactory _levelFactory;
         private MunitionsFactory _munitionsFactory;
-        private int _levelCounter;
+        private int _levelCounter=1;
         private Player _player;
         private CollisionDetector _collisionDetection = new CollisionDetector();
         private List<IAGameObject> _weaponEnemy;
@@ -79,7 +79,8 @@ namespace OuterSpace.Game
             IsNewGame = false;
             SetupGameData();
             _weaponEnemy = new List<IAGameObject>();
-            _levelFactory = new LevelFactory(_gameData);
+            GameObjectLoader gol = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
+            _levelFactory = new LevelFactory(gol.GetLevelParser(), _gameData);
             _munitionsFactory = new MunitionsFactory(_gameData);
             _weaponPlayer = new List<IAGameObject>();
             _player = new Player(_gameData, _keyboardInput, _weaponPlayer);
@@ -96,6 +97,7 @@ namespace OuterSpace.Game
 
         public void Run()
         {
+            Destructor destructor = new Destructor();
             _gameData.WriteToConsole.Invoke(new[] { string.Format("Loading Level {0}\r", _levelCounter) });
             _level = _levelFactory.MakeLevel(_levelCounter++);
             _level.Load();
@@ -104,6 +106,7 @@ namespace OuterSpace.Game
             _gameEngine.AddWorldObjects(_weaponPlayer);
             _gameEngine.AddWorldObjects(_weaponEnemy);
             _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level, _player);
+            destructor = null;
         }
 
         public void Update()
@@ -122,6 +125,19 @@ namespace OuterSpace.Game
             _level.DeInitialise();
             (_keyboardInput as KeyboardInput).Dispose();
             _keyboardInput = null;
+        }
+    }
+
+    public class Destructor
+    {
+        public Destructor()
+        {
+            Console.WriteLine("Constructor for Destructor created");
+        }
+
+        ~Destructor()
+        {
+            Console.WriteLine("Destructor Destructor Called");
         }
     }
 }

@@ -10,6 +10,7 @@ namespace OuterSpace.Game.Input
     public interface IKeyboardInput
     {
         List<Key?> GetActiveKeys();
+        void ClearKeys();
         void KBEventInitialise();
         void KBPreviewEventInitialise();
         Key? GetRawKeyObject();

@@ -4,6 +4,7 @@ using OuterSpace.Game.Loaders;
 using OuterSpace.GameEntities.Ships.Enemy;
 using OuterSpace.GameObjects;
 using OuterSpace.GameObjects.Ships.Enemy;
+using OuterSpace.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +14,17 @@ using System.Threading.Tasks;
 
 namespace OuterSpace.Game.Levels
 {
-    public class WaveOne : ILevel
+    public class Level : ILevel
     {
         private List<IAGameObject> _enemies;
         private GameData _gameData;
         private AiFactory _aiFactory;
+        private LevelModel _levelModel;
+        private GameObjectLoader gol;
 
-        public WaveOne(GameData gameData)
+        public Level(LevelModel levelModel, GameData gameData)
         {
+            _levelModel = levelModel;
             _gameData = gameData;
         }
 
@@ -28,8 +32,9 @@ namespace OuterSpace.Game.Levels
         {
             //Load Level data here.
             _gameData.WriteToConsole(new[] { "Loading Level Data...\r" });
-            GameObjectLoader gol = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
+            gol = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
             _aiFactory = new AiFactory(gol.GetAiParser(), _gameData);
+            _gameData.WriteToConsole(new[] { "Creating Level...\r" });
             CreateLevel();
         }
 
@@ -38,20 +43,12 @@ namespace OuterSpace.Game.Levels
             _enemies = CreateEnemies();
         }
 
-        public List<IAGameObject> CreateEnemies()
+        private List<IAGameObject> CreateEnemies()
         {
             _gameData.WriteToConsole(new[] { "Loading AI...\r" });
             List<IAGameObject> enemies = new List<IAGameObject>();
-            enemies.Add(_aiFactory.GetAi(0));
-            //enemies.Add(_aiFactory.GetAi(1));
-            enemies.Add(_aiFactory.GetAi(0));
-            //enemies.Add(_aiFactory.GetAi(1));
-            enemies.Add(_aiFactory.GetAi(0));
-            //enemies.Add(_aiFactory.GetAi(1));
-            enemies.Add(_aiFactory.GetAi(0));
-            //enemies.Add(_aiFactory.GetAi(1));
-            enemies.Add(_aiFactory.GetAi(0));
-            //enemies.Add(_aiFactory.GetAi(1));
+            foreach(int enemyType in _levelModel.AiTypes)
+                enemies.Add(_aiFactory.GetAi(enemyType));
             return enemies;
         }
 

@@ -20,8 +20,9 @@ namespace OuterSpace.Game.Loaders
             if (_aiModelList != null)
                 return _aiModelList;
             _aiModelList = new List<AiModel>();
-            XmlNodeList nodeList =  _xmlDocument.GetElementsByTagName("Ai");
-            foreach(XmlNode node in nodeList)
+            XmlNodeList nodeList =  _xmlDocument.GetElementsByTagName("Ships");
+            nodeList = nodeList[0].ChildNodes;
+            foreach (XmlNode node in nodeList)
             {
                 _aiModelList.Add
                 (
@@ -33,7 +34,7 @@ namespace OuterSpace.Game.Loaders
                         HeadingRange = Int32.Parse(node["HeadingRange"].InnerText),
                         RandomStart = node["RandomStart"].InnerText,
                         Weapon = Int32.Parse(node["WeaponType"].InnerText),
-                        FireFrequency = Int32.Parse(node["FireFrequency"].InnerText),
+                        FireGranularity = Int32.Parse(node["FireGranularity"].InnerText),
                         ScanRange = Double.Parse(node["Scanrange"].InnerText),
                         Speed = Int32.Parse(node["Speed"].InnerText),
                         HitBarShow = bool.Parse(node["ShowHitbar"].InnerText),
