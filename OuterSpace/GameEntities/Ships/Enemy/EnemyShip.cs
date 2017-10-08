@@ -58,7 +58,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         protected double GenerateRangedRandom(int min, int max)
         {
-            return _random.Next(min, max);
+            return _random.Next(min, max == 0? 1 : max);
         }
 
         protected double GenerateRangedRandom(int seed)
@@ -73,7 +73,7 @@ namespace OuterSpace.GameObjects.Ships.Enemy
 
         protected void SetRandomFiringMilliFrequency()
         {
-            FiringClock = (long)GenerateRangedRandom(1, _gameData.FramesPerSecond) + _gameData.FramesPerSecond; //minimum 1 second interval.
+            FiringClock = (long)GenerateRangedRandom(_gameData.FramesPerSecond/4, (int)FiringClockSet); //minimum 1 second interval.
         }
 
         public override void Render()

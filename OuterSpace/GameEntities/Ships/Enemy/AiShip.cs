@@ -25,7 +25,6 @@ namespace OuterSpace.GameEntities.Ships.Enemy
         private int _speedRange = 5;
         private Mathematics _maths = new Mathematics();
         private ArmamentType _weaponType = ArmamentType.Missile;
-        private int _firingClockGranularity = 5;
         private double _hitpoint = 50;
 
         public AiShip(AiModel aiModel, GameData gameData, bool showhitbar = true) : base(gameData, null, null)
@@ -52,7 +51,6 @@ namespace OuterSpace.GameEntities.Ships.Enemy
         {
             _speedRange = _aiModel.Speed;
             _headingAngleRange = (int)_aiModel.HeadingRange;
-            _firingClockGranularity = _aiModel.FireGranularity;
             _texturePath = string.Format("Assets//Images//{0}", _aiModel.Texture);
             _framesPerSecond = _gameData.FramesPerSecond;
             base.Strength = _aiModel.Strength;
@@ -62,6 +60,7 @@ namespace OuterSpace.GameEntities.Ships.Enemy
             _armoryType = ArmoryType.AI;
             _armamentType = _weaponType;
             FireAngle = _aiModel.ScanRange;
+            FiringClockSet = _aiModel.FireGranularity;
             AdjustFiringClock();
             _boundingBox = new BoundingBox(new Box { Left = 0, Top = 0, Width = _aiModel.Width, Height = _aiModel.Height });
 
@@ -88,7 +87,6 @@ namespace OuterSpace.GameEntities.Ships.Enemy
         public override void AdjustFiringClock()
         {
             SetRandomFiringMilliFrequency();
-            FiringClock *= _aiModel.FireGranularity;
         }
 
         private void Heading()

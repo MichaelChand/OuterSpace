@@ -6,9 +6,9 @@
       <Texture>EnemyOne.png</Texture>
       <Strength>500</Strength>
       <HeadingRange>160</HeadingRange>
-      <RandomStart>-1</RandomStart> <!-- -1 = Random start. Else enter position as x,y -->
+      <RandomStart>350,100</RandomStart> <!-- -1 = Random start. Else enter position as x,y -->
       <WeaponType>0</WeaponType>
-      <FireGranularity>1</FireGranularity>
+      <FireGranularity>150</FireGranularity>
       <Scanrange>90</Scanrange>
       <Speed>5</Speed> <!-- 0 = Auto speed -->
       <ShowHitbar>true</ShowHitbar>
@@ -20,7 +20,7 @@
       <Texture>SampleEnemyShip.png</Texture>
       <Strength>400</Strength>
       <HeadingRange>160</HeadingRange>
-      <RandomStart>-1</RandomStart> <!-- -1 = Random start. Else enter position as x,y -->
+      <RandomStart>200,100</RandomStart> <!-- -1 = Random start. Else enter position as x,y -->
       <WeaponType>1</WeaponType>
       <FireGranularity>1</FireGranularity>
       <Scanrange>90</Scanrange>

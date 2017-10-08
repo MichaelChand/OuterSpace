@@ -15,7 +15,7 @@ namespace OuterSpace.Models
         public int HeadingRange { get; set; }
         public string RandomStart { get; set; }
         public int Weapon { get; set; }
-        public int FireGranularity { get; set; }
+        public double FireGranularity { get; set; }
         public int Speed { get; set; }
         public double ScanRange { get; set; }
         public bool HitBarShow { get; set; }

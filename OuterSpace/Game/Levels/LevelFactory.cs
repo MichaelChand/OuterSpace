@@ -14,27 +14,21 @@ namespace OuterSpace.Game.Levels
     {
         private GameData _gameData;
         private LevelParser _levelParser;
+        private EnemyShipParser _enemyShipParser;
 
-        public LevelFactory(LevelParser levelParser, GameData gameData)
+        public LevelFactory(LevelParser levelParser, EnemyShipParser enemyShipParser, GameData gameData)
         {
             _levelParser = levelParser;
+            _enemyShipParser = enemyShipParser;
             _gameData = gameData;
         }
 
         public ILevel MakeLevel(int level)
         {
-            //switch (level)
-            //{
-            //    case 0:
-            //        return new WaveOne(_gameData);
-            //    default :
-            //        return null;
-            //}
             Level newLevel =  new Level((from levelModel in _levelParser.GetLevelsList()
                               where levelModel.ID == level
                               select levelModel
-                             ).FirstOrDefault(), _gameData);
-            //newLevel.Load();
+                             ).FirstOrDefault(), _enemyShipParser, _gameData);
             return newLevel;
         }
     }

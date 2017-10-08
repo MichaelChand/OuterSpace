@@ -14,6 +14,7 @@ namespace OuterSpace.GameObjects.Ships
         public ArmamentType _armamentType { get; set; }
         public int FrameTimeStamp = 0;
         public double FiringClock;
+        public double FiringClockSet;
         public double FireAngle;
 
         public override void Update()
