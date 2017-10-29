@@ -26,6 +26,7 @@ namespace OuterSpace.Game
         public bool IsNewGame { get; private set; }
         public bool IsLevelRunning { get; private set; }
         public bool UserReady { get; set; }
+        public bool ThisGameEnded { get; set; }
 
         private IKeyboardInput _keyboardInput;
         private Mathematics _maths = new Mathematics();
@@ -42,6 +43,7 @@ namespace OuterSpace.Game
         private GameManager _gameManager;
         private LevelManager _levelManager;
         private GameEngine _gameEngine;
+        private GameObjectLoader _gameObjectLoader;
 
         private static System.Diagnostics.Stopwatch _stopWatch = new System.Diagnostics.Stopwatch();
 
@@ -52,6 +54,7 @@ namespace OuterSpace.Game
 
         private void Initialise(Page renderPage, int frames, GameData gameData)
         {
+            ThisGameEnded = false;
             _gameData = gameData;
             _gameData.WriteToConsole.Invoke(new[] { "\rInitialising...\r"});
             _keyboardInput = new KeyboardInput(new PlayKeyManager());
@@ -65,8 +68,8 @@ namespace OuterSpace.Game
             IsNewGame = false;
             SetupGameData();
             _weaponEnemy = new List<IAGameObject>();
-            GameObjectLoader gol = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
-            _levelFactory = new LevelFactory(gol.GetLevelParser(), gol.GetAiParser(), _gameData);
+            _gameObjectLoader = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
+            _levelFactory = new LevelFactory(_gameObjectLoader.GetLevelParser(), _gameObjectLoader.GetAiParser(), _gameData);
             _munitionsFactory = new MunitionsFactory(_gameData);
             _weaponPlayer = new List<IAGameObject>();
             _player = new Player(_gameData, _keyboardInput, _weaponPlayer);
@@ -115,19 +118,30 @@ namespace OuterSpace.Game
 
         private void StartNextLevel()
         {
+            int levelCount = _gameObjectLoader.GetLevelParser().GetLevelsList().Count;
             _levelManager.Next();
-            NextLevelPreprocess();
-            NextLevelInit();
-            Run();
+            if (_gameData.StartLID < levelCount)
+            {
+                NextLevelPreprocess();
+                NextLevelInit();
+                Run();
+            }
+            else
+                ThisGameEnded = true;
         }
 
         private void NextLevelPreprocess()
         {
             _gameManager.DeInitialise();
             _gameEngine.DeInitialise();
-            _level.DeInitialise();
+            _levelManager.DeInitialise();
             (_keyboardInput as KeyboardInput).Dispose();
             _keyboardInput = null;
+        }
+
+        public bool GameRunning()
+        {
+            return _levelManager.LevelRunning;
         }
 
         public void Update()
@@ -151,7 +165,7 @@ namespace OuterSpace.Game
             _gameData = null;
             _gameManager.DeInitialise();
             _gameEngine.DeInitialise();
-            _level.DeInitialise();
+            _levelManager.DeInitialise();
             (_keyboardInput as KeyboardInput).Dispose();
             _keyboardInput = null;
         }

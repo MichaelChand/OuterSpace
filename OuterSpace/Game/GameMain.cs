@@ -99,7 +99,10 @@ namespace OuterSpace.Game
 
         public void RunState()
         {
-            _game.Update();
+            if (!_game.ThisGameEnded)
+                _game.Update();
+            else 
+                _gameState = GameState.InMenu;
         }
 
         public void MenuControl()

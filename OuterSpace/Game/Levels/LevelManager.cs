@@ -69,12 +69,6 @@ namespace OuterSpace.Game.Levels
             return _gameData.StartLID;
         }
 
-        public void DeInitialise()
-        {
-            _level.DeInitialise();
-            _gameData = null;
-        }
-
         public void Update()
         {
             _levelState = _gameManager.GetState();
@@ -82,6 +76,13 @@ namespace OuterSpace.Game.Levels
                 _gameManager.Update();
             else
                 LevelRunning = false;
+        }
+
+        public void DeInitialise()
+        {
+            _level.DeInitialise();
+            _gameManager = null;
+            _gameData = null;
         }
     }
 }
