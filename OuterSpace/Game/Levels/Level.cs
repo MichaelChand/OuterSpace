@@ -20,11 +20,12 @@ namespace OuterSpace.Game.Levels
         private GameData _gameData;
         private AiFactory _aiFactory;
         private LevelModel _levelModel;
-        private GameObjectLoader gol;
+        private EnemyShipParser _enemyShipParser;
 
-        public Level(LevelModel levelModel, GameData gameData)
+        public Level(LevelModel levelModel, EnemyShipParser enemyShipParser, GameData gameData)
         {
             _levelModel = levelModel;
+            _enemyShipParser = enemyShipParser;
             _gameData = gameData;
         }
 
@@ -32,8 +33,7 @@ namespace OuterSpace.Game.Levels
         {
             //Load Level data here.
             _gameData.WriteToConsole(new[] { "Loading Level Data...\r" });
-            gol = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
-            _aiFactory = new AiFactory(gol.GetAiParser(), _gameData);
+            _aiFactory = new AiFactory(_enemyShipParser, _gameData);
             _gameData.WriteToConsole(new[] { "Creating Level...\r" });
             CreateLevel();
         }
@@ -61,6 +61,11 @@ namespace OuterSpace.Game.Levels
         {
             for (int i = _enemies.Count-1; i >= 0; i--)
                 _enemies[i].Update();
+        }
+
+        public TGameData GetGameData<TGameData>()
+        {
+            return (TGameData)Convert.ChangeType(_gameData, typeof(TGameData));
         }
 
         public void DeInitialise()

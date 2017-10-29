@@ -35,33 +35,19 @@ namespace OuterSpace.Game
         private ILevel _level;
         private LevelFactory _levelFactory;
         private MunitionsFactory _munitionsFactory;
-        private int _levelCounter=1;
         private Player _player;
         private CollisionDetector _collisionDetection = new CollisionDetector();
         private List<IAGameObject> _weaponEnemy;
         private List<IAGameObject> _weaponPlayer;
         private GameManager _gameManager;
+        private LevelManager _levelManager;
         private GameEngine _gameEngine;
-        private long _delta;
-        private EnemyShipParser _enemyShipParser;
 
         private static System.Diagnostics.Stopwatch _stopWatch = new System.Diagnostics.Stopwatch();
 
         public Game(Page renderPage, int frames, GameData gameData)
         {
             Initialise(renderPage, frames, gameData);
-        }
-
-        private Func<long> ElapsedTime(Func<long> ElapsedFunction = null)
-        {
-            long time = DateTime.Now.Millisecond;
-            Func<long> elapsedTime;
-            if(ElapsedFunction == null)
-                ElapsedFunction = () => time;
-            _delta = time - ElapsedFunction();
-            elapsedTime = () => _delta;
-
-            return elapsedTime;
         }
 
         private void Initialise(Page renderPage, int frames, GameData gameData)
@@ -80,7 +66,7 @@ namespace OuterSpace.Game
             SetupGameData();
             _weaponEnemy = new List<IAGameObject>();
             GameObjectLoader gol = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
-            _levelFactory = new LevelFactory(gol.GetLevelParser(), _gameData);
+            _levelFactory = new LevelFactory(gol.GetLevelParser(), gol.GetAiParser(), _gameData);
             _munitionsFactory = new MunitionsFactory(_gameData);
             _weaponPlayer = new List<IAGameObject>();
             _player = new Player(_gameData, _keyboardInput, _weaponPlayer);
@@ -97,26 +83,69 @@ namespace OuterSpace.Game
 
         public void Run()
         {
-            Destructor destructor = new Destructor();
-            _gameData.WriteToConsole.Invoke(new[] { string.Format("Loading Level {0}\r", _levelCounter) });
-            _level = _levelFactory.MakeLevel(_levelCounter++);
-            _level.Load();
+            _gameData.WriteToConsole.Invoke(new[] { string.Format("Loading Level {0}\r", _gameData.StartLID) });
+            _level = _levelFactory.MakeLevel(_gameData.StartLID);
+            _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level, _player);
+            _levelManager = new LevelManager(_level, _gameData, _gameManager);
+            _levelManager.PlayLevel();
             _gameEngine.AddWorldObjects(_level.GetLevelObjects());
             _gameEngine.AddWorldObject(_player.GetPlayerObject());
             _gameEngine.AddWorldObjects(_weaponPlayer);
             _gameEngine.AddWorldObjects(_weaponEnemy);
-            _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level, _player);
-            destructor = null;
+        }
+
+        private void NextLevelInit()
+        {
+            _gameData.WriteToConsole.Invoke(new[] { "\rInitialising...\r" });
+            _keyboardInput = new KeyboardInput(new PlayKeyManager());
+            _keyboardInput.KBPreviewEventInitialise();
+            _gameEngine = new GameEngine(_renderer);
+            IsLevelRunning = false;
+            IsNewGame = true;
+            UserReady = false;
+            IsNewGame = false;
+            SetupGameData();
+            _weaponEnemy = new List<IAGameObject>();
+            GameObjectLoader gol = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
+            _levelFactory = new LevelFactory(gol.GetLevelParser(), gol.GetAiParser(), _gameData);
+            _munitionsFactory = new MunitionsFactory(_gameData);
+            _weaponPlayer = new List<IAGameObject>();
+            _player = new Player(_gameData, _keyboardInput, _weaponPlayer);
+        }
+
+        private void StartNextLevel()
+        {
+            _levelManager.Next();
+            NextLevelPreprocess();
+            NextLevelInit();
+            Run();
+        }
+
+        private void NextLevelPreprocess()
+        {
+            _gameManager.DeInitialise();
+            _gameEngine.DeInitialise();
+            _level.DeInitialise();
+            (_keyboardInput as KeyboardInput).Dispose();
+            _keyboardInput = null;
         }
 
         public void Update()
         {
-            _gameManager.Update();
-            _player.Update();
-            _gameEngine.Update();
-            _gameEngine.Render();
+            if (_levelManager.LevelRunning)
+            {
+                _levelManager.Update();
+                _player.Update();
+                _gameEngine.Update();
+                _gameEngine.Render();
+            }
+            else
+            {
+                StartNextLevel();
+            }
         }
 
+        #region Cleanup
         public void DeInitialise()
         {
             _gameData = null;
@@ -126,18 +155,7 @@ namespace OuterSpace.Game
             (_keyboardInput as KeyboardInput).Dispose();
             _keyboardInput = null;
         }
-    }
 
-    public class Destructor
-    {
-        public Destructor()
-        {
-            Console.WriteLine("Constructor for Destructor created");
-        }
-
-        ~Destructor()
-        {
-            Console.WriteLine("Destructor Destructor Called");
-        }
+        #endregion
     }
 }

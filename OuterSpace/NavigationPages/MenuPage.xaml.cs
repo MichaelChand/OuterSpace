@@ -29,24 +29,28 @@ namespace OuterSpace.NavigationPages
         private void btnNewGame_Click(object sender, RoutedEventArgs e)
         {
             //New Game, pause, resume button. Type should be checked via button label.
-            (DataContext as MainWindow).btnStop_Click(sender, e);
-            (DataContext as MainWindow).btnStart_Click(sender, e);
+            ButtonGameStopStartManager((DataContext as MainWindow).btnStart_Click, sender, e);
         }
 
         private void btnQuit_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainWindow).btnStop_Click(sender, e);
-            (DataContext as MainWindow).btnExit_Click(sender, e);
-        }
-
-        private void MenuPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            //MenuPageFrame.DataContext = DataContext;
+            ButtonGameStopStartManager((DataContext as MainWindow).btnExit_Click, sender, e);
         }
 
         private void btnResume_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as MainWindow).btnPause_Click(sender, e);
+        }
+
+        private void ButtonGameStopStartManager(Action<object, RoutedEventArgs> f, object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainWindow).btnStop_Click(sender, e);
+            f.Invoke(sender, e);
+        }
+
+        private void MenuPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            //MenuPageFrame.DataContext = DataContext;
         }
     }
 }

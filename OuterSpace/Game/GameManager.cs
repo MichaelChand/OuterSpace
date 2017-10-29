@@ -30,6 +30,7 @@ namespace OuterSpace.Game
         private ILevel _level;
         private Player _player;
         private CollisionDetector _collisionDetector;
+        private LevelState _levelState;
 
         public GameManager(List<IAGameObject> playerWeaponList, List<IAGameObject> enemyWeaponList, GameData gameData, GameEngine gameEngine, MunitionsFactory munitionsFactory, RenderPage renderer, ILevel level, Player player)
         {
@@ -44,8 +45,13 @@ namespace OuterSpace.Game
             _aiManager = new AiManager(_gameData, enemyWeaponList, _munitionsFactory);
             _player = player;
             _collisionDetector = new CollisionDetector();
+            _levelState = LevelState.Active;
         }
 
+        public LevelState GetState()
+        {
+            return _levelState;
+        }
 
         private void WeaponPersistanceCheck(List<IAGameObject> weaponList)
         {
@@ -129,6 +135,16 @@ namespace OuterSpace.Game
             }
         }
 
+        private void ConfirmLevelState()
+        {
+            //PlayerState
+            if (!(_player.GetPlayerObject() as Ship).Alive)
+                _levelState = LevelState.DeadPlayer;
+            //EnemyState
+            if (_level.GetLevelObjects().Count <= 0 && _levelState == LevelState.Active)
+                _levelState = LevelState.LevelCleared;
+        }
+
         public void Update()
         {
             EnemyHitTest(_level.GetLevelObjects(), _playerWeaponList);
@@ -138,6 +154,7 @@ namespace OuterSpace.Game
             CheckForNewWeaponToAdd(_playerWeaponList);
             CheckForNewWeaponToAdd(_enemyWeaponList);
             UpdateAi();
+            ConfirmLevelState();
         }
 
         #region Deinitialise Methods

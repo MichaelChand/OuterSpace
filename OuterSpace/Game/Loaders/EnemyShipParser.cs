@@ -34,7 +34,7 @@ namespace OuterSpace.Game.Loaders
                         HeadingRange = Int32.Parse(node["HeadingRange"].InnerText),
                         RandomStart = node["RandomStart"].InnerText,
                         Weapon = Int32.Parse(node["WeaponType"].InnerText),
-                        FireGranularity = Int32.Parse(node["FireGranularity"].InnerText),
+                        FireGranularity = double.Parse(node["FireGranularity"].InnerText),
                         ScanRange = Double.Parse(node["Scanrange"].InnerText),
                         Speed = Int32.Parse(node["Speed"].InnerText),
                         HitBarShow = bool.Parse(node["ShowHitbar"].InnerText),

@@ -15,6 +15,7 @@ namespace RenderSystem.Interfaces
         void AddWorldObjectList(List<IAGameObject> gameObjects);
         void DynamicAdd(IAGameObject gameObject);
         void RemoveWorldObject(IAGameObject gameObject);
+        void ClearAll();
         void Render();
         void Render(List<IAGameObject> gameObjects);
     }
