@@ -63,6 +63,11 @@ namespace OuterSpace.Game.Levels
                 _enemies[i].Update();
         }
 
+        public TGameData GetGameData<TGameData>()
+        {
+            return (TGameData)Convert.ChangeType(_gameData, typeof(TGameData));
+        }
+
         public void DeInitialise()
         {
             _enemies.Clear();

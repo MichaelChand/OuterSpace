@@ -109,12 +109,12 @@ namespace OuterSpace.Game
 
         public void Run()
         {
+            _gameData.StartLID = 0;
             _gameTimer = new GameDispatcherTimer(_FRAMES, Update);
             _game = new Game(_renderPage, _FRAMES, _gameData);
             _gameState = GameState.Running;
             _game.Run();
             _gameTimer.Start();
-            _mainWindow.GameStateCallback();
         }
 
         private Page InitialisePage(Page page)

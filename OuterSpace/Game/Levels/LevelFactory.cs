@@ -26,9 +26,11 @@ namespace OuterSpace.Game.Levels
         public ILevel MakeLevel(int level)
         {
             Level newLevel =  new Level((from levelModel in _levelParser.GetLevelsList()
-                              where levelModel.ID == level
-                              select levelModel
-                             ).FirstOrDefault(), _enemyShipParser, _gameData);
+                                         where levelModel.ID == level
+                                         select levelModel
+                                        ).FirstOrDefault(), 
+                                        _enemyShipParser, _gameData
+                                       );
             return newLevel;
         }
     }

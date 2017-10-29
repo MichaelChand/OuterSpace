@@ -56,6 +56,7 @@ namespace OuterSpace.Game
         {
             for (int i = 0; i < _worldObjects.Count; i++)
                 _renderer.RemoveWorldObject(_worldObjects[i]);
+            _renderer.ClearAll();
         }
     }
 }

@@ -80,23 +80,17 @@ namespace OuterSpace
             _outputConsole.Show();
         }
 
-        private void btnDebug_Click(object sender, RoutedEventArgs e)
+        private void BootGameMain()
         {
-            //XmlFileReader xmlFileReader = new XmlFileReader("Assets//Scripts//Gamedat.xml");
-            //XmlDocument xd =  xmlFileReader.GetDocumentObject();
+            _gameMain = new GameMain(this);
+            _gameMain.Initialise(GameGrid);
         }
 
         internal void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            //_gameMain?.Dispose();
-            //_gameMain = new GameMain(this);
-            //_gameMain.Initialise(GameGrid);
-            //_gameMain.StartGame();
-            if(_gameMain == null)
-            {
-                _gameMain = new GameMain(this);
-                _gameMain.Initialise(GameGrid);
-            }
+            if (_gameMain == null)
+                BootGameMain();
+
             _gameMain.Run();
         }
 
@@ -123,22 +117,6 @@ namespace OuterSpace
         }
 
         #region Key trap hook for main window
-        /// <summary>
-        /// Deactivate certain windows modifier keys such as "ALT"
-        /// </summary>
-        /// <param name="kea"></param>
-        //protected override void OnKeyDown(KeyEventArgs kea)
-        //{
-        //    switch (Keyboard.Modifiers)
-        //    {
-        //        case ModifierKeys.Alt:
-        //            kea.Handled = true;
-        //            break;
-        //        default:
-        //            base.OnKeyDown(kea);
-        //            break;
-        //    }
-        //}
 
         /// <summary>
         /// Manage responses based on keys pressed for main menu and overall game state management
@@ -167,6 +145,22 @@ namespace OuterSpace
             _keyboardInput.ClearKeys();
         }
 
+        /// <summary>
+        /// Deactivate certain windows modifier keys such as "ALT"
+        /// </summary>
+        /// <param name="kea"></param>
+        //protected override void OnKeyDown(KeyEventArgs kea)
+        //{
+        //    switch (Keyboard.Modifiers)
+        //    {
+        //        case ModifierKeys.Alt:
+        //            kea.Handled = true;
+        //            break;
+        //        default:
+        //            base.OnKeyDown(kea);
+        //            break;
+        //    }
+        //}
         #endregion
     }
 }

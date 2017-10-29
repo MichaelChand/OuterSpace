@@ -100,6 +100,11 @@ namespace RenderSystem
             _gameObjects.Capacity = _gameObjects.Count + 4;
         }
 
+        public void ClearAll()
+        {
+            cnvViewPort.Children.Clear();
+        }
+
         public void Render()
         {
             //Call each component's render method. Assumption: Already in canvas.

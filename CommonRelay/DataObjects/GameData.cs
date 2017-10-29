@@ -10,5 +10,6 @@ namespace CommonRelay.DataObjects
         public BoundingBox ViewportBounding { get; set; }
         public int FramesPerSecond;
         public Action<string[]> WriteToConsole;
+        public int StartLID { get; set; }
     }
 }

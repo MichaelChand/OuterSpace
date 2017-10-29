@@ -92,6 +92,7 @@
     <Compile Include="Game\Loaders\EnemyShipParser.cs" />
     <Compile Include="Game\Loaders\GameObjectLoader.cs" />
     <Compile Include="Game\Loaders\LevelParser.cs" />
+    <Compile Include="Game\LevelState.cs" />
     <Compile Include="Models\AiModel.cs" />
     <Compile Include="Models\LevelModel.cs" />
     <Compile Include="NavigationPages\MenuPage.xaml.cs">
