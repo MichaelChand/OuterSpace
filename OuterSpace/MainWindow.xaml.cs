@@ -8,6 +8,8 @@ using System.Windows.Input;
 
 using ConsoleOutput;
 using System.Windows.Controls;
+using OuterSpace.NavigationPages;
+using RenderSystem;
 
 namespace OuterSpace
 {
@@ -20,6 +22,7 @@ namespace OuterSpace
         private IKeyboardInput _keyboardInput;
         private OutputConsole _outputConsole;
         internal Action<string[]> ConsoleWrite;
+        internal AnimationOverlayMainPage _animationOverlayMainPage;
 
         public MainWindow()
         {
@@ -69,6 +72,7 @@ namespace OuterSpace
         private void SetupDataContext()
         {
             (MenuFrame.Content as Page).DataContext = this;
+            (AnimationOverlayMainFrame.Content as Page).DataContext = this;
         }
 
         private void PreComponentInitialise()

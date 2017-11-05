@@ -6,14 +6,20 @@
         xmlns:local="clr-namespace:OuterSpace"
         x:Name="OuterSpaceMain"
         mc:Ignorable="d"
-        Title="MainWindow" Background="MidnightBlue" WindowStartupLocation="CenterScreen" MaxWidth="1920" MaxHeight="1080" ResizeMode="NoResize" WindowState="Maximized" IsTabStop="False" IsHitTestVisible="True" KeyUp="KeyUp_Pressed" >
-    
+        Title="MainWindow" Background="Black" WindowStartupLocation="CenterScreen" MaxWidth="1920" MaxHeight="1080" ResizeMode="NoResize" WindowState="Maximized" IsTabStop="False" IsHitTestVisible="True" KeyUp="KeyUp_Pressed" >
+
     <Grid Margin="5,5,5,5">
-        <Grid x:Name="MenuGrid" Margin="10,10,0,0" Background="Midnightblue">
+        <Grid x:Name="GameGrid" Visibility="Hidden" Background="LawnGreen" Loaded="MainWindow_Loaded">
+            <!-- Frame place holder -->
+        </Grid>
+        <Grid>
+            <Image x:Name="image" Source="pack://siteoforigin:,,,/Assets/Images/GameEdges.png" IsEnabled="False" IsHitTestVisible="False" Width="1000" Height="800"/>
+        </Grid>
+        <Grid x:Name="MenuGrid" Margin="10,10,0,0">
             <Frame x:Name="MenuFrame" Visibility="Visible" Margin="5,5,5,5" NavigationUIVisibility="Hidden" Background="Black" Source="NavigationPages\MenuPage.xaml" />
         </Grid>
-        <Grid x:Name="GameGrid" Visibility="Hidden" Margin="0,50,0,0" Background="LawnGreen" Loaded="MainWindow_Loaded" HorizontalAlignment="Left">
-            <!-- Frame place holder -->
+        <Grid x:Name="AnimationOverlayMainGrid" Visibility="Hidden" Margin="0,0,0,0" Background="Black">
+            <Frame x:Name="AnimationOverlayMainFrame" Visibility="Visible" Margin="0,0,0,0" NavigationUIVisibility="Hidden" Background="Transparent" Source="pack://application:,,,/RenderSystem;component/AnimationOverlayMainPage.xaml" />
         </Grid>
     </Grid>
 </Window>

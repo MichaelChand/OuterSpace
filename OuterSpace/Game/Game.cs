@@ -56,22 +56,17 @@ namespace OuterSpace.Game
         {
             ThisGameEnded = false;
             _gameData = gameData;
-            _gameData.WriteToConsole.Invoke(new[] { "\rInitialising...\r"});
-            _keyboardInput = new KeyboardInput(new PlayKeyManager());
-            _keyboardInput.KBPreviewEventInitialise();
             _frames = frames;
             _renderer = renderPage as RenderPage;
-            _gameEngine = new GameEngine(_renderer);
-            IsLevelRunning = false;
-            IsNewGame = true;
-            UserReady = false;
-            IsNewGame = false;
-            SetupGameData();
-            _weaponEnemy = new List<IAGameObject>();
             _gameObjectLoader = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
             _levelFactory = new LevelFactory(_gameObjectLoader.GetLevelParser(), _gameObjectLoader.GetAiParser(), _gameData);
+            _keyboardInput = new KeyboardInput(new PlayKeyManager());
+            _keyboardInput.KBPreviewEventInitialise();
+            SetupGameData();
             _munitionsFactory = new MunitionsFactory(_gameData);
+            _weaponEnemy = new List<IAGameObject>();
             _weaponPlayer = new List<IAGameObject>();
+            NextLevelInit();
             _player = new Player(_gameData, _keyboardInput, _weaponPlayer);
         }
 
@@ -100,27 +95,20 @@ namespace OuterSpace.Game
         private void NextLevelInit()
         {
             _gameData.WriteToConsole.Invoke(new[] { "\rInitialising...\r" });
-            _keyboardInput = new KeyboardInput(new PlayKeyManager());
-            _keyboardInput.KBPreviewEventInitialise();
             _gameEngine = new GameEngine(_renderer);
             IsLevelRunning = false;
             IsNewGame = true;
             UserReady = false;
             IsNewGame = false;
-            SetupGameData();
-            _weaponEnemy = new List<IAGameObject>();
-            GameObjectLoader gol = new GameObjectLoader("Assets//Scripts//Gamedat.xml");
-            _levelFactory = new LevelFactory(gol.GetLevelParser(), gol.GetAiParser(), _gameData);
-            _munitionsFactory = new MunitionsFactory(_gameData);
-            _weaponPlayer = new List<IAGameObject>();
-            _player = new Player(_gameData, _keyboardInput, _weaponPlayer);
+            _weaponEnemy.Clear();
+            _weaponPlayer.Clear();
         }
 
         private void StartNextLevel()
         {
             int levelCount = _gameObjectLoader.GetLevelParser().GetLevelsList().Count;
             _levelManager.Next();
-            if (_gameData.StartLID < levelCount)
+            if (_gameData.StartLID < levelCount && (_player.GetPlayerObject() as GameObjects.Ships.Ship).Alive)
             {
                 NextLevelPreprocess();
                 NextLevelInit();
@@ -135,8 +123,6 @@ namespace OuterSpace.Game
             _gameManager.DeInitialise();
             _gameEngine.DeInitialise();
             _levelManager.DeInitialise();
-            (_keyboardInput as KeyboardInput).Dispose();
-            _keyboardInput = null;
         }
 
         public bool GameRunning()

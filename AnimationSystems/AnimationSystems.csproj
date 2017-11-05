@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{84DE6543-72EF-418E-8E4C-16EDFC58B1C8}</ProjectGuid>
+    <ProjectGuid>{B396D162-A312-4DFC-8E5B-5DBE396B9342}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RenderSystem</RootNamespace>
-    <AssemblyName>RenderSystem</AssemblyName>
+    <RootNamespace>AnimationSystems</RootNamespace>
+    <AssemblyName>AnimationSystems</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,33 +44,19 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimationOverlayMainPage.xaml.cs">
-      <DependentUpon>AnimationOverlayMainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Interfaces\IRender.cs" />
+    <Compile Include="Animations\AnimationDataBinder.cs" />
+    <Compile Include="Animations\IAnimation.cs" />
+    <Compile Include="Animations\InterLevelAnimation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RenderPage.xaml.cs">
-      <DependentUpon>RenderPage.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="AnimationOverlayMainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="RenderPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AnimationSystems\AnimationSystems.csproj">
-      <Project>{B396D162-A312-4DFC-8E5B-5DBE396B9342}</Project>
-      <Name>AnimationSystems</Name>
+    <ProjectReference Include="..\Chronometers\Chronometers.csproj">
+      <Project>{7CED1186-14A2-4EB8-9697-55FCEDAE3F6F}</Project>
+      <Name>Chronometers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameObjects\GameObjects.csproj">
-      <Project>{ACB151F2-758E-404E-BF75-6561240CC2DE}</Project>
-      <Name>GameObjects</Name>
+    <ProjectReference Include="..\CommonRelay\CommonRelay.csproj">
+      <Project>{637706F7-BB9D-49A7-A2B0-007F8494E8E2}</Project>
+      <Name>CommonRelay</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
