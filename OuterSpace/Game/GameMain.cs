@@ -56,6 +56,11 @@ namespace OuterSpace.Game
             _gameState = _gameState == GameState.Running ? GameState.Paused : GameState.Running;
         }
 
+        public void PauseGameToMenu()
+        {
+            _gameState = _gameState == GameState.Running || _gameState == GameState.Paused ? GameState.PauseInMenu : GameState.Running;
+        }
+
         public void Update(object sender, EventArgs eventArgs)
         {
             switch (_gameState)
@@ -67,6 +72,9 @@ namespace OuterSpace.Game
                     _mainWindow.GameStateCallback(); //Can I avoid placing this here?
                     break;
                 case GameState.Paused:
+                    PauseState();
+                    break;
+                case GameState.PauseInMenu:
                     PauseState();
                     break;
                 case GameState.Stopped:

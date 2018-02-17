@@ -39,7 +39,7 @@
             <Button x:Name="btnNewGame" Style="{StaticResource StyleMenuButton}" Content="New Game" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" Click="btnNewGame_Click" />
             <Button x:Name="btnPaused" Style="{StaticResource StyleMenuButton}" Content="Resume" HorizontalAlignment="Left" Margin="0,81,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" Click="btnResume_Click"/>
             <Button x:Name="btnTopScores" Style="{StaticResource StyleMenuButton}" Content="Top Scores" HorizontalAlignment="Left" Margin="0,162,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" />
-            <Button x:Name="btnHelp" Style="{StaticResource StyleMenuButton}" Content="Help" HorizontalAlignment="Left" Margin="0,243,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" />
+            <Button x:Name="btnHelp" Style="{StaticResource StyleMenuButton}" Content="Help" HorizontalAlignment="Left" Margin="0,243,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" Click="btnHelp_Click" />
             <Button x:Name="btnCredits" Style="{StaticResource StyleMenuButton}" Content="Credits" HorizontalAlignment="Left" Margin="0,324,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" />
             <Button x:Name="btnQuit" Style="{StaticResource StyleMenuButton}" Content="Quit" HorizontalAlignment="Left" Margin="0,405,0,0" VerticalAlignment="Top" BorderBrush="Yellow" Foreground="Yellow" BorderThickness="5" Click="btnQuit_Click" />
         </Grid>

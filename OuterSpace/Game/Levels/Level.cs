@@ -32,6 +32,7 @@ namespace OuterSpace.Game.Levels
         public void Load()
         {
             //Load Level data here.
+            _gameData.WriteToConsole.Invoke(new[] { string.Format("Loading Level {0}\rChapter: {1}\r", _gameData.StartLID, _levelModel.Chapter) });
             _gameData.WriteToConsole(new[] { "Loading Level Data...\r" });
             _aiFactory = new AiFactory(_enemyShipParser, _gameData);
             _gameData.WriteToConsole(new[] { "Creating Level...\r" });
@@ -40,12 +41,12 @@ namespace OuterSpace.Game.Levels
 
         private void CreateLevel()
         {
+            _gameData.WriteToConsole(new[] { "Creating AI...\r" });
             _enemies = CreateEnemies();
         }
 
         private List<IAGameObject> CreateEnemies()
         {
-            _gameData.WriteToConsole(new[] { "Loading AI...\r" });
             List<IAGameObject> enemies = new List<IAGameObject>();
             foreach(int enemyType in _levelModel.AiTypes)
                 enemies.Add(_aiFactory.GetAi(enemyType));

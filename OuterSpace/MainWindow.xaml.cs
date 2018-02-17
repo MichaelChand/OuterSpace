@@ -44,6 +44,10 @@ namespace OuterSpace
                     MenuGrid.Visibility = Visibility.Visible;
                     break;
                 case GameState.Paused:
+                    GameGrid.Visibility = Visibility.Visible;
+                    MenuGrid.Visibility = Visibility.Hidden;
+                    break;
+                case GameState.PauseInMenu:
                     GameGrid.Visibility = Visibility.Hidden;
                     MenuGrid.Visibility = Visibility.Visible;
                     break;
@@ -109,6 +113,11 @@ namespace OuterSpace
             _gameMain.PauseGame();
         }
 
+        private void PauseGameToMenu()
+        {
+            _gameMain.PauseGameToMenu();
+        }
+
         internal void btnExit_Click(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
@@ -138,7 +147,7 @@ namespace OuterSpace
                         btnPause_Click(sender, null);
                         break;
                     case Key.Escape:
-                        btnPause_Click(sender, null);
+                        PauseGameToMenu();
                         break;
                 }
             };

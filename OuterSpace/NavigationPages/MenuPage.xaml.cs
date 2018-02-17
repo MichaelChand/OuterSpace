@@ -52,5 +52,16 @@ namespace OuterSpace.NavigationPages
         {
             //MenuPageFrame.DataContext = DataContext;
         }
+
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            //This is basic text. Proper instruction screen to be built once other components are done and levels created.
+            string Title = "HELP:";
+            string Movement = "Use LEFT and RIGHT ARROW keys on your keyboard to move the player ship left or right.";
+            string Fire = "Press the SPACE BAR to fire. Hold down the space bar for continuous fire.";
+            string MenuControl = "Press ESC to get to GAME MENU. Press \"P\" to pause the game ";
+            string helpContent = string.Format("{0}\r\n{1}\r\n{2}\r\n{3}", Title, Movement, Fire, MenuControl);
+            MessageBox.Show(helpContent);
+        }
     }
 }

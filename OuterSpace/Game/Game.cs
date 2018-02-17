@@ -81,7 +81,6 @@ namespace OuterSpace.Game
 
         public void Run()
         {
-            _gameData.WriteToConsole.Invoke(new[] { string.Format("Loading Level {0}\r", _gameData.StartLID) });
             _level = _levelFactory.MakeLevel(_gameData.StartLID);
             _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level, _player);
             _levelManager = new LevelManager(_level, _gameData, _gameManager);

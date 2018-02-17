@@ -8,6 +8,6 @@ namespace OuterSpace.Game
 {
     public enum GameState
     {
-        Running, Paused, Stopped, InMenu
+        Running, Paused, PauseInMenu, Stopped, InMenu
     }
 }
