@@ -1,4 +1,6 @@
 ﻿using CommonRelay.DataObjects;
+using OuterSpace.GameObjects.Ships;
+using OuterSpace.GameObjects.Ships.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,10 @@ using System.Threading.Tasks;
 /* What should this do?
  * Pass a level to it. 
  * The level contains information the manager uses to manage the level.
- * The manager sets status that can be chacked on each update.
+ * The manager sets status that can be checked on each update.
  *      Status such as: is level still running? Is player dead. Is enemy cleared. Powerup timer/number of power ups obtained this level. Score obtained this level.
- *      
+ * 
+ * TODOs':     
  * How do we determine when to transistion level?
  */
 
@@ -20,16 +23,17 @@ namespace OuterSpace.Game.Levels
     {
         private ILevel _level;
         private GameData _gameData;
-        private GameManager _gameManager;
         private LevelState _levelState;
+        private Player _player;
 
         public bool LevelRunning { get; private set; }
 
-        public LevelManager(ILevel level, GameData gamedata, GameManager gameManager)
+        public LevelManager(ILevel level, GameData gamedata, Player player)
         {
             _level = level;
-            _gameManager = gameManager;
             _gameData = level.GetGameData<GameData>();
+            _levelState = LevelState.Active;
+            _player = player;
         }
 
         public ILevel GetLevelObject()
@@ -71,17 +75,42 @@ namespace OuterSpace.Game.Levels
 
         public void Update()
         {
-            _levelState = _gameManager.GetState();
-            if (_levelState == LevelState.Active)
-                _gameManager.Update();
-            else
-                LevelRunning = false;
+            ConfirmLevelState();
+            switch(_levelState)
+            {
+                case LevelState.Active :
+                    //_gameManager.Update();
+                    break;
+                case LevelState.LevelCleared :
+                    LevelRunning = false;
+                    break;
+                case LevelState.DeadPlayer:
+                    LevelRunning = false;
+                    break;
+                default:
+                    LevelRunning = false;
+                    break;
+            }
+        }
+
+        public LevelState GetLevelState()
+        {
+            return _levelState;
+        }
+
+        private void ConfirmLevelState()
+        {
+            //PlayerState
+            if (!(_player.GetPlayerObject() as Ship).Alive)
+                _levelState = LevelState.DeadPlayer;
+            //EnemyState
+            if (_level.GetLevelObjects().Count <= 0 && _levelState == LevelState.Active)
+                _levelState = LevelState.LevelCleared; //We should then run a level end timer to allow player to mop up any powerups.
         }
 
         public void DeInitialise()
         {
             _level.DeInitialise();
-            _gameManager = null;
             _gameData = null;
         }
     }

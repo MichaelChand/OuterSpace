@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -31,6 +32,7 @@ namespace OuterSpace.AnimationSystems.Animations
             LoadTexture();
             _gameTimer = new GameTimer(_maxFrames, Callback);
             InitialiseBindingVariables();
+            SetBinding(); //Added 5/04/2018.  Not sure if I should put this here. Just guessing.
         }
 
         private void InitialiseBindingVariables()
@@ -76,6 +78,11 @@ namespace OuterSpace.AnimationSystems.Animations
         public void Pause()
         {
             AnimationUpdatePaused = !AnimationUpdatePaused;
+        }
+
+        public UIElement GetUIElement()
+        {
+            return _gate1;
         }
 
         public void Update()

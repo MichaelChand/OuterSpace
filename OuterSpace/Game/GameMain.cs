@@ -24,6 +24,7 @@ namespace OuterSpace.Game
         public static int _FRAMES = 30;
         internal GameState _gameState;
         private GameData _gameData;
+        private Grid _grid;
 
         public  GameMain(MainWindow mainWindow)
         {
@@ -32,9 +33,14 @@ namespace OuterSpace.Game
             _gameData.WriteToConsole = _mainWindow.ConsoleWrite;
         }
 
-        private void  AddToGrid<TGrid>(TGrid grid, UIElement element) where TGrid : Grid
+        public void  AddToGrid<TGrid>(TGrid grid, UIElement element) where TGrid : Grid
         {
             grid.Children.Add(element);
+        }
+
+        public void RemoveFromGrid<TGrid>(TGrid grid, UIElement element) where TGrid : Grid
+        {
+            grid.Children.Remove(element);
         }
 
         public void StartGame()
@@ -122,7 +128,7 @@ namespace OuterSpace.Game
         {
             _gameData.StartLID = 0;
             _gameTimer = new GameDispatcherTimer(_FRAMES, Update);
-            _game = new Game(_renderPage, _FRAMES, _gameData);
+            _game = new Game(_renderPage, _FRAMES, _gameData, _mainWindow.AnimationOverlayMainGrid, _mainWindow.AnimationOverlayMainFrame);
             _gameState = GameState.Running;
             _game.Run();
             _gameTimer.Start();
@@ -136,6 +142,7 @@ namespace OuterSpace.Game
 
         public void Initialise<TGrid>(TGrid grid)
         {
+            _grid = grid as Grid;
             _gameState = GameState.InMenu;
             _renderPage = SetupRenderPage();
             Frame frame = SetupRenderFrame();

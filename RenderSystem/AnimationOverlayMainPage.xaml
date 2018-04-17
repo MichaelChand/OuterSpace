@@ -10,6 +10,8 @@
       Title="AnimationOverlayMainPage">
 
     <Grid>
-        <Canvas x:Name="cnvViewPort" x:FieldModifier="public" Margin="0,0,0,0" Background="Green" />
+        <Canvas x:Name="cnvViewPort" x:FieldModifier="public" Margin="0,0,0,0" Background="Green" >
+            <Label x:Name="label" Content="LOADING..." Canvas.Left="117" Canvas.Top="130" Width="119" FontSize="22" Height="41"/>
+        </Canvas>
     </Grid>
 </Page>

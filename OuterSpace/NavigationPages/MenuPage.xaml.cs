@@ -62,6 +62,40 @@ namespace OuterSpace.NavigationPages
             string MenuControl = "Press ESC to get to GAME MENU. Press \"P\" to pause the game ";
             string helpContent = string.Format("{0}\r\n{1}\r\n{2}\r\n{3}", Title, Movement, Fire, MenuControl);
             MessageBox.Show(helpContent);
+
+            //ClassBase cb = new ClassBase();
+            //ClassDerived cd = new ClassDerived();
+            //ClassOverrideDerived cod = new ClassOverrideDerived();
+
+            //cb = cd;
+
+            //cb.Display();
+            //cd.Display();
+            //cod.Display();
         }
+
+        //private class ClassBase
+        //{
+        //    public virtual void Display()
+        //    {
+        //        Console.WriteLine("Base Class");
+        //    }
+        //}
+
+        //private class ClassDerived : ClassBase
+        //{
+        //    public void Display()
+        //    {
+        //        Console.WriteLine("Derived Class");
+        //    }
+        //}
+
+        //private class ClassOverrideDerived : ClassBase
+        //{
+        //    public override void Display()
+        //    {
+        //        Console.WriteLine("Override Derived Class");
+        //    }
+        //}
     }
 }

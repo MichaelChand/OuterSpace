@@ -4,7 +4,7 @@
     <Ai>
       <ID>0</ID>
       <Texture>EnemyOne.png</Texture>
-      <Strength>300</Strength>
+      <Strength>100</Strength>
       <HeadingRange>270</HeadingRange>
       <RandomStart>350,150</RandomStart> <!-- -1 = Random start. Else enter position as x,y -->
       <WeaponType>0</WeaponType>
@@ -18,7 +18,7 @@
     <Ai>
       <ID>1</ID>
       <Texture>SampleEnemyShip.png</Texture>
-      <Strength>400</Strength>
+      <Strength>100</Strength>
       <HeadingRange>270</HeadingRange>
       <RandomStart>200,100</RandomStart> <!-- -1 = Random start. Else enter position as x,y -->
       <WeaponType>1</WeaponType>

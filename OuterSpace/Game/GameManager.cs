@@ -1,4 +1,7 @@
-﻿using CommonRelay.Common;
+﻿/*
+ Manage the game's current state. Eg state of level, state of player, state of enemies, etc.
+ */
+using CommonRelay.Common;
 using CommonRelay.DataObjects;
 using CommonRelay.Extensions;
 using GameObjects.Interfaces;
@@ -31,8 +34,12 @@ namespace OuterSpace.Game
         private Player _player;
         private CollisionDetector _collisionDetector;
         private LevelState _levelState;
+        private LevelManager _levelManager;
 
-        public GameManager(List<IAGameObject> playerWeaponList, List<IAGameObject> enemyWeaponList, GameData gameData, GameEngine gameEngine, MunitionsFactory munitionsFactory, RenderPage renderer, ILevel level, Player player)
+        public bool LevelRunning { get { return _levelManager.LevelRunning; } }
+
+        public GameManager(List<IAGameObject> playerWeaponList, List<IAGameObject> enemyWeaponList, GameData gameData, GameEngine gameEngine, 
+            MunitionsFactory munitionsFactory, RenderPage renderer, ILevel level, Player player)
         {
 
             _level = level;
@@ -46,19 +53,30 @@ namespace OuterSpace.Game
             _player = player;
             _collisionDetector = new CollisionDetector();
             _levelState = LevelState.Active;
+            _levelManager = new LevelManager(_level, _gameData, _player);
+        }
+
+        public void PlayLevel()
+        {
+            _levelManager.PlayLevel();
+        }
+
+        public void NextLevel()
+        {
+            _levelManager.Next();
         }
 
         public LevelState GetState()
         {
-            return _levelState;
+            return _levelManager.GetLevelState();
         }
 
         private void WeaponPersistanceCheck(List<IAGameObject> weaponList)
         {
             int count = weaponList.Count - 1;
-            List<IAGameObject> inactiveObjects = (from IAGameObject go in weaponList
-                                                  where (!(go as Armory).IsActive)
-                                                  select go).ToList();
+            List<IAGameObject> inactiveObjects = (from IAGameObject gObj in weaponList
+                                                  where (!(gObj as Armory).IsActive)
+                                                  select gObj).ToList();
             for (int i = inactiveObjects.Count - 1; i >= 0; i--)
             {
                 _renderer.RemoveWorldObject(inactiveObjects[i]);
@@ -135,18 +153,9 @@ namespace OuterSpace.Game
             }
         }
 
-        private void ConfirmLevelState()
-        {
-            //PlayerState
-            if (!(_player.GetPlayerObject() as Ship).Alive)
-                _levelState = LevelState.DeadPlayer;
-            //EnemyState
-            if (_level.GetLevelObjects().Count <= 0 && _levelState == LevelState.Active)
-                _levelState = LevelState.LevelCleared;
-        }
-
         public void Update()
         {
+            _levelManager.Update();
             EnemyHitTest(_level.GetLevelObjects(), _playerWeaponList);
             PlayerHitTest(_level.GetLevelObjects(), _enemyWeaponList);
             WeaponPersistanceCheck(_playerWeaponList);
@@ -154,7 +163,11 @@ namespace OuterSpace.Game
             CheckForNewWeaponToAdd(_playerWeaponList);
             CheckForNewWeaponToAdd(_enemyWeaponList);
             UpdateAi();
-            ConfirmLevelState();
+            //ConfirmLevelState();
+            //Update player and engine
+            _player.Update();
+            _gameEngine.Update();
+            _gameEngine.Render();
         }
 
         #region Deinitialise Methods
@@ -173,6 +186,8 @@ namespace OuterSpace.Game
             RemoveGameObjectsInList(_playerWeaponList);
             RemoveGameObjectsInList(_enemyWeaponList);
             RemoveGameObjectsInList(_level.GetLevelObjects());
+            _levelManager.DeInitialise();
+            _levelManager = null;
         }
 
         #endregion

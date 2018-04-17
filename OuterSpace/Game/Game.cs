@@ -18,6 +18,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using OuterSpace.Game.Loaders;
+using System.Windows.Media;
 
 namespace OuterSpace.Game
 {
@@ -41,19 +42,24 @@ namespace OuterSpace.Game
         private List<IAGameObject> _weaponEnemy;
         private List<IAGameObject> _weaponPlayer;
         private GameManager _gameManager;
-        private LevelManager _levelManager;
+        //private LevelManager _levelManager;
         private GameEngine _gameEngine;
         private GameObjectLoader _gameObjectLoader;
+        private Grid _grid;
+        private Frame _animationFrame;
+        private static int fc = 0;
 
         private static System.Diagnostics.Stopwatch _stopWatch = new System.Diagnostics.Stopwatch();
 
-        public Game(Page renderPage, int frames, GameData gameData)
+        public Game(Page renderPage, int frames, GameData gameData, Grid grid, Frame animationFrame)
         {
-            Initialise(renderPage, frames, gameData);
+            Initialise(renderPage, frames, gameData, grid, animationFrame);
         }
 
-        private void Initialise(Page renderPage, int frames, GameData gameData)
+        private void Initialise(Page renderPage, int frames, GameData gameData, Grid grid, Frame animationFrame)
         {
+            _grid = grid;
+            _animationFrame = animationFrame;
             ThisGameEnded = false;
             _gameData = gameData;
             _frames = frames;
@@ -83,8 +89,9 @@ namespace OuterSpace.Game
         {
             _level = _levelFactory.MakeLevel(_gameData.StartLID);
             _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level, _player);
-            _levelManager = new LevelManager(_level, _gameData, _gameManager);
-            _levelManager.PlayLevel();
+            //_levelManager = new LevelManager(_level, _gameData, _gameManager);
+            //_levelManager.PlayLevel();
+            _gameManager.PlayLevel();
             _gameEngine.AddWorldObjects(_level.GetLevelObjects());
             _gameEngine.AddWorldObject(_player.GetPlayerObject());
             _gameEngine.AddWorldObjects(_weaponPlayer);
@@ -106,7 +113,8 @@ namespace OuterSpace.Game
         private void StartNextLevel()
         {
             int levelCount = _gameObjectLoader.GetLevelParser().GetLevelsList().Count;
-            _levelManager.Next();
+            //_level.Next()
+            _gameManager.NextLevel();
             if (_gameData.StartLID < levelCount && (_player.GetPlayerObject() as GameObjects.Ships.Ship).Alive)
             {
                 NextLevelPreprocess();
@@ -121,26 +129,33 @@ namespace OuterSpace.Game
         {
             _gameManager.DeInitialise();
             _gameEngine.DeInitialise();
-            _levelManager.DeInitialise();
+            //_levelManager.DeInitialise();
         }
 
         public bool GameRunning()
         {
-            return _levelManager.LevelRunning;
+            return _gameManager.LevelRunning;
         }
 
         public void Update()
         {
-            if (_levelManager.LevelRunning)
+            if (_gameManager.LevelRunning)
             {
-                _levelManager.Update();
-                _player.Update();
-                _gameEngine.Update();
-                _gameEngine.Render();
+                _gameManager.Update();
             }
             else
             {
-                StartNextLevel();
+                if (_gameManager.GetState() == LevelState.LevelCleared)
+                {
+                    _grid.Visibility = Visibility.Visible;
+                    if (++fc > 66)
+                    {
+                        _grid.Visibility = Visibility.Hidden;
+                        fc = 0;
+                    }
+                    
+                }
+                if(_grid.Visibility != Visibility.Visible) StartNextLevel();
             }
         }
 
@@ -150,7 +165,7 @@ namespace OuterSpace.Game
             _gameData = null;
             _gameManager.DeInitialise();
             _gameEngine.DeInitialise();
-            _levelManager.DeInitialise();
+            //_levelManager.DeInitialise();
             (_keyboardInput as KeyboardInput).Dispose();
             _keyboardInput = null;
         }
