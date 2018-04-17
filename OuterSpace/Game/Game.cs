@@ -42,7 +42,6 @@ namespace OuterSpace.Game
         private List<IAGameObject> _weaponEnemy;
         private List<IAGameObject> _weaponPlayer;
         private GameManager _gameManager;
-        //private LevelManager _levelManager;
         private GameEngine _gameEngine;
         private GameObjectLoader _gameObjectLoader;
         private Grid _grid;
@@ -89,8 +88,6 @@ namespace OuterSpace.Game
         {
             _level = _levelFactory.MakeLevel(_gameData.StartLID);
             _gameManager = new GameManager(_weaponPlayer, _weaponEnemy, _gameData, _gameEngine, _munitionsFactory, _renderer, _level, _player);
-            //_levelManager = new LevelManager(_level, _gameData, _gameManager);
-            //_levelManager.PlayLevel();
             _gameManager.PlayLevel();
             _gameEngine.AddWorldObjects(_level.GetLevelObjects());
             _gameEngine.AddWorldObject(_player.GetPlayerObject());
@@ -113,7 +110,6 @@ namespace OuterSpace.Game
         private void StartNextLevel()
         {
             int levelCount = _gameObjectLoader.GetLevelParser().GetLevelsList().Count;
-            //_level.Next()
             _gameManager.NextLevel();
             if (_gameData.StartLID < levelCount && (_player.GetPlayerObject() as GameObjects.Ships.Ship).Alive)
             {
@@ -129,7 +125,6 @@ namespace OuterSpace.Game
         {
             _gameManager.DeInitialise();
             _gameEngine.DeInitialise();
-            //_levelManager.DeInitialise();
         }
 
         public bool GameRunning()
@@ -165,7 +160,6 @@ namespace OuterSpace.Game
             _gameData = null;
             _gameManager.DeInitialise();
             _gameEngine.DeInitialise();
-            //_levelManager.DeInitialise();
             (_keyboardInput as KeyboardInput).Dispose();
             _keyboardInput = null;
         }

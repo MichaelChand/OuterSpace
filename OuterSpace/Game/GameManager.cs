@@ -53,7 +53,7 @@ namespace OuterSpace.Game
             _player = player;
             _collisionDetector = new CollisionDetector();
             _levelState = LevelState.Active;
-            _levelManager = new LevelManager(_level, _gameData, _player);
+            _levelManager = new LevelManager(_level, _gameData, _player, _gameEngine, _renderer, _aiManager, _collisionDetector, _playerWeaponList, _enemyWeaponList);
         }
 
         public void PlayLevel()
@@ -71,103 +71,9 @@ namespace OuterSpace.Game
             return _levelManager.GetLevelState();
         }
 
-        private void WeaponPersistanceCheck(List<IAGameObject> weaponList)
-        {
-            int count = weaponList.Count - 1;
-            List<IAGameObject> inactiveObjects = (from IAGameObject gObj in weaponList
-                                                  where (!(gObj as Armory).IsActive)
-                                                  select gObj).ToList();
-            for (int i = inactiveObjects.Count - 1; i >= 0; i--)
-            {
-                _renderer.RemoveWorldObject(inactiveObjects[i]);
-                weaponList.Remove(inactiveObjects[i]);
-            }
-
-            weaponList.CapacityTrim();
-        }
-
-        private void CheckForNewWeaponToAdd(List<IAGameObject> weaponList)
-        {
-            Armory[] armory = (from Armory wp in weaponList
-                               where (!(wp as Armory).Fired && (wp as Armory).IsActive)
-                               select wp).ToArray();
-            for (int i = armory.Length - 1; i >= 0; i--)
-            {
-                armory[i].Fired = true;
-                _gameEngine.DynamicAdd(armory[i]);
-            }
-        }
-
-        private void UpdateAi()
-        {
-            int enemyCount = _level.GetLevelObjects().Count;
-            List<IAGameObject> enemies = _level.GetLevelObjects();
-            for (int i = enemyCount -1; i >= 0; i--)
-            {
-                _aiManager.SetAi(enemies[i]);
-                _aiManager.Update();
-            }
-        }
-
-        private bool HitTest(GameObject ship, List<IAGameObject> weaponList)
-        {
-            if (!(ship as Ship).Alive)
-                return false;
-            IAGameObject[] collidedWeapon = (from weapon in weaponList
-                                             where _collisionDetector.Collision(ship.GetBoundingBox(), (weapon as GameObject).GetBoundingBox())
-                                             select weapon).ToArray();
-            if(collidedWeapon.Length > 0)
-            {
-                for(int i = 0; i < collidedWeapon.Length; i++)
-                {
-                    (collidedWeapon[i] as Armory).IsActive = false;
-                    (ship as Ship).Strength -= (collidedWeapon[i] as Armory).Strength;
-                }
-                return true;
-            }
-            return false;
-        }
-
-        private void EnemyHitTest(List<IAGameObject> ships, List<IAGameObject> weaponList)
-        {
-            List<IAGameObject> aiShips = ships;
-            for(int i = aiShips.Count -1; i >= 0; i--)
-            {
-                HitTest(aiShips[i] as GameObject, weaponList);
-                (aiShips[i] as EnemyShip).HitPointBar.SetHitpoint((aiShips[i] as Ship).Strength);
-                if ((aiShips[i] as EnemyShip).HitPointBar.Hitpoint <= 0)
-                {
-                    _renderer.RemoveWorldObject(aiShips[i]);
-                    aiShips.Remove(aiShips[i]);
-                }
-            }
-        }
-
-        private void PlayerHitTest(List<IAGameObject> ships, List<IAGameObject> weaponList)
-        {
-            HitTest((_player.GetPlayerObject() as PlayerShip), weaponList);
-            if ((_player.GetPlayerObject() as Ship).Strength <= 0)
-            {
-                _renderer.RemoveWorldObject(_player.GetPlayerObject());
-                (_player.GetPlayerObject() as Ship).Alive = false;
-            }
-        }
-
         public void Update()
         {
             _levelManager.Update();
-            EnemyHitTest(_level.GetLevelObjects(), _playerWeaponList);
-            PlayerHitTest(_level.GetLevelObjects(), _enemyWeaponList);
-            WeaponPersistanceCheck(_playerWeaponList);
-            WeaponPersistanceCheck(_enemyWeaponList);
-            CheckForNewWeaponToAdd(_playerWeaponList);
-            CheckForNewWeaponToAdd(_enemyWeaponList);
-            UpdateAi();
-            //ConfirmLevelState();
-            //Update player and engine
-            _player.Update();
-            _gameEngine.Update();
-            _gameEngine.Render();
         }
 
         #region Deinitialise Methods
@@ -180,11 +86,6 @@ namespace OuterSpace.Game
 
         public void DeInitialise()
         {
-            _collisionDetector = null;
-            _aiManager.DeInitialise();
-            RemoveGameObjectsInList(new List<IAGameObject> { _player.GetPlayerObject() });
-            RemoveGameObjectsInList(_playerWeaponList);
-            RemoveGameObjectsInList(_enemyWeaponList);
             RemoveGameObjectsInList(_level.GetLevelObjects());
             _levelManager.DeInitialise();
             _levelManager = null;
